@@ -7,10 +7,16 @@ This content will be displayed at the top of the index page.
 You can leave this empty if you don’t want to show any content.
 -->
 
-A static blog theme based on [Astro](https://astro.build), designed for clarity and focus.
+I'm an artist learning to code. This blog is designed for _clarity & focus._
 
-With a deliberately minimal design, this layout ensures your content takes center stage. It's built for flexibility, offering customization options that honor its clean and elegant aesthetic.
+Come say hello on [GitHub](https://github.com/mite404) (Active), [Twitter](https://x.com/mite_404) (Reluctantly Active) or [LinkedIn](https://www.linkedin.com/feed/) (Lurking).
 
-Effortlessly share your thoughts in _a calm & dustless space._
+<!--
+// gotta find out why these cards don't work..
+::link{url="https://x.com/mite_404"}
+::x{url="hhttps://x.com/mite_404"}
+-->
 
-Check posts for details and view source on [GitHub](https://github.com/the3ash/astro-chiri).
+Sonic Inspriation:
+
+::spotify{url="https://open.spotify.com/track/6MqBw0PbsgNiGf1amzt3dZ?si=3605e52b217a403f"}
