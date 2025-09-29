@@ -1,0 +1,36 @@
+---
+title: 'Week 01'
+pubDate: '2025-09-27'
+---
+
+# _"The Mountain and the Map: Week One Revelations"_
+
+On Monday I packed up my gear, my existing JavaScript, Python and a small bit of Typescript knowledge and started off on the trail that leads to the bottom of the mountain.
+
+It’s been a long time since I tried to learn something with a very minimal amount of pre-existing knowledge – maybe even not since college, 19 years ago. I feel like I encountered the visibility paradox early on on Monday & Tuesday. The more I realized I didn’t know as much as I thought I did, the larger the mountain becomes. “When will I even see the other side of it?” I worried to myself. But as the week went on and I had some wins (standing up my backend server quicker than I thought it’d take me and doing it while using a pkg I’m unfamiliar with, Vite-Express) the more I realized that I actually do know some things, learning is fun, being challenged is exhilarating and the knowledge gained is sometimes more powerful than the end result.
+
+I enjoyed gaining a deeper understanding of the separation of concerns and building pure functions. I was able to take the final steps into understanding the state as a concept rather than something that a React hook can output. An important lesson that was unclear up until that point was: Rendering state isn’t necessarily the same as the state that your program is in.
+
+_What did I gain this week then?_
+
+I started to feel like I was thinking like an engineer rather than thinking “learning the syntax of TypeScript or learning how to use React hooks” was of greater importance. The problem solving, sketching out your mental model and testing it against what your building is the win.
+
+## My Week 01 Project
+
+::github{repo="mite404/fr-tic-tac-toe"}
+
+### This Week's Work Song
+
+::spotify{url="https://open.spotify.com/track/401zNdtFjGxRcwaAeS1fes?si=89fd6bae23f8452b"}
+
+#### Bonus
+
+::spotify{url="https://open.spotify.com/track/3EHXjWB20eINe1FVTZzKny?si=93e35fad3f754cdf"}
+
+##### Highlight -- Didn't realize how amazingly fast Bun is even compared to Pnpm
+
+::x{url="https://x.com/mite_404/status/1972119061250400541"}
+
+##### Some Audio Inspiration
+
+::x{url="https://x.com/BristowEwan/status/1967148099799040155"}
