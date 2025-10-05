@@ -11,7 +11,7 @@ It’s been a long time since I tried to learn something with a very minimal amo
 
 I enjoyed gaining a deeper understanding of the separation of concerns and building pure functions. I was able to take the final steps into understanding the state as a concept rather than something that a React hook can output. An important lesson that was unclear up until that point was: Rendering state isn’t necessarily the same as the state that your program is in.
 
-_What did I gain this week then?_
+_What knowledge did I gain this week then?_
 
 I started to feel like I was thinking like an engineer rather than thinking about _“learning the syntax of TypeScript"_ or _"learning how to use React hooks”_ was of greater importance. Learning how problem solving, sketching out your mental model, then testing it against what your building _was_ the win.
 
@@ -23,7 +23,7 @@ I started to feel like I was thinking like an engineer rather than thinking abou
 
 ::spotify{url="https://open.spotify.com/track/401zNdtFjGxRcwaAeS1fes?si=89fd6bae23f8452b"}
 
-#### Bonus
+#### B Side
 
 ::spotify{url="https://open.spotify.com/track/3EHXjWB20eINe1FVTZzKny?si=93e35fad3f754cdf"}
 
