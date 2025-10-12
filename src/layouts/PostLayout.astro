@@ -28,30 +28,28 @@ const ogImage = `/open-graph/${postSlug}.png`
 <BaseLayout
   title={`${title} · ${themeConfig.site.title}`}
   description={themeConfig.site.description}
-  type='post'>
+  type="post"
+>
   <BaseHead
     title={`${title} · ${themeConfig.site.title}`}
     description={themeConfig.site.description}
     ogImage={ogImage}
-    slot='head'
+    slot="head"
   />
-  <div class='post-container'>
+  <div class="post-container">
     <main>
-      <div class='prose'>
+      <div class="prose">
         <GradientMask />
         <BackButton />
         {themeConfig.post.toc && <TableOfContents toc={toc} />}
-        <div class='title'>
+        <div class="title">
           <h1>{title}</h1>
-          <div class='date'>
-            <FormattedDate
-              date={pubDate}
-              context='post'
-            />
+          <div class="date">
+            <FormattedDate date={pubDate} context="post" />
             {
               themeConfig.post.readingTime && readingTime && (
-                <span class='reading-time'>
-                  <span class='separator'>·</span>
+                <span class="reading-time">
+                  <span class="separator">·</span>
                   {readingTime.text}
                 </span>
               )
