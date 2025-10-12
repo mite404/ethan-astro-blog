@@ -19,23 +19,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is an Astro-based blog using the "Chiri" theme with the following key characteristics:
 
 ### Framework Stack
+
 - **Astro 5.x** - Main framework with SSG/SSR capabilities
 - **TypeScript** - Strict configuration with path aliases (`@/*` → `src/*`)
 - **MDX + Markdown** - Content system with custom remark/rehype plugins
 - **CSS** - Custom styling with CSS variables for theming
 
 ### Content System
+
 - Blog posts in `src/content/posts/` (`.md` and `.mdx` files)
 - About page in `src/content/about/about.md`
 - Content collections defined in `src/content.config.ts` with Zod schema validation
 - Frontmatter schema: `title` (string), `pubDate` (date), `image` (optional string)
 
 ### Configuration
+
 - Main theme config in `src/config.ts` controls layout, features, and behavior
 - Key toggleable features: theme toggle, reading time, TOC, image viewer, copy code, link cards
 - Adapter configuration dynamically toggled based on `linkCard` setting via prebuild script
 
 ### Custom Plugins
+
 - `remark-embedded-media.mjs` - Media embedding
 - `remark-reading-time.mjs` - Reading time calculation
 - `remark-toc.mjs` - Table of contents generation
@@ -44,12 +48,14 @@ This is an Astro-based blog using the "Chiri" theme with the following key chara
 - `rehype-copy-code.mjs` - Code copy functionality
 
 ### Layout Structure
+
 - `BaseLayout.astro` - Root layout with theme management and transitions
 - `IndexLayout.astro` - Homepage layout
 - `PostLayout.astro` - Blog post layout
 - Components organized in `components/ui/`, `components/layout/`, `components/widgets/`
 
 ### Dynamic Features
+
 - Conditional adapter loading (Netlify adapter enabled/disabled based on linkCard config)
 - API proxy at `/api/proxy.ts` for link card functionality
 - Theme switching with system preference detection
@@ -57,6 +63,7 @@ This is an Astro-based blog using the "Chiri" theme with the following key chara
 - OpenGraph image generation
 
 ### Build Process
+
 - Prebuild script (`scripts/toggle-proxy.ts`) automatically enables/disables proxy and adapter based on `linkCard` setting in config
 - Uses `@playform/inline` for CSS inlining (excludes KaTeX)
 - Generates sitemap and RSS feeds

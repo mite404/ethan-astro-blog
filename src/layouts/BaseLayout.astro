@@ -21,25 +21,24 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
   <head>
     <ThemeManager />
     {fadeAnimation && <ClientRouter />}
-    <slot name='head' />
+    <slot name="head" />
   </head>
   <body
     data-centered={themeConfig.general.centeredLayout}
     style={`
       max-width: ${finalWidth};
       ${shouldUseCustomWidth ? `--content-width: ${widthValue}rem;` : ''}
-    `}>
+    `}
+  >
     <FaviconThemeSwitcher />
 
     {
       fadeAnimation ? (
-        <TransitionWrapper
-          type={type}
-          class='layout-wrapper'>
+        <TransitionWrapper type={type} class="layout-wrapper">
           <slot />
         </TransitionWrapper>
       ) : (
-        <div class='layout-wrapper'>
+        <div class="layout-wrapper">
           <slot />
         </div>
       )
