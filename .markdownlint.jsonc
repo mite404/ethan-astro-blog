@@ -1,0 +1,8 @@
+{
+  "default": true, // Enable all rules by default
+  "MD013": {
+    // Customize rule MD013 (line length)
+    "line_length": 100
+  },
+  "MD001": false // Disable rule MD001 (header levels should only increment by one level at a time)
+}
