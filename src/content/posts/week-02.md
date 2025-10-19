@@ -35,11 +35,11 @@ A good sensei doesn't ask if you've won. They ask:
 
 ### This Week's Theme Song
 
-::spotify{url="https://open.spotify.com/track/7hzm68uGbxcvQY9FAtpk2s?si=cb8e9844ac8047ea"}
+::applemusic{url="https://music.apple.com/us/album/battlecry-feat-shing02/1721842998?i=1721842999"}
 ::youtube{url="https://www.youtube.com/watch?v=Eq6EYcpWB_c"}
 
 #### B Sides
 
-::spotify{url="https://open.spotify.com/track/6ri6ZQWxqIZgYd2RfsnKNa?si=3d4dcc7daab94356"}
-::spotify{url="https://open.spotify.com/track/4zpUzAK4st9jdmAoFXBCff?si=a27541d06c414433"}
-::spotify{url="https://open.spotify.com/track/1TFSSWCXIWP3lpzRJRaw5J?si=cd3cc7adc0494fe6"}
+::applemusic{url="https://music.apple.com/us/album/crust/1563057633?i=1563057819"}
+::applemusic{url="https://music.apple.com/us/album/pain-and-blood/1563057633?i=1563057821"}
+::applemusic{url="https://music.apple.com/us/album/whar/300716807?i=300716886"}

@@ -26,8 +26,8 @@ a program designed to preserve itself.”
 
 ### This Week's Theme Song
 
-::spotify{url="https://open.spotify.com/track/3kmfkijfcDWo1OpsVOvpaJ?si=e84c2057946a4e8b"}
+::applemusic{url="https://music.apple.com/us/album/view-from-above/1438158735?i=1438158741"}
 
 #### B Sides
 
-::spotify{url="https://open.spotify.com/track/5yGfwpmkjNYwVbABvjvy2M?si=929cf098d46849d2"}
+::applemusic{url="https://music.apple.com/us/album/obsession-feat-jenna-g-2020-remaster/1519346791?i=1519347041"}
