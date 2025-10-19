@@ -24,14 +24,21 @@ littered with disappointments. The fluency I'd worked so hard to build was slipp
 
 Needless to say this week I took a leave from my part-time job. I hadn't had a day off in four weeks.
 My job was also pulling some bullshit with the scheduling so, to be honest
-all in all it was a WIN-WIN for me.
+all in all it's a WIN-WIN for me.
 
 ## _What I Built Instead_
 
 > "You can't record music once every three to four years and think that's going to be enough" - Daniel Ek, Spotify CEO
 
 Daniel Ek sucks. His VC firm, Prima Materia, has been the primary investor in Helsing,
-an AI-powered military drones and battlefield analysis software maker.
+an AI-powered military drones and battlefield analysis software maker. The template
+I've been building my blog off of only supports rendering Spotify links using html
+templating directives for use in .md files. I don't want to use Spotify!
+So I looked at the Spotify & YouTube directive patterns and tried to make a custom Apple Music one.
+I figured it out with a llittle help from Claude, but all in all my intuition and
+my understanding of JavaScript and HTML paid off. I now have a working Apple Music Markdown template,
+something the package `remark-directive` didn't support!
+
 I'm glad I solved this problem, implemented the feature and can end my support of Spotify & Daniel Ek.
 Sure, I didn't pass every drill this week. But I practiced, took some actionable steps to
 increase my available study time and built something that matters to me.
