@@ -1,3 +1,4 @@
+// import { node } from 'globals'
 import { visit } from 'unist-util-visit'
 
 /**
@@ -207,10 +208,69 @@ const embedHandlers = {
     const isSquare = category === 'music' || category === 'album' || category === 'podcast'
     const skeletonClass = isSquare ? 'music' : 'other'
 
-    return `<div class="neodb-card-container" data-url="${url}">
-  <div class="neodb-card neodb-loading ${skeletonClass}">
-  </div>
-</div>`
+    return `
+    <div class="neodb-card-container" data-url="${url}">
+    <div class="neodb-card neodb-loading ${skeletonClass}">
+    </div>
+    </div>
+  `
+  },
+
+  // Apple Music
+  // Template for creating custom directive handlers:
+  // 1. The handler name (e.g., 'applemusic') becomes the directive name used in markdown: ::applemusic{url="..."}
+  // 2. The 'node' parameter contains: node.attributes (key-value pairs from {url="..."}), node.name (directive name), node.children (content inside [])
+  // 3. Extract required data from node.attributes - use ?? '' for safe defaults
+  // 4. Validate the input - return false to skip transformation if invalid
+  // 5. Transform/process the input (e.g., convert regular URLs to embed URLs)
+  // 6. Return an HTML string that will replace the directive in the final output
+  // 7. IMPORTANT: Must be inside the embedHandlers object to be recognized by the plugin
+  applemusic: (node) => {
+    // Extract attributes from the directive (e.g., ::applemusic{url="https://..."})
+    const url = node.attributes?.url ?? ''
+
+    if (!url) {
+      return false
+    }
+
+    // Validate URL format - must be an Apple Music URL
+    if (!/^https:\/\/(music|embed\.music)\.apple\.com\//.test(url)) {
+      return false
+    }
+
+    // Transform the URL - Example: https://music.apple.com/us/album/... → https://embed.music.apple.com/us/album/...
+    let embedUrl = url.replace('music.apple.com/', 'embed.music.apple.com/')
+
+    // Add required query parameters for Apple Music embeds if not present
+    if (!embedUrl.includes('itscg=')) {
+      embedUrl +=
+        (embedUrl.includes('?') ? '&' : '?') +
+        'itscg=30200&itsct=music_box_player&ls=1&app=music&theme=auto'
+    }
+
+    let height = '175'
+    
+    // '?i=' means a single track in Apple Music land...
+    if (url.includes('?i=')) {
+      height = '175'
+    } else if (url.includes('/album/') || url.includes('/playlist/')) {
+      height = '450'
+    }
+
+    return `
+    <figure>
+      <iframe
+        style="border-radius:12px"
+        src="${embedUrl}"
+        width="100%"
+        height="${height}"
+        frameBorder="0"
+        allow="autoplay *; encrypted-media *; clipboard-write"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+        loading="lazy"
+      ></iframe>
+    </figure>
+    `
   }
 }
 
