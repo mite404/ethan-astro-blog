@@ -19,13 +19,13 @@ I started to feel like I was thinking like an engineer rather than thinking abou
 
 ::github{repo="mite404/fr-tic-tac-toe"}
 
-### This Week's Work Song
+### This Week's Theme Song
 
-::spotify{url="https://open.spotify.com/track/401zNdtFjGxRcwaAeS1fes?si=89fd6bae23f8452b"}
+::applemusic{url="https://music.apple.com/us/album/king-cobra/1484994181?i=1484994537"}
 
-#### B Side
+#### B Sides
 
-::spotify{url="https://open.spotify.com/track/3EHXjWB20eINe1FVTZzKny?si=93e35fad3f754cdf"}
+::applemusic{url="https://music.apple.com/us/album/my-girl/1484994181?i=1484994538"}
 
 ##### Highlight -- Didn't realize how amazingly fast Bun is even compared to Pnpm
 
