@@ -31,7 +31,7 @@ export function formatDate(date: Date, format?: string): string {
 
   const year = date.getFullYear()
   const month = date.getMonth() + 1
-  const day = date.getDate()
+  const day = date.getUTCDate()
   const monthName = MONTHS_EN[date.getMonth()]
 
   const pad = (num: number) => String(num).padStart(2, '0')
