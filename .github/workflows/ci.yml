@@ -27,24 +27,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 'latest'
-          cache: 'pnpm'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --prefer-offline
+        run: bun install --frozen-lockfile
 
       - name: Check formatting (if prettier is available)
         run: |
-          if [ -f "pnpm-lock.yaml" ] && pnpm list prettier &>/dev/null; then
-            pnpm exec prettier --check .
+          if [ -f "bun.lockb" ] && bun list prettier &>/dev/null; then
+            bunx prettier --check .
           else
             echo "Prettier not configured, skipping format check"
           fi
@@ -52,18 +44,18 @@ jobs:
 
       - name: Run ESLint (if available)
         run: |
-          if [ -f "pnpm-lock.yaml" ] && pnpm list eslint &>/dev/null; then
-            pnpm exec eslint .
+          if [ -f "bun.lockb" ] && bun list eslint &>/dev/null; then
+            bunx eslint .
           else
             echo "ESLint not configured, skipping lint check"
           fi
         continue-on-error: true
 
       - name: Run linting
-        run: pnpm lint
+        run: bun run lint
 
       - name: Build project
-        run: pnpm build
+        run: bun run build
 
   auto-merge:
     name: Auto Merge
