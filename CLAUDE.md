@@ -8,9 +8,9 @@ This is a personal blog built with Astro 5, based on the Chiri theme. It's a sta
 
 **Key technologies:**
 - Astro 5 with MDX support
-- TypeScript
+- TypeScript (strict mode)
 - Deployed on Netlify (using @astrojs/netlify adapter)
-- Package manager: pnpm
+- Package manager: pnpm (with bun as task runner)
 
 ## Development Commands
 
@@ -36,6 +36,19 @@ pnpm format:check     # Check code formatting
 ```bash
 pnpm update-theme     # Update to latest theme version
 ```
+
+## Project Structure
+
+The main source code is organized as follows:
+- **src/content/** - Markdown/MDX content files and collection schemas
+- **src/pages/** - Astro page and API route files (dynamic routing with `[...slug].astro`)
+- **src/layouts/** - Page layout components (BaseLayout, IndexLayout, PostLayout)
+- **src/components/** - Reusable UI and feature components
+- **src/styles/** - Global and component styles
+- **src/utils/** - Utility functions and helpers
+- **src/types/** - TypeScript type definitions
+- **src/plugins/** - Custom Remark/Rehype plugins for markdown processing
+- **scripts/** - Build and utility scripts (toggle-proxy.ts, new-post.ts, update-theme.ts)
 
 ## Architecture
 
@@ -106,10 +119,25 @@ Complex feature components for homepage sections
 ### Example Components (`src/components/examples/`)
 Demonstration components (Callout, Tag) showing MDX capabilities
 
+## TypeScript Configuration
+
+- Extends Astro's strict TypeScript config with `strictNullChecks: true`
+- Path alias `@/` resolves to `src/` directory
+- All files (except dist) are included in TypeScript checking
+
+## Code Quality Standards
+
+**ESLint Rules:**
+- Console statements are warned (only `console.warn` and `console.error` allowed)
+- Unused variables warned (except those prefixed with `_`)
+- `any` types warned but not forbidden
+- Prettier is integrated for code formatting
+
 ## Important Notes
 
 - **Link cards require an adapter**: The `linkCard` feature needs a server adapter (Netlify, Vercel, etc.). Set `linkCard: false` in config.ts if deploying as static HTML
 - **Math support**: Uses KaTeX for math rendering via remark-math and rehype-katex
-- **Image optimization**: Uses Sharp for image processing
+- **Image optimization**: Uses Sharp for image processing with CSS inlining via @playform/inline
 - **Theme toggle**: Can be enabled/disabled in config.ts (defaults to system theme)
 - **Date format**: Highly configurable via config.ts (format, separator, position)
+- **Custom directives**: Supports remark-directive for custom markdown syntax extensions
