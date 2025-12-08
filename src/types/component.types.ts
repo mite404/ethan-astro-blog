@@ -16,7 +16,7 @@ export interface PostLayoutProps {
 
 // Transition props interface
 export interface TransitionProps {
-  type: 'post' | 'page'
+  type: 'post' | 'page' | 'portfolio'
   class?: string
 }
 
