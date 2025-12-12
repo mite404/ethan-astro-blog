@@ -16,6 +16,7 @@ import { imageConfig } from './src/utils/image-config'
 import path from 'path'
 import netlify from '@astrojs/netlify'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@astrojs/react'
 
 export default defineConfig({
   adapter: netlify(), // Set adapter for deployment, or set `linkCard` to `false` in `src/config.ts`
@@ -35,6 +36,7 @@ export default defineConfig({
     rehypePlugins: [rehypeKatex, rehypeCleanup, rehypeImageProcessor, rehypeCopyCode]
   },
   integrations: [
+    react(),
     playformInline({
       Exclude: [(file) => file.toLowerCase().includes('katex')]
     }),
