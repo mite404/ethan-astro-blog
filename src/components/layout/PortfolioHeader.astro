@@ -8,8 +8,8 @@ import { Image } from 'astro:assets'
   <!-- Top row with asterix icon and buttons -->
   <nav class="relative flex items-start justify-between px-0 pt-0">
     <!-- Asterix icon -->
-    <div class="w-5 h-5">
-      <Image src={asterix} alt="Asterix icon" width={20} height={20} />
+    <div class="w-[25px] h-[25px]">
+      <Image src={asterix} alt="Asterix icon" width={40} height={40} />
     </div>
 
     <!-- Button container -->
@@ -18,23 +18,21 @@ import { Image } from 'astro:assets'
         href="https://github.com/mite404"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-github group relative flex items-center justify-center w-[61px] h-[30px] rounded-[40px]"
+        class="btn-github group relative flex items-center justify-center w-[70px] h-[40px] rounded-[40px]"
       >
-        <span class="text-[13px] font-normal leading-[0.91em] text-black font-guisol">
-          GITHUB
-        </span>
+        <span class="text-[13px] font-normal leading-none text-black font-guisol"> GITHUB </span>
       </a>
       <a
         href="/blog"
-        class="btn-blog group relative flex items-center justify-center w-[61px] h-[30px] rounded-[40px]"
+        class="btn-blog group relative flex items-center justify-center w-[61px] h-[40px] rounded-[40px]"
       >
-        <span class="text-[13px] font-normal leading-[0.91em] text-black font-guisol"> BLOG </span>
+        <span class="text-[13px] font-normal leading-none text-black font-guisol"> BLOG </span>
       </a>
     </div>
   </nav>
 
   <!-- Name text with gradient dither background -->
-  <div class="relative mt-[30px]">
+  <div class="relative">
     <!-- Gradient dither background -->
     <div class="h-[51px]" style="max-width: 797px;">
       <Image
@@ -57,24 +55,7 @@ import { Image } from 'astro:assets'
 </header>
 
 <style>
-  /* Ensure Guisol font is loaded for buttons */
-  @font-face {
-    font-family: 'Guisol';
-    src: url('/fonts/guisol.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* Ensure Fit font is loaded for name */
-  @font-face {
-    font-family: 'Fit';
-    src: url('/fonts/fit.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
+  /* Font utility classes - fonts already loaded in global fonts.css */
   .font-guisol {
     font-family: 'Guisol', sans-serif;
   }
@@ -87,21 +68,30 @@ import { Image } from 'astro:assets'
     color: #7fee40;
   }
 
+  /* Button styles matching Figma design */
   .btn-github {
     background-color: #d9d9d9;
-    transition: background-color 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
   }
 
   .btn-github:hover {
     background-color: #c0c0c0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   .btn-blog {
     background-color: #7fee40;
-    transition: background-color 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
   }
 
   .btn-blog:hover {
     background-color: #6dd835;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(127, 238, 64, 0.3);
   }
 </style>

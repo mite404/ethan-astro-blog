@@ -2,20 +2,180 @@
 import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
 import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
-
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
-  <!-- projects row container -->
-  <div class="flex flex-wrap gap-4">
-    <!-- projects div -->
-    <div class="flex-1 min-w-80 border rounded-lg p-6 shadow-sm">
-      {projects.map((project) => (
-        <h2>{project.title}</h2>
-        <p>{project.description}</p>
-        <p>{project.link}</p>
-        <p>{project.details}</p>
-      ))}
+  <!-- PROJECTS Section -->
+  <section class="mb-12">
+    <h2 class="section-title mb-6">PROJECTS:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {
+        projects.map((project) => (
+          <div class="project-card">
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-description">{project.description}</p>
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+              View Project →
+            </a>
+            <p class="project-details">{project.details}</p>
+          </div>
+        ))
+      }
     </div>
-  </div>
+  </section>
+
+  <!-- BLOG Section -->
+  <section class="mb-12">
+    <h2 class="section-title mb-6">BLOG:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 1</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More →</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 2</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More →</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 3</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More →</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 4</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More →</a>
+      </div>
+    </div>
+  </section>
 </PortfolioLayout>
+
+<style>
+  /* Section styling */
+  .section-title {
+    font-family: 'Fit', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #7fee40;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Project card styling */
+  .project-card {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: #7fee40;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
+  }
+
+  .project-title {
+    font-family: 'Guisol', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .project-link {
+    display: inline-block;
+    font-family: 'Guisol', sans-serif;
+    font-size: 0.875rem;
+    color: #7fee40;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+  }
+
+  .project-link:hover {
+    color: #6dd835;
+  }
+
+  .project-details {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Blog card styling */
+  .blog-card {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .blog-card:hover {
+    border-color: #7fee40;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
+  }
+
+  .blog-title {
+    font-family: 'Guisol', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .blog-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .blog-link {
+    display: inline-block;
+    font-family: 'Guisol', sans-serif;
+    font-size: 0.875rem;
+    color: #7fee40;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .blog-link:hover {
+    color: #6dd835;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -22,25 +22,28 @@ const { title, description } = Astro.props
 </BaseLayout>
 
 <style is:global>
-  /* Portfolio-specific body styles */
+  /* Portfolio-specific body styles - dark theme matching Figma design */
   body[data-layout-type='portfolio'] {
     padding: 0;
     max-width: none;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    background-color: var(--bg) !important;
+    margin: 0 auto;
+    background-color: #282828 !important;
+  }
+
+  html:has(body[data-layout-type='portfolio']) {
+    background-color: #282828 !important;
   }
 
   .portfolio-layout {
-    /* Fixed-width container matching Figma design */
-    max-width: 792px;
+    /* Fixed-width container - 1280px max, centered */
+    max-width: 1280px;
     width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    background-color: var(--bg) !important;
+    margin: 0 auto;
+    background-color: #282828 !important;
   }
 
   .portfolio-main {
@@ -49,8 +52,15 @@ const { title, description } = Astro.props
     width: 100%;
   }
 
-  /* On mobile, allow full width */
-  @media (max-width: 968px) {
+  /* At 2xl breakpoint (1536px), lock to 1280px and center */
+  @media (min-width: 1536px) {
+    .portfolio-layout {
+      max-width: 1280px;
+    }
+  }
+
+  /* On mobile/tablet, allow full width */
+  @media (max-width: 1535px) {
     .portfolio-layout {
       max-width: 100%;
       padding: 1rem;
