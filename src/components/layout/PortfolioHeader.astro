@@ -4,51 +4,53 @@ import gradDither from '@/assets/portfolio/grad-dither-group.svg'
 import { Image } from 'astro:assets'
 ---
 
-<header class="relative w-full">
+<header class='relative w-full'>
   <!-- Top row with asterix icon and buttons -->
-  <nav class="relative flex items-start justify-between px-0 pt-0">
+  <nav class='relative flex items-start justify-between px-0 pt-0'>
     <!-- Asterix icon -->
-    <div class="w-[25px] h-[25px]">
-      <Image src={asterix} alt="Asterix icon" width={40} height={40} />
+    <div class='w-[25px] h-[25px]'>
+      <Image
+        src={asterix}
+        alt='Asterix icon'
+        width={40}
+        height={40}
+      />
     </div>
 
     <!-- Button container -->
-    <div class="flex gap-[9px]">
+    <div class='flex gap-[9px]'>
       <a
-        href="https://github.com/mite404"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-github group relative flex items-center justify-center w-[70px] h-[40px] rounded-[40px]"
-      >
-        <span class="text-[13px] font-normal leading-none text-black font-guisol"> GITHUB </span>
+        href='https://github.com/mite404'
+        target='_blank'
+        rel='noopener noreferrer'
+        class='btn-github group relative flex items-center justify-center w-[70px] h-[40px] rounded-[40px]'>
+        <span class='text-[13px] font-normal leading-none text-black font-guisol'> GITHUB </span>
       </a>
       <a
-        href="/blog"
-        class="btn-blog group relative flex items-center justify-center w-[61px] h-[40px] rounded-[40px]"
-      >
-        <span class="text-[13px] font-normal leading-none text-black font-guisol"> BLOG </span>
+        href='/blog'
+        class='btn-blog group relative flex items-center justify-center w-[61px] h-[40px] rounded-[40px]'>
+        <span class='text-[13px] font-normal leading-none text-black font-guisol'> BLOG </span>
       </a>
     </div>
   </nav>
 
   <!-- Name text with gradient dither background -->
-  <div class="relative">
+  <div class='relative'>
     <!-- Gradient dither background -->
-    <div class="h-[51px]" style="max-width: 797px;">
+    <div class='h-[51px] w-full'>
       <Image
         src={gradDither}
-        alt=""
+        alt=''
         width={797}
         height={51}
-        class="h-full"
-        style="width: 100%; max-width: 797px; object-fit: cover;"
+        class='h-full w-full'
+        style='object-fit: cover;'
       />
     </div>
 
     <!-- Name text - positioned absolutely to overlap the gradient -->
     <h1
-      class="absolute top-[20px] left-5 text-[70px] font-normal leading-[1em] font-fit neon-green"
-    >
+      class='absolute top-[20px] left-5 text-[70px] font-normal leading-[1em] font-fit neon-green'>
       Ethan Anderson
     </h1>
   </div>
