@@ -4,20 +4,26 @@ import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 ---
 
-<PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
+<PortfolioLayout
+  title={themeConfig.site.title}
+  description={themeConfig.site.description}>
   <!-- PROJECTS Section -->
-  <section class="mb-12">
-    <h2 class="section-title mb-6">PROJECTS:</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <section class='mb-12 pl-5'>
+    <h2 class='section-title mb-6'>PROJECTS:</h2>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
       {
         projects.map((project) => (
-          <div class="project-card">
-            <h3 class="project-title">{project.title}</h3>
-            <p class="project-description">{project.description}</p>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+          <div class='project-card'>
+            <h3 class='project-title'>{project.title}</h3>
+            <p class='project-description'>{project.description}</p>
+            <a
+              href={project.link}
+              target='_blank'
+              rel='noopener noreferrer'
+              class='project-link'>
               View Project →
             </a>
-            <p class="project-details">{project.details}</p>
+            <p class='project-details'>{project.details}</p>
           </div>
         ))
       }
@@ -25,28 +31,44 @@ import { themeConfig } from '@/config'
   </section>
 
   <!-- BLOG Section -->
-  <section class="mb-12">
-    <h2 class="section-title mb-6">BLOG:</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 1</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+  <section class='mb-12 pl-5'>
+    <h2 class='section-title mb-6'>BLOG:</h2>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+      <div class='blog-card'>
+        <h3 class='blog-title'>Recent Post 1</h3>
+        <p class='blog-description'>A brief description of the blog post content goes here...</p>
+        <a
+          href='/blog'
+          class='blog-link'
+          >Read More →</a
+        >
       </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 2</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+      <div class='blog-card'>
+        <h3 class='blog-title'>Recent Post 2</h3>
+        <p class='blog-description'>A brief description of the blog post content goes here...</p>
+        <a
+          href='/blog'
+          class='blog-link'
+          >Read More →</a
+        >
       </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 3</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+      <div class='blog-card'>
+        <h3 class='blog-title'>Recent Post 3</h3>
+        <p class='blog-description'>A brief description of the blog post content goes here...</p>
+        <a
+          href='/blog'
+          class='blog-link'
+          >Read More →</a
+        >
       </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 4</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+      <div class='blog-card'>
+        <h3 class='blog-title'>Recent Post 4</h3>
+        <p class='blog-description'>A brief description of the blog post content goes here...</p>
+        <a
+          href='/blog'
+          class='blog-link'
+          >Read More →</a
+        >
       </div>
     </div>
   </section>
@@ -55,12 +77,16 @@ import { themeConfig } from '@/config'
 <style>
   /* Section styling */
   .section-title {
-    font-family: 'Fit', sans-serif;
-    font-size: 2rem;
+    font-family: 'Guisol', sans-serif;
+    font-size: 100px;
     font-weight: 400;
-    color: #7fee40;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  section.mb-12 {
+    border: 1px solid rgba(255, 255, 255, 1);
   }
 
   /* Project card styling */
@@ -80,7 +106,7 @@ import { themeConfig } from '@/config'
 
   .project-title {
     font-family: 'Guisol', sans-serif;
-    font-size: 1.25rem;
+    font-size: 30px;
     font-weight: 400;
     color: #ffffff;
     margin-bottom: 0.75rem;
@@ -88,8 +114,8 @@ import { themeConfig } from '@/config'
   }
 
   .project-description {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
+    font-family: 'Aptos Narrow', sans-serif;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     margin-bottom: 1rem;
@@ -134,7 +160,7 @@ import { themeConfig } from '@/config'
 
   .blog-title {
     font-family: 'Guisol', sans-serif;
-    font-size: 1.25rem;
+    font-size: 30px;
     font-weight: 400;
     color: #ffffff;
     margin-bottom: 0.75rem;
@@ -142,8 +168,8 @@ import { themeConfig } from '@/config'
   }
 
   .blog-description {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
+    font-family: 'Aptos Narrow', sans-serif;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     margin-bottom: 1rem;
