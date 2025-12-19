@@ -1,0 +1,29 @@
+---
+const tickerText = [
+  'TypeScript | React | Tailwind | PostgreSQL | Drizzle | BetterAuth | TypeScript | React | Tailwind | PostgreSQL | Drizzle | BetterAuth |'
+]
+---
+
+<div class="w-screen overflow-hidden bg-gray-900 py-4">
+  <div
+    class="animate-ticker whitespace-nowrap text-white text-xl font-semibold h-[1.5em]"
+    style="animation-delay: -10s;"
+  >
+    {tickerText[0]}
+  </div>
+</div>
+
+<style>
+  @keyframes ticker {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-ticker {
+    animation: ticker 20s linear infinite;
+  }
+</style>
