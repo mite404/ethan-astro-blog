@@ -123,13 +123,17 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   letter-spacing: var(--spacing-m);
-  padding: 6rem 1.5rem 1.5rem 1.5rem;
   overscroll-behavior-y: contain;
   transition: background-color 0.2s ease-out;
 }
 
+/* Only apply blog-specific padding when NOT on portfolio layout */
+body:not([data-layout-type='portfolio']) {
+  padding: 6rem 1.5rem 1.5rem 1.5rem;
+}
+
 @media (max-width: 768px) {
-  body {
+  body:not([data-layout-type='portfolio']) {
     padding: 4rem 1.35rem 1.35rem 1.35rem;
   }
 }
