@@ -1,4 +1,4 @@
-@import './fonts.css';
+@import 'tailwindcss/base' @import 'tailwindcss/components' @import './fonts.css';
 @import './post.css';
 
 :root {
