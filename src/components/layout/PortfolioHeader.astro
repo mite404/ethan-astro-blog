@@ -1,30 +1,100 @@
 ---
-import { themeConfig } from '@/config'
-import ThemeToggle from '@/components/ui/ThemeToggle.astro'
+import asterix from '@/assets/portfolio/asterix.svg'
+import gradDither from '@/assets/portfolio/grad-dither-group.svg'
+import { Image } from 'astro:assets'
 ---
 
-<header>
-  <nav>
-    <div className="">
-      <button class="btn btn-primary" onclick="alert('Hello, World!')"> GITHUB </button>
-      <button class="btn btn-primary" onclick="alert('Hello, World!')"> BLOG </button>
+<header class="relative w-full">
+  <!-- Top row with asterix icon and buttons -->
+  <nav class="relative flex items-start justify-between px-0 pt-0">
+    <!-- Asterix icon -->
+    <div class="w-5 h-5">
+      <Image src={asterix} alt="Asterix icon" width={20} height={20} />
+    </div>
+
+    <!-- Button container -->
+    <div class="flex gap-[9px]">
+      <a
+        href="https://github.com/mite404"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-github group relative flex items-center justify-center w-[61px] h-[30px] rounded-[40px]"
+      >
+        <span class="text-[13px] font-normal leading-[0.91em] text-black font-guisol">
+          GITHUB
+        </span>
+      </a>
+      <a
+        href="/blog"
+        class="btn-blog group relative flex items-center justify-center w-[61px] h-[30px] rounded-[40px]"
+      >
+        <span class="text-[13px] font-normal leading-[0.91em] text-black font-guisol"> BLOG </span>
+      </a>
     </div>
   </nav>
+
+  <!-- Name text with gradient dither background -->
+  <div class="relative mt-[30px]">
+    <!-- Gradient dither background -->
+    <div class="w-full h-[51px]">
+      <Image src={gradDither} alt="" width={797} height={51} class="w-full h-full object-cover" />
+    </div>
+
+    <!-- Name text - positioned absolutely to overlap the gradient -->
+    <h1
+      class="absolute top-[20px] left-5 text-[70px] font-normal leading-[1em] font-fit neon-green"
+    >
+      Ethan Anderson
+    </h1>
+  </div>
 </header>
+
 <style>
-  header {
-    margin: 0;
+  /* Ensure Guisol font is loaded for buttons */
+  @font-face {
+    font-family: 'Guisol';
+    src: url('/fonts/guisol.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
   }
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+  /* Ensure Fit font is loaded for name */
+  @font-face {
+    font-family: 'Fit';
+    src: url('/fonts/fit.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
   }
-  header a {
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    text-decoration: none;
-    min-width: 3rem;
-    display: inline-block;
+
+  .font-guisol {
+    font-family: 'Guisol', sans-serif;
+  }
+
+  .font-fit {
+    font-family: 'Fit', sans-serif;
+  }
+
+  .neon-green {
+    color: #7fee40;
+  }
+
+  .btn-github {
+    background-color: #d9d9d9;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-github:hover {
+    background-color: #c0c0c0;
+  }
+
+  .btn-blog {
+    background-color: #7fee40;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-blog:hover {
+    background-color: #6dd835;
   }
 </style>

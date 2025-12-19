@@ -9,6 +9,7 @@ import type { LayoutProps } from '@/types'
 type Props = LayoutProps
 
 const { type = 'page' } = Astro.props
+const isPortfolio = type === 'portfolio'
 const language = themeConfig.site.language || 'en-US'
 const contentWidth = themeConfig.general.contentWidth
 const fadeAnimation = themeConfig.general.fadeAnimation
@@ -24,11 +25,14 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
     <slot name="head" />
   </head>
   <body
-    data-centered={themeConfig.general.centeredLayout}
-    style={`
+    data-centered={!isPortfolio && themeConfig.general.centeredLayout}
+    data-layout-type={type}
+    style={!isPortfolio
+      ? `
       max-width: ${finalWidth};
       ${shouldUseCustomWidth ? `--content-width: ${widthValue}rem;` : ''}
-    `}
+    `
+      : ''}
   >
     <FaviconThemeSwitcher />
 
