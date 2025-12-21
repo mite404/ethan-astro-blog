@@ -12,7 +12,9 @@ const { title, description } = Astro.props
 <BaseLayout title={title} description={description} type="portfolio">
   <div class="portfolio-layout">
     <PortfolioHeader />
-    <Ticker />
+    <div class="mt-8">
+      <Ticker />
+    </div>
     <main class="portfolio-main">
       <slot />
     </main>
@@ -27,7 +29,7 @@ const { title, description } = Astro.props
     margin: 0;
     display: flex;
     justify-content: center;
-    background-color: #000; /* or whatever your background color is */
+    background-color: var(--bg) !important;
   }
 
   .portfolio-layout {
@@ -38,6 +40,7 @@ const { title, description } = Astro.props
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
+    background-color: var(--bg) !important;
   }
 
   .portfolio-main {
@@ -54,4 +57,3 @@ const { title, description } = Astro.props
     }
   }
 </style>
-||||||| |||||||
