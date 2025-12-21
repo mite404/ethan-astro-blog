@@ -303,3 +303,4 @@ The portfolio page contains these sections in order:
 **URL**: https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1
 
 For detailed measurements and visual specifications, refer to the Figma design file.
+|||||||
