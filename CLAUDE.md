@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-**Last Updated**: 2025-12-11
+**Last Updated**: 2025-12-12
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -15,6 +15,18 @@ This is a hybrid portfolio + blog site built with Astro 5. The portfolio landing
 - TypeScript (strict mode)
 - Deployed on Netlify (using @astrojs/netlify adapter)
 - Package manager: pnpm (with bun as task runner)
+
+**Site Structure:**
+
+- `/` - Portfolio landing page (fixed 792px width, poster composition)
+- `/blog` - Blog section (responsive, Chiri theme)
+- Isolated styling systems using `data-layout-type` attributes
+
+**Documentation:**
+
+- `docs/SPEC.md` - Design specifications from Figma
+- `docs/IMPLEMENTATION.md` - Implementation status and roadmap
+- `debugging-notes/` - Debug session documentation
 
 **Site Structure:**
 
@@ -235,6 +247,12 @@ Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_` are ex
 - Name heading ("Ethan Anderson", 70px Fit font, #7FEE40)
 - Gradient dither background (797×51px SVG)
 
+**SVG Constraint:**
+
+- Gradient dither SVG constrained to `max-width: 797px` with inline styles
+- Prevents SVG from expanding beyond design specification
+- Uses `width: 100%; max-width: 797px; object-fit: cover;` pattern
+
 **Fonts:**
 
 - Uses @font-face to load Guisol (buttons) and Fit (name)
@@ -243,13 +261,16 @@ Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_` are ex
 
 ### Ticker.astro
 
-**Purpose:** Scrolling tech stack ticker with warning stripe background
+**Purpose:** Scrolling tech stack ticker with theme-aware styling
 
 **Implementation:**
 
 - Uses `inline-block` display for single-line text
 - CSS keyframe animation (20s linear infinite scroll)
 - Parent container: `overflow: hidden` to clip scrolling
+- Uses `w-full` (respects 792px parent container) instead of `w-screen`
+- Background: `var(--bg)` (matches page background color)
+- Text color: `var(--text-primary)` (theme-aware, responds to light/dark mode)
 
 ## Component Structure
 
@@ -297,7 +318,7 @@ Demonstration components (Callout, Tag) showing MDX capabilities
 
 - **Use `data-layout-type` attributes** - Set by BaseLayout, target with CSS selectors
 - **Conditional styling via `:not()`** - Blog styles exclude portfolio: `body:not([data-layout-type='portfolio'])`
-- **Avoid `!important`** - Use proper specificity and selectors instead
+- **Use `!important` sparingly** - Applied to portfolio background-color to override any competing CSS rules (Astro view transitions, etc.)
 
 ### Design System
 
