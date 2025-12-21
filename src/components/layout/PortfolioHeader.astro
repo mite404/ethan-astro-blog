@@ -36,15 +36,8 @@ import { Image } from 'astro:assets'
   <!-- Name text with gradient dither background -->
   <div class="relative mt-[30px]">
     <!-- Gradient dither background -->
-    <div class="h-[51px]" style="max-width: 797px;">
-      <Image
-        src={gradDither}
-        alt=""
-        width={797}
-        height={51}
-        class="h-full"
-        style="width: 100%; max-width: 797px; object-fit: cover;"
-      />
+    <div class="w-full h-[51px]">
+      <Image src={gradDither} alt="" width={797} height={51} class="w-full h-full object-cover" />
     </div>
 
     <!-- Name text - positioned absolutely to overlap the gradient -->
