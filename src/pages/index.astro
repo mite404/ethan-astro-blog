@@ -2,20 +2,158 @@
 import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
 import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
-
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
-  <!-- projects row container -->
-  <div class="flex flex-wrap gap-4">
-    <!-- projects div -->
-    <div class="flex-1 min-w-80 border rounded-lg p-6 shadow-sm">
-      {projects.map((project) => (
-        <h2>{project.title}</h2>
-        <p>{project.description}</p>
-        <p>{project.link}</p>
-        <p>{project.details}</p>
-      ))}
+  <!-- PROJECTS Section -->
+  <section class="mb-12 pl-5">
+    <h2 class="section-title">PROJECTS:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {
+        projects.map((project) => (
+          <div class="project-card">
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-description">{project.description}</p>
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub
+            </a>
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+              | Live
+            </a>
+            <p class="project-details">{project.details}</p>
+          </div>
+        ))
+      }
     </div>
-  </div>
+  </section>
+
+  <!-- BLOG Section -->
+  <section class="mb-12 pl-5">
+    <h2 class="section-title">BLOG:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 1</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More...</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 2</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More...</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 3</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More...</a>
+      </div>
+      <div class="blog-card">
+        <h3 class="blog-title">Recent Post 4</h3>
+        <p class="blog-description">A brief description of the blog post content goes here...</p>
+        <a href="/blog" class="blog-link">Read More...</a>
+      </div>
+    </div>
+  </section>
 </PortfolioLayout>
+
+<style>
+  /* Section styling */
+  .section-title {
+    font-family: 'Guisol', sans-serif;
+    font-size: 6.25rem;
+    font-weight: 400;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  section.mb-12 {
+    border: 1px solid rgba(255, 255, 255, 1);
+    padding-bottom: 1.5rem;
+  }
+
+  /* Project card styling */
+  .project-card {
+    /*padding: 1.5rem;*/
+  }
+
+  .project-title {
+    font-family: 'Guisol', sans-serif;
+    font-size: 1.875rem;
+    font-weight: 400;
+    color: #fefefe;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-description {
+    font-family: 'Aptos Narrow', sans-serif;
+    font-size: 0.813;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .project-link,
+  .blog-link {
+    display: inline-block;
+    font-family: 'Aptos-Narrow', sans-serif;
+    font-size: 0.813rem;
+    font-weight: 400;
+    color: #fefefe;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .project-link:hover,
+  .blog-link:hover {
+    color: #e071e3;
+  }
+
+  .project-details {
+    font-family: 'Aptos-Narrow', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Blog card styling */
+  .blog-card {
+    /*padding: 1.5rem;*/
+  }
+
+  .blog-title {
+    font-family: 'Guisol', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #fefefe;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .blog-description {
+    font-family: 'Aptos Narrow', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
