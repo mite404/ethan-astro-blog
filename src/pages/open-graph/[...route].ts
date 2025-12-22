@@ -17,15 +17,15 @@ export const { getStaticPaths, GET } = OGImageRoute({
   getImageOptions: (_path, page) => ({
     title: page.title,
     description: themeConfig.site.title,
-    logo: {
-      path: 'public/og/og-logo.png',
-      size: [80, 80]
-    },
+    // logo: {
+    //   path: 'public/og/og-logo.png',
+    //   size: [80, 80]
+    // },
     bgGradient: [[255, 255, 255]],
-    bgImage: {
-      path: 'public/og/og-bg.png',
-      fit: 'fill'
-    },
+    // bgImage: {
+    //   path: 'public/og/og-bg.png',
+    //   fit: 'fill'
+    // },
     padding: 64,
     font: {
       title: {
