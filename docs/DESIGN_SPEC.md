@@ -19,15 +19,15 @@ This document serves as the source of truth for the portfolio site design, extra
 
 ### Canvas Dimensions
 
-- **Width**: 792px
-- **Height**: 1224px
+- **Width**: 1280px
+- **Height**: 1985px
 - **Layout Type**: Fixed-width, centered composition (poster-style)
 
-The entire portfolio uses a narrow, fixed-width layout that stays centered in the viewport. When the browser width exceeds 792px, extra space appears on the sides rather than stretching the content.
+The entire portfolio uses a narrow, fixed-width layout that stays centered in the viewport. When the browser width exceeds 1280px, extra space appears on the sides rather than stretching the content.
 
 ### Responsive Behavior
 
-- **Desktop** (>968px): Fixed 792px width, centered
+- **Desktop** (>1280px): Fixed 1280px width, centered
 - **Mobile** (≤968px): Full width with responsive padding
 
 ---
@@ -37,8 +37,8 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 ### Primary Colors
 
 | Color Name | Hex Code  | Usage                     |
-| ---------- | --------- | ------------------------- |
-| Background | `#282828` | Main page background      |
+| ---------- | --------- | ------------------------- | --------- |
+| Background | `#282828` | Main page background      | #1c1c1c ? |
 | White      | `#FFFFFF` | Primary text, UI elements |
 | Neon Green | `#7FEE40` | Accent color, CTAs, name  |
 | Light Gray | `#D9D9D9` | GitHub button background  |
@@ -50,9 +50,10 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 
 ### Fonts
 
-- **Guisol**: Used for buttons and UI elements
+- **Guisol**: Used for buttons and UI elements and headers
 - **Fit**: Used for the name heading
-- **Iosevka Fixed**: Used for body text and descriptions
+- **Iosevka Fixed**: Used for body text
+- **Aptos Narrow**: Used for description text for cards
 
 ### Type Specifications
 
@@ -76,16 +77,24 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 #### Section Headers
 
 - **Font**: Guisol
-- **Size**: 45px
+- **Size**: 100px
 - **Weight**: 400 (Normal)
 - **Line Height**: 0.91em
 - **Color**: #FFFFFF (White)
 - **Examples**: "PROJECTS:", "BLOG:"
 
+#### Descriptions
+
+- **Font**: Aptos Narrow
+- **Size**: 12px
+- **Weight**: 400 (Normal)
+- **Line Height**: 1.25em
+- **Color**: #FFFFFF (White)
+
 #### Body Text / Descriptions
 
 - **Font**: Iosevka Fixed
-- **Size**: 25px
+- **Size**: 45px
 - **Weight**: 400 (Normal)
 - **Line Height**: 1.25em
 - **Color**: #FFFFFF (White)
@@ -98,7 +107,7 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 
 #### Layout
 
-- Full width of 792px canvas
+- Full width of 1280px canvas
 - Contains: Asterix icon (left), Buttons (right), Name + Gradient background
 
 #### Asterix Icon
@@ -110,22 +119,22 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 
 ##### GitHub Button
 
-- **Width**: 61px
-- **Height**: 30px
+- **Width**: 100px
+- **Height**: 50px
 - **Border Radius**: 40px
 - **Background**: #D9D9D9
 - **Hover Background**: #C0C0C0
-- **Text**: "GITHUB" (Guisol, 13px, Black)
+- **Text**: "GITHUB" (Guisol, 20px, Black)
 - **Link**: https://github.com/mite404
 
 ##### Blog Button
 
-- **Width**: 61px
-- **Height**: 30px
+- **Width**: 100px
+- **Height**: 50px
 - **Border Radius**: 40px
 - **Background**: #7FEE40 (Neon Green)
 - **Hover Background**: #6DD835
-- **Text**: "BLOG" (Guisol, 13px, Black)
+- **Text**: "BLOG" (Guisol, 20px, Black)
 - **Link**: /blog
 
 ##### Button Spacing
@@ -134,8 +143,8 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 
 #### Gradient Dither Background
 
-- **Width**: 797px (full width)
-- **Height**: 51px
+- **Width**: 1280px (full width)
+- **Height**: 78px
 - **Asset**: `grad-dither-group.svg`
 - **Position**: Behind name text
 
@@ -303,4 +312,3 @@ The portfolio page contains these sections in order:
 **URL**: https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1
 
 For detailed measurements and visual specifications, refer to the Figma design file.
-|||||||

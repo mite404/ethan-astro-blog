@@ -7,7 +7,7 @@ import { themeConfig } from '@/config'
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
   <!-- PROJECTS Section -->
   <section class="mb-12 pl-5">
-    <h2 class="section-title">PROJECTS:</h2>
+    <h2 class="section-title mb-6">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
         projects.map((project) => (
@@ -15,10 +15,7 @@ import { themeConfig } from '@/config'
             <h3 class="project-title">{project.title}</h3>
             <p class="project-description">{project.description}</p>
             <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
-              GitHub
-            </a>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
-              | Live
+              View Project →
             </a>
             <p class="project-details">{project.details}</p>
           </div>
@@ -27,39 +24,55 @@ import { themeConfig } from '@/config'
     </div>
   </section>
 
+  <section class="bio-top">
+    <p>
+      An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
+      where my professional background in video and audio production becomes a <span
+        class="highlight">technical advantage</span
+      >.
+    </p>
+  </section>
+
+  <section class="bio-btm">
+    <p>
+      Bringing 19 years of <span class="highlight">systems thinking and team leadership</span> within
+      entertainment for brands like VICE & BEYONCÉ to early-stage companies building creative tools.
+    </p>
+  </section>
+
   <!-- BLOG Section -->
   <section class="mb-12 pl-5">
-    <h2 class="section-title">BLOG:</h2>
+    <h2 class="section-title mb-6">BLOG:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 1</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
+        <a href="/blog" class="blog-link">Read More →</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 2</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
+        <a href="/blog" class="blog-link">Read More →</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 3</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
+        <a href="/blog" class="blog-link">Read More →</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 4</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
+        <a href="/blog" class="blog-link">Read More →</a>
       </div>
     </div>
   </section>
 </PortfolioLayout>
 
-<style>
+<style is:global>
   /* Section styling */
   .section-title {
     font-family: 'Guisol', sans-serif;
-    font-size: 6.25rem;
+    font-size: 100px;
     font-weight: 400;
     color: white;
     text-transform: uppercase;
@@ -68,50 +81,77 @@ import { themeConfig } from '@/config'
 
   section.mb-12 {
     border: 1px solid rgba(255, 255, 255, 1);
-    padding-bottom: 1.5rem;
+  }
+
+  .bio-top {
+    font-family: 'Iosevka', monospace;
+    font-size: 45px;
+    font-style: italic;
+    font-weight: 400;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .bio-btm {
+    font-family: 'Guisol', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .highlight {
+    color: #e071e3;
   }
 
   /* Project card styling */
   .project-card {
-    /*padding: 1.5rem;*/
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: #7fee40;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
   }
 
   .project-title {
     font-family: 'Guisol', sans-serif;
-    font-size: 1.875rem;
+    font-size: 30px;
     font-weight: 400;
-    color: #fefefe;
+    color: #ffffff;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
   }
 
   .project-description {
     font-family: 'Aptos Narrow', sans-serif;
-    font-size: 0.813;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     margin-bottom: 1rem;
   }
 
-  .project-link,
-  .blog-link {
+  .project-link {
     display: inline-block;
-    font-family: 'Aptos-Narrow', sans-serif;
-    font-size: 0.813rem;
-    font-weight: 400;
-    color: #fefefe;
+    font-family: 'Guisol', sans-serif;
+    font-size: 0.875rem;
+    color: #7fee40;
     text-decoration: none;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     transition: color 0.2s ease;
   }
 
-  .project-link:hover,
-  .blog-link:hover {
-    color: #e071e3;
+  .project-link:hover {
+    color: #6dd835;
   }
 
   .project-details {
-    font-family: 'Aptos-Narrow', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
@@ -120,14 +160,24 @@ import { themeConfig } from '@/config'
 
   /* Blog card styling */
   .blog-card {
-    /*padding: 1.5rem;*/
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .blog-card:hover {
+    border-color: #7fee40;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
   }
 
   .blog-title {
     font-family: 'Guisol', sans-serif;
     font-size: 30px;
     font-weight: 400;
-    color: #fefefe;
+    color: #ffffff;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
   }
@@ -138,6 +188,19 @@ import { themeConfig } from '@/config'
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     margin-bottom: 1rem;
+  }
+
+  .blog-link {
+    display: inline-block;
+    font-family: 'Guisol', sans-serif;
+    font-size: 0.875rem;
+    color: #7fee40;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .blog-link:hover {
+    color: #6dd835;
   }
 
   /* Responsive adjustments */
