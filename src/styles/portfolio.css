@@ -78,7 +78,7 @@ body[data-layout-type='portfolio'] .btn-nav-blog:hover {
 
 body[data-layout-type='portfolio'] .section-title {
   font-family: 'Guisol', sans-serif;
-  font-size: 100px;
+  font-size: 6.25rem;
   font-weight: 400;
   color: white;
   text-transform: uppercase;
@@ -114,47 +114,41 @@ body[data-layout-type='portfolio'] .highlight {
    CARDS (PROJECT & BLOG)
    =========================== */
 
+/* Shared card base styles */
 body[data-layout-type='portfolio'] .project-card,
 body[data-layout-type='portfolio'] .blog-card {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  /*background-color: rgba(255, 255, 255, 0.02);*/
   padding: 1.5rem;
-  transition: all 0.3s ease;
 }
 
-body[data-layout-type='portfolio'] .project-card:hover,
-body[data-layout-type='portfolio'] .blog-card:hover {
-  border-color: #7fee40;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
-}
-
+/* Shared card title styles */
 body[data-layout-type='portfolio'] .project-title,
 body[data-layout-type='portfolio'] .blog-title {
   font-family: 'Guisol', sans-serif;
-  font-size: 30px;
+  font-size: 1.875rem;
   font-weight: 400;
   color: #ffffff;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
 }
 
+/* Shared card description styles */
 body[data-layout-type='portfolio'] .project-description,
 body[data-layout-type='portfolio'] .blog-description {
   font-family: 'Aptos Narrow', sans-serif;
-  font-size: 13px;
+  font-size: 0.938rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
 
+/* Shared card link styles */
 body[data-layout-type='portfolio'] .project-link,
 body[data-layout-type='portfolio'] .blog-link {
   display: inline-block;
-  font-family: 'Guisol', sans-serif;
-  font-size: 14px; /* 0.875rem = 14px at 16px base */
-  color: #7fee40;
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 0.938rem;
+  color: #fefefe;
   text-decoration: none;
   margin-bottom: 0.75rem;
   transition: color 0.2s ease;
@@ -162,12 +156,12 @@ body[data-layout-type='portfolio'] .blog-link {
 
 body[data-layout-type='portfolio'] .project-link:hover,
 body[data-layout-type='portfolio'] .blog-link:hover {
-  color: #6dd835;
+  color: #e071e3;
 }
 
 body[data-layout-type='portfolio'] .project-details {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px; /* 0.75rem = 12px at 16px base */
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 0.813rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;

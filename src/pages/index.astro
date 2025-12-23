@@ -1,4 +1,5 @@
 ---
+import '@/styles/portfolio.css'
 import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
 import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
@@ -15,7 +16,10 @@ import { themeConfig } from '@/config'
             <h3 class="project-title">{project.title}</h3>
             <p class="project-description">{project.description}</p>
             <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
-              View Project →
+              GitHub
+            </a>
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+              | Live
             </a>
             <p class="project-details">{project.details}</p>
           </div>
@@ -47,22 +51,22 @@ import { themeConfig } from '@/config'
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 1</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+        <a href="/blog" class="blog-link">Read More...</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 2</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+        <a href="/blog" class="blog-link">Read More...</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 3</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+        <a href="/blog" class="blog-link">Read More...</a>
       </div>
       <div class="blog-card">
         <h3 class="blog-title">Recent Post 4</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More →</a>
+        <a href="/blog" class="blog-link">Read More...</a>
       </div>
     </div>
   </section>
