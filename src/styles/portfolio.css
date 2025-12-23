@@ -1,0 +1,214 @@
+/* Portfolio-specific styles */
+/* Scoped to body[data-layout-type='portfolio'] to prevent conflicts with blog styles */
+
+/* ===========================
+   PORTFOLIO LAYOUT OVERRIDES
+   =========================== */
+
+body[data-layout-type='portfolio'] {
+  /* Reset any blog-specific styles */
+  padding: 0;
+  max-width: none;
+  background-color: #282828 !important;
+  color: #fefefe;
+}
+
+/* ===========================
+   TICKER COMPONENT
+   =========================== */
+
+body[data-layout-type='portfolio'] .ticker-container {
+  background-color: transparent !important;
+  /* Override any Tailwind bg-* classes */
+}
+
+/* ===========================
+   HEADER & BUTTONS
+   =========================== */
+
+body[data-layout-type='portfolio'] .portfolio-name {
+  font-family: 'Fit', sans-serif;
+  font-size: 100px;
+  font-weight: 400;
+  color: #7fee40;
+  line-height: 1em;
+}
+
+body[data-layout-type='portfolio'] .btn-nav-gh,
+.btn-nav-blog {
+  /* Button styling */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 50px;
+  border-radius: 40px;
+
+  /* Text styling */
+  font-family: 'Guisol', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 0.91em;
+  color: #282828;
+
+  /* Interaction */
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-nav-gh {
+  background-color: #d9d9d9;
+}
+
+.btn-nav-blog {
+  background-color: #7fee40;
+}
+
+body[data-layout-type='portfolio'] .btn-nav-gh:hover {
+  color: #e071e3;
+}
+
+body[data-layout-type='portfolio'] .btn-nav-blog:hover {
+  color: #e071e3;
+}
+
+/* ===========================
+   SECTION TITLES
+   =========================== */
+
+body[data-layout-type='portfolio'] .section-title {
+  font-family: 'Guisol', sans-serif;
+  font-size: 100px;
+  font-weight: 400;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===========================
+   BIO SECTIONS
+   =========================== */
+
+body[data-layout-type='portfolio'] .bio-top {
+  font-family: 'Iosevka', monospace;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 400;
+  color: white;
+  line-height: 1.4;
+}
+
+body[data-layout-type='portfolio'] .bio-btm {
+  font-family: 'Guisol', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: white;
+  line-height: 1.4;
+}
+
+body[data-layout-type='portfolio'] .highlight {
+  color: #e071e3;
+}
+
+/* ===========================
+   CARDS (PROJECT & BLOG)
+   =========================== */
+
+body[data-layout-type='portfolio'] .project-card,
+body[data-layout-type='portfolio'] .blog-card {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+body[data-layout-type='portfolio'] .project-card:hover,
+body[data-layout-type='portfolio'] .blog-card:hover {
+  border-color: #7fee40;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
+}
+
+body[data-layout-type='portfolio'] .project-title,
+body[data-layout-type='portfolio'] .blog-title {
+  font-family: 'Guisol', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+body[data-layout-type='portfolio'] .project-description,
+body[data-layout-type='portfolio'] .blog-description {
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+body[data-layout-type='portfolio'] .project-link,
+body[data-layout-type='portfolio'] .blog-link {
+  display: inline-block;
+  font-family: 'Guisol', sans-serif;
+  font-size: 14px; /* 0.875rem = 14px at 16px base */
+  color: #7fee40;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+body[data-layout-type='portfolio'] .project-link:hover,
+body[data-layout-type='portfolio'] .blog-link:hover {
+  color: #6dd835;
+}
+
+body[data-layout-type='portfolio'] .project-details {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; /* 0.75rem = 12px at 16px base */
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===========================
+   SECTION BORDERS
+   =========================== */
+
+body[data-layout-type='portfolio'] section.bordered {
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+/* ===========================
+   RESPONSIVE ADJUSTMENTS
+   =========================== */
+
+@media (max-width: 1024px) {
+  body[data-layout-type='portfolio'] .portfolio-name {
+    font-size: 60px;
+  }
+
+  body[data-layout-type='portfolio'] .section-title {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-layout-type='portfolio'] .portfolio-name {
+    font-size: 40px;
+  }
+
+  body[data-layout-type='portfolio'] .section-title {
+    font-size: 40px;
+  }
+
+  body[data-layout-type='portfolio'] .bio-top {
+    font-size: 28px;
+  }
+
+  body[data-layout-type='portfolio'] .bio-btm {
+    font-size: 24px;
+  }
+}

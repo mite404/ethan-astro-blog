@@ -6,7 +6,7 @@ import { themeConfig } from '@/config'
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
   <!-- PROJECTS Section -->
-  <section class="mb-12 pl-5">
+  <section class="bordered mb-12 pl-5">
     <h2 class="section-title mb-6">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
@@ -41,7 +41,7 @@ import { themeConfig } from '@/config'
   </section>
 
   <!-- BLOG Section -->
-  <section class="mb-12 pl-5">
+  <section class="bordered mb-12 pl-5">
     <h2 class="section-title mb-6">BLOG:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="blog-card">
@@ -68,142 +68,11 @@ import { themeConfig } from '@/config'
   </section>
 </PortfolioLayout>
 
-<style is:global>
-  /* Section styling */
-  .section-title {
-    font-family: 'Guisol', sans-serif;
-    font-size: 100px;
-    font-weight: 400;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+<style>
+  /* All portfolio styles are now in src/styles/portfolio.css */
+  /* Keeping only page-specific layout styles here */
 
-  section.mb-12 {
-    border: 1px solid rgba(255, 255, 255, 1);
-  }
-
-  .bio-top {
-    font-family: 'Iosevka', monospace;
-    font-size: 45px;
-    font-style: italic;
-    font-weight: 400;
-    color: white;
-    line-height: 1.4;
-  }
-
-  .bio-btm {
-    font-family: 'Guisol', sans-serif;
-    font-size: 40px;
-    font-weight: 400;
-    color: white;
-    line-height: 1.4;
-  }
-
-  .highlight {
-    color: #e071e3;
-  }
-
-  /* Project card styling */
-  .project-card {
-    background-color: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .project-card:hover {
-    border-color: #7fee40;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
-  }
-
-  .project-title {
-    font-family: 'Guisol', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
-    color: #ffffff;
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .project-description {
-    font-family: 'Aptos Narrow', sans-serif;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .project-link {
-    display: inline-block;
-    font-family: 'Guisol', sans-serif;
-    font-size: 0.875rem;
-    color: #7fee40;
-    text-decoration: none;
-    margin-bottom: 0.75rem;
-    transition: color 0.2s ease;
-  }
-
-  .project-link:hover {
-    color: #6dd835;
-  }
-
-  .project-details {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  /* Blog card styling */
-  .blog-card {
-    background-color: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .blog-card:hover {
-    border-color: #7fee40;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(127, 238, 64, 0.1);
-  }
-
-  .blog-title {
-    font-family: 'Guisol', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
-    color: #ffffff;
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .blog-description {
-    font-family: 'Aptos Narrow', sans-serif;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .blog-link {
-    display: inline-block;
-    font-family: 'Guisol', sans-serif;
-    font-size: 0.875rem;
-    color: #7fee40;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .blog-link:hover {
-    color: #6dd835;
-  }
-
-  /* Responsive adjustments */
+  /* Responsive grid adjustments */
   @media (max-width: 1024px) {
     .grid {
       grid-template-columns: repeat(2, 1fr);
@@ -213,10 +82,6 @@ import { themeConfig } from '@/config'
   @media (max-width: 640px) {
     .grid {
       grid-template-columns: 1fr;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
     }
   }
 </style>

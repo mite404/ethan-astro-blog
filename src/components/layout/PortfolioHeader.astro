@@ -13,22 +13,12 @@ import { Image } from 'astro:assets'
     </div>
 
     <!-- Button container -->
-    <div class="flex gap-[9px]">
-      <a
-        href="https://github.com/mite404"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-github group relative flex items-center justify-center w-[100px] h-[50px] rounded-[40px]"
-      >
-        <span class="text-[20px] font-normal leading-[0.91em] text-black font-guisol">
-          GITHUB
-        </span>
+    <div class="flex gap-0">
+      <a href="https://github.com/mite404" class="btn-nav-gh">
+        <span> GITHUB </span>
       </a>
-      <a
-        href="/blog"
-        class="btn-blog group relative flex items-center justify-center w-[100px] h-[50px] rounded-[40px]"
-      >
-        <span class="text-[20px] font-normal leading-[0.91em] text-black font-guisol"> BLOG </span>
+      <a href="/blog" class="btn-nav-blog">
+        <span> BLOG </span>
       </a>
     </div>
   </nav>
@@ -41,60 +31,11 @@ import { Image } from 'astro:assets'
     </div>
 
     <!-- Name text - positioned absolutely to overlap the gradient -->
-    <h1
-      class="absolute top-[20px] left-5 text-[70px] font-normal leading-[1em] font-fit neon-green"
-    >
-      Ethan Anderson
-    </h1>
+    <h1 class="portfolio-name absolute top-[20px] left-5">Ethan Anderson</h1>
   </div>
 </header>
 
 <style>
-  /* Ensure Guisol font is loaded for buttons */
-  @font-face {
-    font-family: 'Guisol';
-    src: url('/fonts/guisol.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* Ensure Fit font is loaded for name */
-  @font-face {
-    font-family: 'Fit';
-    src: url('/fonts/fit.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  .font-guisol {
-    font-family: 'Guisol', sans-serif;
-  }
-
-  .font-fit {
-    font-family: 'Fit', sans-serif;
-  }
-
-  .neon-green {
-    color: #7fee40;
-  }
-
-  .btn-github {
-    background-color: #d9d9d9;
-    transition: background-color 0.2s ease;
-  }
-
-  .btn-github:hover {
-    background-color: #c0c0c0;
-  }
-
-  .btn-blog {
-    background-color: #7fee40;
-    transition: background-color 0.2s ease;
-  }
-
-  .btn-blog:hover {
-    background-color: #6dd835;
-  }
+  /* All portfolio header styles are now in src/styles/portfolio.css */
+  /* Component-specific styles only if needed */
 </style>

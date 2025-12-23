@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './fonts.css';
 @import './post.css';
+@import './portfolio.css';
 
 :root {
   /* Min Content Width */
