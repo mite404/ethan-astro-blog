@@ -15,21 +15,25 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ## Issues Resolved
 
 ### 1. ✅ Ticker/Name Heading Overlap
+
 - **Issue**: Ticker component overlapped "Ethan Anderson" heading
 - **Root Cause**: No spacing between PortfolioHeader and Ticker components
 - **Fix**: Added `mt-8` (2rem) wrapper div around Ticker in PortfolioLayout.astro:15
 
 ### 2. ✅ Ticker Background Color Mismatch
+
 - **Issue**: Ticker had hardcoded gray background (`bg-gray-900`)
 - **Root Cause**: Not using CSS variable system like rest of site
 - **Fix**: Changed to `background-color: var(--bg)` in Ticker.astro:7
 
 ### 3. ✅ Ticker Text Color Not Theme-Aware
+
 - **Issue**: Text color was hardcoded white, didn't respond to light/dark mode
 - **Root Cause**: Not using CSS variable system
 - **Fix**: Changed to `color: var(--text-primary)` in Ticker.astro:9
 
 ### 4. ✅ Portfolio Background Not Persisting
+
 - **Issue**: Background flashed correct color on page load, then turned black
 - **Root Cause**: CSS cascade conflicts with Astro view transitions
 - **Fix**: Added `!important` to `background-color: var(--bg) !important` in both:
@@ -37,6 +41,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
   - `.portfolio-layout` in PortfolioLayout.astro:43
 
 ### 5. ✅ SVG Gradient Expanding Beyond Design
+
 - **Issue**: grad-dither-group.svg expanded beyond 797px spec before layout breakpoint
 - **Root Cause**: Using `w-full` class without max-width constraint
 - **Fix**: Added inline styles in PortfolioHeader.astro:40:
@@ -45,6 +50,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
   ```
 
 ### 6. ✅ Ticker Breaking 792px Layout Constraint
+
 - **Issue**: Ticker extended beyond 792px container on wide viewports
 - **Root Cause**: Used `w-screen` (100vw) instead of `w-full`
 - **Fix**: Changed `class="w-screen"` to `class="w-full"` in Ticker.astro:7
@@ -56,6 +62,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ### Modified Files
 
 #### `src/layouts/PortfolioLayout.astro`
+
 ```diff
 - <PortfolioHeader />
 - <Ticker />
@@ -78,6 +85,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ```
 
 #### `src/components/layout/Ticker.astro`
+
 ```diff
 - <div class="w-screen overflow-hidden bg-gray-900 py-4">
 + <div class="w-full overflow-hidden py-4" style="background-color: var(--bg);">
@@ -89,6 +97,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ```
 
 #### `src/components/layout/PortfolioHeader.astro`
+
 ```diff
 - <div class="w-full h-[51px]">
 -   <Image src={gradDither} alt="" width={797} height={51} class="w-full h-full object-cover" />
@@ -102,12 +111,14 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ## Documentation Updates
 
 ### Updated `CLAUDE.md`
+
 - Updated last modified date to 2025-12-12
 - Updated Ticker.astro section with new implementation details (width constraint, theme-aware colors)
 - Updated PortfolioHeader.astro section with SVG constraint details
 - Updated Style Isolation guidance: clarified `!important` usage for layout stability
 
 ### Updated `docs/IMPLEMENTATION.md`
+
 - Updated status to "Portfolio Foundation + Layout Polish Complete"
 - Updated last modified date to 2025-12-12
 - Added new "Layout Fixes & Polish (2025-12-12)" section documenting all fixes
@@ -120,19 +131,25 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 ## Technical Details
 
 ### CSS Variable System
+
 All portfolio styling now properly integrated with the theme CSS variable system:
+
 - `--bg`: Background color (white in light mode, #1c1c1c in dark mode)
 - `--text-primary`: Text color (rgba(0,0,0,0.85) light, rgba(255,255,255,0.9) dark)
 
 ### Width Constraints
+
 Portfolio layout maintains strict 792px fixed-width:
+
 - Body flexbox centers the container
 - `.portfolio-layout` sets `max-width: 792px`
 - All children use `w-full` (100% of parent) not `w-screen` (100vw)
 - Mobile breakpoint at 968px allows full-width on smaller screens
 
 ### Astro View Transitions
+
 Portfolio background uses `!important` because:
+
 - Astro view transitions apply CSS animations that can override base colors
 - Without `!important`, the background color would flash or disappear during navigation
 - This is a justified exception to the "avoid !important" rule
@@ -142,6 +159,7 @@ Portfolio background uses `!important` because:
 ## Testing
 
 ✅ **Visual Testing**
+
 - Portfolio background color persists on page load
 - Ticker appears below header with proper spacing
 - Ticker background matches page background
@@ -149,15 +167,18 @@ Portfolio background uses `!important` because:
 - All elements respect 792px container width
 
 ✅ **Theme Testing**
+
 - Light mode: white background, dark text
 - Dark mode: dark gray background (#1c1c1c), light text
 - Theme toggle works without flickering
 
 ✅ **Responsive Testing**
+
 - Desktop (>968px): 792px fixed width with side margins
 - Mobile (<968px): Full width (100%)
 
 ✅ **Build Testing**
+
 - No new compilation errors
 - CSS properly scoped
 
@@ -167,19 +188,20 @@ Portfolio background uses `!important` because:
 
 The **Code is the Source of Truth** for this PR:
 
-| Component | Code ✅ | Docs ✅ | Status |
-|-----------|---------|---------|--------|
-| PortfolioLayout.astro | Fixed | Updated | 🟢 Synced |
-| Ticker.astro | Fixed | Updated | 🟢 Synced |
-| PortfolioHeader.astro | Fixed | Updated | 🟢 Synced |
-| CLAUDE.md | — | Updated | 🟢 Synced |
-| IMPLEMENTATION.md | — | Updated | 🟢 Synced |
+| Component             | Code ✅ | Docs ✅ | Status    |
+| --------------------- | ------- | ------- | --------- |
+| PortfolioLayout.astro | Fixed   | Updated | 🟢 Synced |
+| Ticker.astro          | Fixed   | Updated | 🟢 Synced |
+| PortfolioHeader.astro | Fixed   | Updated | 🟢 Synced |
+| CLAUDE.md             | —       | Updated | 🟢 Synced |
+| IMPLEMENTATION.md     | —       | Updated | 🟢 Synced |
 
 ---
 
 ## Deployment Notes
 
 No breaking changes. This is a pure enhancement:
+
 - All fixes are backwards compatible
 - No new dependencies
 - No configuration changes needed
