@@ -1,8 +1,8 @@
 # Portfolio Design Specification
 
 **Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`  
-**Last Updated**: 2025-12-11  
-**Implementation Status**: Foundation Complete (Header, Ticker, Layout)
+**Last Updated**: 2025-12-24  
+**Implementation Status**: Portfolio sections implemented (Header, Ticker, Projects, Blog, Bio sections)
 
 This document serves as the source of truth for the portfolio site design, extracted from the Figma design file.
 
@@ -60,11 +60,12 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 #### Name Heading
 
 - **Font**: Fit
-- **Size**: 70px
+- **Size**: 100px (responsive: 60px at 1024px, 40px at 640px)
 - **Weight**: 400 (Normal)
 - **Line Height**: 1em
 - **Color**: #7FEE40 (Neon Green)
 - **Text**: "Ethan Anderson"
+- **Position**: Absolute, overlapping gradient dither background (top: 20px, left: 20px)
 
 #### Button Text
 
@@ -123,9 +124,9 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Height**: 50px
 - **Border Radius**: 40px
 - **Background**: #D9D9D9
-- **Hover Background**: #C0C0C0
 - **Text**: "GITHUB" (Guisol, 20px, Black)
 - **Link**: https://github.com/mite404
+- **Hover Effect**: Text color changes to #e071e3
 
 ##### Blog Button
 
@@ -133,20 +134,17 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Height**: 50px
 - **Border Radius**: 40px
 - **Background**: #7FEE40 (Neon Green)
-- **Hover Background**: #6DD835
 - **Text**: "BLOG" (Guisol, 20px, Black)
 - **Link**: /blog
-
-##### Button Spacing
-
-- **Gap between buttons**: 9px
+- **Hover Effect**: Text color changes to #e071e3
 
 #### Gradient Dither Background
 
 - **Width**: 1280px (full width)
 - **Height**: 78px
-- **Asset**: `grad-dither-group.svg`
+- **Asset**: `src/assets/portfolio/grad-dither-group.svg`
 - **Position**: Behind name text
+- **Implementation**: Astro Image component with width={1280} height={78}
 
 #### Name
 
@@ -178,32 +176,42 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Font**: Guisol (gradient/styled text with pink/magenta accents)
 - **Text**: "Bringing 19 years of systems thinking and team leadership within entertainment for brands like VICE & BEYONCÉ to early-stage companies building creative tools."
 
-### Project Boxes
+### Project Cards
 
 Each project card follows this structure:
 
 #### Layout
 
-- **Border Radius**: 0px (sharp corners)
-- **Border**: White stroke
-- **Background**: Transparent/Dark
+- **Container**: Grid-based (1 col mobile, 2 cols tablet, 4 cols desktop)
+- **Border**: 1px solid white (section border only)
+- **Background**: Transparent
+- **Padding**: Bottom 1.5rem
 
 #### Content Structure
 
-1. **Project Title** (e.g., "Project 1:", "Project 2:")
-   - Font: Guisol-style header
+1. **Project Title**
+   - Font: Guisol, 30px (1.875rem)
+   - Weight: 400
    - Color: #FFFFFF
+   - Text-transform: uppercase
 
 2. **Description**
-   - Font: Iosevka Fixed, 25px
-   - Color: #FFFFFF
-   - Text: "Amet Lorem eiusmod id ad ipsum deserunt dolor nisi laboris ex. Proident sint mollit est aliquip elit adipisicing vol."
+   - Font: Aptos Narrow, 12px (0.938rem)
+   - Color: rgba(255, 255, 255, 0.7)
+   - Line-height: 1.6
+   - Margin-bottom: 1rem
 
-3. **Meta Information**
-   - Links: "Github | Live"
-   - Tech Stack: "TypeScript | React | Tailwind"
-   - Font: Iosevka Fixed
-   - Color: #FFFFFF
+3. **Links**
+   - Font: Aptos Narrow, 12px
+   - Color: #FEFEFE
+   - Hover: #e071e3
+   - Format: "GitHub | Live"
+
+4. **Meta/Details** (Tech Stack)
+   - Font: Aptos Narrow, 13px (0.813rem)
+   - Color: rgba(255, 255, 255, 0.5)
+   - Text-transform: uppercase
+   - Letter-spacing: 0.05em
 
 ### Contact Button
 
