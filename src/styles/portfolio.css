@@ -118,7 +118,7 @@ body[data-layout-type='portfolio'] .highlight {
 body[data-layout-type='portfolio'] .project-card,
 body[data-layout-type='portfolio'] .blog-card {
   /*background-color: rgba(255, 255, 255, 0.02);*/
-  padding: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 /* Shared card title styles */
@@ -128,7 +128,7 @@ body[data-layout-type='portfolio'] .blog-title {
   font-size: 1.875rem;
   font-weight: 400;
   color: #ffffff;
-  margin-bottom: 0.75rem;
+  /*margin-bottom: 0.75rem;*/
   text-transform: uppercase;
 }
 
