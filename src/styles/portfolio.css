@@ -89,21 +89,39 @@ body[data-layout-type='portfolio'] .section-title {
    BIO SECTIONS
    =========================== */
 
+body[data-layout-type='portfolio'] .bio-container {
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
 body[data-layout-type='portfolio'] .bio-top {
-  font-family: 'Iosevka', monospace;
+  font-family: 'Iosevka Fixed', monospace;
   font-size: 45px;
   font-style: italic;
   font-weight: 400;
   color: white;
-  line-height: 1.4;
+  margin-bottom: 30px;
+  line-height: 1.05;
+}
+
+body[data-layout-type='portfolio'] .bio-top p {
+  margin: 0 !important;
+}
+
+body[data-layout-type='portfolio'] .bio-stars-divider {
+  margin-bottom: 65px;
 }
 
 body[data-layout-type='portfolio'] .bio-btm {
   font-family: 'Guisol', sans-serif;
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 400;
   color: white;
-  line-height: 1.4;
+  /*line-height: 1.4;*/
+}
+
+body[data-layout-type='portfolio'] .bio-btm p {
+  margin: 0 !important;
 }
 
 body[data-layout-type='portfolio'] .highlight {
@@ -199,7 +217,7 @@ body[data-layout-type='portfolio'] section.bordered {
   }
 
   body[data-layout-type='portfolio'] .bio-top {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   body[data-layout-type='portfolio'] .bio-btm {

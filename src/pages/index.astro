@@ -5,11 +5,12 @@ import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 import { Image } from 'astro:assets'
 import batImage from '@/assets/portfolio/BAT_.png'
+import stars from '@/assets/portfolio/STARS.png'
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
   <!-- PROJECTS Section -->
-  <section class="bordered mb-12 pl-8">
+  <section class="bordered pl-8 pb-5">
     <h2 class="section-title">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
@@ -31,14 +32,14 @@ import batImage from '@/assets/portfolio/BAT_.png'
   </section>
 
   <!-- Bio section with bat background -->
-  <section class="bio-container relative w-full h-[476px] mb-12">
+  <section class="bio-container relative w-full h-[476px]">
     <!-- Bat background image -->
     <div class="absolute inset-0 w-full h-full">
       <Image src={batImage} alt="" width={1280} height={476} class="w-full h-full object-cover" />
     </div>
 
     <!-- Text content layered on top -->
-    <div class="relative z-10 flex flex-col justify-center h-full px-8 gap-8">
+    <div class="relative z-10 flex flex-col justify-start h-full pl-8 pt-[25px]">
       <div class="bio-top">
         <p>
           An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer
@@ -46,6 +47,10 @@ import batImage from '@/assets/portfolio/BAT_.png'
             class="highlight">technical advantage</span
           >.
         </p>
+      </div>
+
+      <div class="bio-stars-divider flex justify-center w-full">
+        <Image src={stars} alt="stars" width={120} height={20} />
       </div>
 
       <div class="bio-btm">
@@ -58,7 +63,7 @@ import batImage from '@/assets/portfolio/BAT_.png'
   </section>
 
   <!-- BLOG Section -->
-  <section class="bordered mb-12 pl-8">
+  <section class="bordered pl-8 pt-2.5">
     <h2 class="section-title">BLOG:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="blog-card">
