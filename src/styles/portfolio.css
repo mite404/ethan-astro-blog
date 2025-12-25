@@ -90,18 +90,18 @@ body[data-layout-type='portfolio'] .section-title {
    =========================== */
 
 body[data-layout-type='portfolio'] .bio-container {
-  margin-top: 25px;
-  margin-bottom: 30px;
+  /*margin-top: 25px;
+  margin-bottom: 30px;*/
 }
 
 body[data-layout-type='portfolio'] .bio-top {
-  font-family: 'Iosevka Fixed', monospace;
+  font-family: 'Iosevka Fixed Light', monospace;
   font-size: 45px;
   font-style: italic;
   font-weight: 400;
   color: white;
   margin-bottom: 30px;
-  line-height: 1.05;
+  line-height: 1.0;
 }
 
 body[data-layout-type='portfolio'] .bio-top p {
@@ -117,7 +117,7 @@ body[data-layout-type='portfolio'] .bio-btm {
   font-size: 2.5rem;
   font-weight: 400;
   color: white;
-  /*line-height: 1.4;*/
+  line-height: 1.0;
 }
 
 body[data-layout-type='portfolio'] .bio-btm p {
