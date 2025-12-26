@@ -48,7 +48,7 @@ export default function Ticker({
   // const estimatedWidth = fullText.length * 8 // ~8px per character
 
   return (
-    <div className={`relative w-full overflow-hidden h-[25px] ${className}`}>
+    <div className={`relative w-full overflow-hidden h-[25px] pt-1.5 ${className}`}>
       {/* Animated text layer (background) */}
       <div className="absolute inset-0 h-full flex items-center">
         <motion.div
