@@ -9,7 +9,7 @@ body[data-layout-type='portfolio'] {
   /* Reset any blog-specific styles */
   padding: 0;
   max-width: none;
-  background-color: #282828 !important;
+  background-color: #1c1c1c !important;
   color: #fefefe;
 }
 
@@ -135,7 +135,6 @@ body[data-layout-type='portfolio'] .highlight {
 /* Shared card base styles */
 body[data-layout-type='portfolio'] .project-card,
 body[data-layout-type='portfolio'] .blog-card {
-  /*background-color: rgba(255, 255, 255, 0.02);*/
   padding-bottom: 1.5rem;
 }
 
