@@ -1,6 +1,7 @@
 ---
 import '@/styles/portfolio.css'
 import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
+import DecorativeElements from '@/components/layout/DecorativeElements.astro'
 import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 import { Image } from 'astro:assets'
@@ -95,11 +96,11 @@ import Ticker from '@/components/layout/Ticker'
       </div>
     </div>
   </section>
+  <DecorativeElements />
 </PortfolioLayout>
 
 <style>
   /* All portfolio styles are now in src/styles/portfolio.css */
-  /* Keeping only page-specific layout styles here */
 
   /* Responsive grid adjustments */
   @media (max-width: 1024px) {
