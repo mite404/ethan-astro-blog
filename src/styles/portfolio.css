@@ -89,11 +89,6 @@ body[data-layout-type='portfolio'] .section-title {
    BIO SECTIONS
    =========================== */
 
-body[data-layout-type='portfolio'] .bio-container {
-  /*margin-top: 25px;
-  margin-bottom: 30px;*/
-}
-
 body[data-layout-type='portfolio'] .bio-top {
   font-family: 'Iosevka Fixed Light', monospace;
   font-size: 45px;
@@ -101,7 +96,7 @@ body[data-layout-type='portfolio'] .bio-top {
   font-weight: 400;
   color: white;
   margin-bottom: 30px;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 body[data-layout-type='portfolio'] .bio-top p {
@@ -117,7 +112,7 @@ body[data-layout-type='portfolio'] .bio-btm {
   font-size: 2.5rem;
   font-weight: 400;
   color: white;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 body[data-layout-type='portfolio'] .bio-btm p {
