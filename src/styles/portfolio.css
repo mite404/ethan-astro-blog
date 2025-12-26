@@ -57,7 +57,7 @@ body[data-layout-type='portfolio'] .btn-nav-gh,
 }
 
 .btn-nav-gh {
-  background-color: #d9d9d9;
+  background-color: #fefefe;
 }
 
 .btn-nav-blog {
@@ -69,6 +69,31 @@ body[data-layout-type='portfolio'] .btn-nav-gh:hover {
 }
 
 body[data-layout-type='portfolio'] .btn-nav-blog:hover {
+  color: #e071e3;
+}
+
+body[data-layout-type='portfolio'] .btn-touch {
+  /* Button styling */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1280px;
+  height: 158px;
+  border-radius: 77px;
+  background-color: #7fee40;
+
+  /* Text styling */
+  font-family: 'Guisol', sans-serif;
+  font-size: 85px;
+  font-weight: 400;
+  color: #fefefe;
+
+  /* Interaction */
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+body[data-layout-type='portfolio'] .btn-touch:hover {
   color: #e071e3;
 }
 
