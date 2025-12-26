@@ -7,6 +7,7 @@ import { themeConfig } from '@/config'
 import { Image } from 'astro:assets'
 import batImage from '@/assets/portfolio/BAT_.png'
 import stars from '@/assets/portfolio/STARS.png'
+import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
 ---
 
@@ -96,7 +97,20 @@ import Ticker from '@/components/layout/Ticker'
       </div>
     </div>
   </section>
+
   <DecorativeElements />
+
+  <!-- GLOBE Asset -->
+  <div class="flex justify-center w-full pt-3">
+    <Image src={globe} alt="" width={322} height={164} />
+  </div>
+
+  <!-- CONTACT BUTTON -->
+  <div class="flex pt-20">
+    <a href="mailto:ethana@ethananderson.net" class="btn-touch">
+      <span>GET IN TOUCH</span>
+    </a>
+  </div>
 </PortfolioLayout>
 
 <style>
