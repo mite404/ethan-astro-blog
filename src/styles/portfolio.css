@@ -46,10 +46,10 @@ body[data-layout-type='portfolio'] .btn-nav-gh,
 
   /* Text styling */
   font-family: 'Guisol', sans-serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   line-height: 0.91em;
-  color: #282828;
+  color: #1c1c1c;
 
   /* Interaction */
   transition: background-color 0.2s ease;
@@ -130,7 +130,8 @@ body[data-layout-type='portfolio'] .highlight {
 /* Shared card base styles */
 body[data-layout-type='portfolio'] .project-card,
 body[data-layout-type='portfolio'] .blog-card {
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.625rem;
+  padding-right: 0.625rem;
 }
 
 /* Shared card title styles */
