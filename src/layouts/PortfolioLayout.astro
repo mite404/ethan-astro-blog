@@ -3,7 +3,7 @@ import '@/styles/global.css'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import BaseHead from '@/components/layout/BaseHead.astro'
 import PortfolioHeader from '@/components/layout/PortfolioHeader.astro'
-import Ticker from '@/components/layout/Ticker.astro'
+import Ticker from '@/components/layout/Ticker'
 import { themeConfig } from '@/config'
 
 const { title, description } = Astro.props
@@ -13,7 +13,7 @@ const { title, description } = Astro.props
   <div class="portfolio-layout">
     <PortfolioHeader />
     <div class="mt-8">
-      <Ticker />
+      <Ticker client:load />
     </div>
     <main class="portfolio-main">
       <slot />
@@ -48,7 +48,7 @@ const { title, description } = Astro.props
 
   .portfolio-main {
     flex: 1;
-    padding: 2rem 0;
+    padding: 0.5rem 0;
     width: 100%;
   }
 
