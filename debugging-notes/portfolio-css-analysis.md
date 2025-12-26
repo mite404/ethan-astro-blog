@@ -9,18 +9,24 @@
 ## Problems Identified
 
 ### 1. Tailwind Utility Classes Not Rendering on Buttons
+
 **Symptoms:**
+
 - Classes like `w-[61px]`, `h-[30px]`, `rounded-[40px]` had no visual effect
 - Buttons did not match design specifications (61px × 30px with 40px border radius)
 - Background colors from Tailwind utilities weren't applying
 
 ### 2. Ticker Component Text Wrapping
+
 **Symptoms:**
+
 - Ticker text was wrapping to multiple lines instead of displaying as single-line scrolling text
 - Animation was correct but layout was broken
 
 ### 3. Blog Styles Bleeding into Portfolio
+
 **Symptoms:**
+
 - Portfolio pages were inheriting large padding from blog layout styles
 - Body element had 6rem top padding intended only for blog pages
 - Portfolio components couldn't override global blog styles effectively
@@ -39,28 +45,26 @@ The project uses **Tailwind CSS v4** (via `@tailwindcss/vite` plugin), which has
 3. **PortfolioLayout.astro didn't import global.css** - only blog layouts (IndexLayout, PostLayout, BlogIndexLayout) imported it
 
 **Impact:**
+
 - When visiting portfolio pages, Tailwind's base styles and utilities were never loaded into the page
 - The Tailwind classes were present in the HTML markup but had no corresponding CSS rules
 - Custom component styles in `<style>` blocks worked, but Tailwind utilities were ignored
 
 **Evidence:**
+
 ```astro
 // Before fix - src/layouts/PortfolioLayout.astro
----
-import BaseLayout from '@/layouts/BaseLayout.astro'
-import BaseHead from '@/components/layout/BaseHead.astro'
+
+import BaseLayout from '@/layouts/BaseLayout.astro' import BaseHead from '@/components/layout/BaseHead.astro'
 // No global.css import!
----
 ```
 
 vs.
 
 ```astro
 // Blog layouts had the import - src/layouts/IndexLayout.astro
----
-import '@/styles/global.css'  // This line was missing in PortfolioLayout
-import BaseHead from '@/components/layout/BaseHead.astro'
----
+
+import '@/styles/global.css' // This line was missing in PortfolioLayout import BaseHead from '@/components/layout/BaseHead.astro'
 ```
 
 ### Problem 2: Incorrect Display Model for Ticker
@@ -70,15 +74,17 @@ The Ticker component used `h-[1.5em]` to constrain height, but this was applied 
 
 ```astro
 // Before fix
-<div class="animate-ticker whitespace-nowrap text-white text-xl font-semibold h-[1.5em]">
+<div class="animate-ticker whitespace-nowrap text-white text-xl font-semibold h-[1.5em]"></div>
 ```
 
 **Issue:**
+
 - Block-level elements (`<div>`) by default take full width and allow height to adjust to content
 - Setting a fixed height without `overflow: hidden` on the container doesn't prevent wrapping
 - The element needed to be `inline-block` to behave as a single scrolling unit
 
 **Impact:**
+
 - Text wrapped across multiple lines despite `whitespace-nowrap`
 - The animation worked but the layout broke the visual effect
 
@@ -91,16 +97,18 @@ The `src/styles/global.css` file applied blog-specific padding to ALL body eleme
 /* Before fix */
 body {
   /* ... other styles ... */
-  padding: 6rem 1.5rem 1.5rem 1.5rem;  /* Applied globally! */
+  padding: 6rem 1.5rem 1.5rem 1.5rem; /* Applied globally! */
 }
 ```
 
 **Issue:**
+
 - This padding was intended only for blog pages (to create space for header)
 - Portfolio pages also got this padding, even though they should have their own layout
 - PortfolioLayout tried to override with `!important`, but this is a code smell and not maintainable
 
 **Impact:**
+
 - Portfolio pages had unwanted 6rem top padding
 - Required hacky overrides with `!important`
 - CSS cascade wasn't properly utilizing layout type differentiation
@@ -114,6 +122,7 @@ body {
 **File:** `src/layouts/PortfolioLayout.astro`
 
 **Change:**
+
 ```diff
 ---
 +import '@/styles/global.css'
@@ -128,12 +137,14 @@ const { title, description } = Astro.props
 ```
 
 **Why this works:**
+
 - Tailwind v4 uses Vite's import system to determine which files need Tailwind processing
 - Importing `global.css` (which contains `@import 'tailwindcss'`) ensures Tailwind processes the portfolio page
 - All Tailwind utility classes in portfolio components now generate corresponding CSS rules
 - The Tailwind Vite plugin scans imported files and their dependencies
 
 **Result:**
+
 - Button utilities (`w-[61px]`, `h-[30px]`, `rounded-[40px]`) now render correctly
 - Arbitrary values work as expected
 - All Tailwind utilities throughout portfolio components are functional
@@ -143,6 +154,7 @@ const { title, description } = Astro.props
 **File:** `src/components/layout/Ticker.astro`
 
 **Change:**
+
 ```diff
 <div class="w-screen overflow-hidden bg-gray-900 py-4">
   <div
@@ -156,12 +168,14 @@ const { title, description } = Astro.props
 ```
 
 **Why this works:**
+
 - `inline-block` makes the element behave as a single unit that can be transformed
 - Combined with `whitespace-nowrap`, text stays on a single line
 - The parent container has `overflow: hidden` to clip the scrolling text
 - Element shrinks to content width, allowing proper translation animation
 
 **Result:**
+
 - Ticker displays as single-line scrolling text
 - Animation works smoothly without text wrapping
 - Visual effect matches design intent
@@ -171,6 +185,7 @@ const { title, description } = Astro.props
 **File:** `src/styles/global.css`
 
 **Change:**
+
 ```diff
 body {
   font-family: var(--sans);
@@ -194,6 +209,7 @@ body {
 ```
 
 **Why this works:**
+
 - Uses CSS attribute selector to target only blog pages
 - BaseLayout.astro already sets `data-layout-type="portfolio"` on portfolio pages
 - Blog pages get `data-layout-type="page"` or no attribute, so they match `:not([data-layout-type='portfolio'])`
@@ -201,6 +217,7 @@ body {
 - Maintains single source of truth for styles
 
 **Result:**
+
 - Blog pages retain their 6rem top padding for header space
 - Portfolio pages get zero padding from global styles
 - Clean separation of concerns without override hacks
@@ -210,6 +227,7 @@ body {
 **File:** `src/layouts/PortfolioLayout.astro`
 
 **Change:**
+
 ```diff
 <style is:global>
 - /* Override blog-specific body styles for portfolio */
@@ -248,6 +266,7 @@ body {
 ```
 
 **Why this works:**
+
 - Removes unnecessary `!important` declarations
 - Adds appropriate padding specifically for portfolio layout (1.5rem)
 - Adjusts padding at component level (.portfolio-main) instead of duplicating at body level
@@ -255,6 +274,7 @@ body {
 - Works in harmony with the global.css conditional padding
 
 **Result:**
+
 - Portfolio pages have clean, consistent spacing
 - No CSS specificity wars or `!important` overrides
 - Maintainable and scalable styling approach
@@ -264,6 +284,7 @@ body {
 ## Verification
 
 ### Development Server Test
+
 ```bash
 pnpm dev
 # Server started successfully at http://localhost:4321/
@@ -271,22 +292,26 @@ pnpm dev
 ```
 
 **Confirmed in HTML output:**
+
 - Tailwind classes present in markup: `w-[61px]`, `h-[30px]`, `rounded-[40px]`, `gap-[9px]`
 - Ticker uses `inline-block` display model
 - Body element has `data-layout-type='portfolio'` attribute
 
 ### Build Test
+
 ```bash
 pnpm build
 # Build completed successfully with no errors
 ```
 
 **Output:**
+
 - No build errors
 - Netlify adapter configured correctly
 - Static routes prerendered successfully
 
 ### Known Issues (Separate from CSS problems)
+
 - Custom fonts missing: `/fonts/guisol.woff2` and `/fonts/fit.woff2` return 404
 - These fonts are referenced in PortfolioHeader.astro but don't exist in `public/fonts/`
 - This is a content issue, not a CSS architecture issue
@@ -302,12 +327,13 @@ This project uses **Tailwind CSS v4** via `@tailwindcss/vite`, which has importa
 1. **No `content` configuration required** - Tailwind v4 automatically scans based on CSS imports
 2. **CSS-first configuration** - Use `@import 'tailwindcss'` in CSS files
 3. **Vite plugin integration** - The plugin is added to `astro.config.ts`:
+
    ```ts
    import tailwindcss from '@tailwindcss/vite'
-   
+
    export default defineConfig({
      vite: {
-       plugins: [tailwindcss()],
+       plugins: [tailwindcss()]
      }
    })
    ```

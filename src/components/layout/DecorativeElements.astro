@@ -1,0 +1,75 @@
+---
+// Decorative elements from Figma designs
+// WAVE (far left), TCHOTCHKES (center), LIQUID (far right)
+import { Image } from 'astro:assets'
+import waveAsset from '@/assets/portfolio/WAVE.svg'
+import liquidAsset from '@/assets/portfolio/LIQUID.svg'
+import tchotchkesAsset from '@/assets/portfolio/TCHOTCHKES.svg'
+---
+
+<div class="decorative-container">
+  <!-- WAVE - Far Left -->
+  <div class="decorative-wave">
+    <Image src={waveAsset} alt="" width={35} height={30} />
+  </div>
+
+  <!-- TCHOTCHKES - Center (Horizontally Centered) -->
+  <div class="decorative-tchotchkes">
+    <Image src={tchotchkesAsset} alt="" width={340} height={29} />
+  </div>
+
+  <!-- LIQUID - Far Right -->
+  <div class="decorative-liquid">
+    <Image src={liquidAsset} alt="" width={34} height={32} />
+  </div>
+</div>
+
+<style>
+  .decorative-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 2rem
+    gap: 2rem;
+  }
+
+  .decorative-wave {
+    flex-shrink: 0;
+  }
+
+  .decorative-tchotchkes {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .decorative-liquid {
+    flex-shrink: 0;
+  }
+
+  /* Ensure images maintain their aspect ratio */
+  .decorative-wave img,
+  .decorative-tchotchkes img,
+  .decorative-liquid img {
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .decorative-container {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .decorative-wave,
+    .decorative-liquid {
+      align-self: center;
+    }
+  }
+</style>
