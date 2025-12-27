@@ -1,8 +1,8 @@
 # Implementation Status & Roadmap
 
-**Last Updated**: 2025-12-24  
+**Last Updated**: 2025-12-27  
 **Project**: Ethan Anderson Portfolio + Blog  
-**Status**: Portfolio sections implemented (layout, header, ticker, cards, bio sections)
+**Status**: Portfolio sections complete (all major components implemented and styled)
 
 ---
 
@@ -62,14 +62,54 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 
 #### Ticker Component
 
-- [x] Created scrolling tech stack ticker
-- [x] Fixed text wrapping issue (changed to `inline-block`)
-- [x] Implemented CSS animation (20s infinite scroll)
-- [x] Applied warning stripe background styling
+- [x] Created scrolling tech stack ticker (React component)
+- [x] Implemented Motion library animation with dynamic text width measurement
+- [x] Applied warning stripe SVG overlay (foreground layer)
+- [x] Configurable items, separator, and speed props
+- [x] Fixed text wrapping with whitespace-nowrap and proper height constraint
 
 **Files:**
 
-- `src/components/layout/Ticker.astro`
+- `src/components/layout/Ticker.tsx` (React client component)
+- `src/assets/portfolio/warning-strip.svg`
+
+**Usage:**
+
+```tsx
+<Ticker
+  items={['TypeScript', 'React', 'Tailwind']}
+  separator="  |  "
+  speed={40}
+  className="custom-class"
+/>
+```
+
+#### Parallax Hand Animation
+
+- [x] Implemented scroll-triggered parallax hand (1.7x scaled, 2875px width)
+- [x] Hand SVG properly converted to WOFF2 with italic angle (-12°)
+- [x] Container overflow clipping at 1280px boundaries
+- [x] Dynamic scroll range calculation based on globe position
+- [x] Spring physics for smooth animation transitions
+- [x] Positioned 150px left of center for dramatic composition
+
+**Files:**
+
+- `src/components/ui/ParallaxHand.tsx` (React client component)
+- `src/assets/portfolio/HAND.svg` (1513×1123px original)
+
+**Usage:**
+
+```tsx
+<ParallexHand client:load />
+```
+
+**Animation Details:**
+
+- Scroll range: dynamically calculated from globe position
+- Y transform: 800px (hidden) → -300px (thumb at globe center)
+- Spring: stiffness 100, damping 30, mass 1
+- Transform: centered horizontally, shifted 150px left
 
 #### Documentation
 
@@ -248,10 +288,12 @@ BaseLayout (type="page")
 **Architecture Improvement:**
 Portfolio-specific styles now live in dedicated file, preventing blog style conflicts.
 
-#### Future Sections (Next Phase)
+#### Contact Button & Decorative Assets
 
-- [ ] Contact CTA Button (790×96px, #7fee40, Guisol 45px)
-- [ ] Decorative SVG assets (MOVIE GLOBE, BAT, HAND, WAVE, STARS, etc.)
+- [x] Contact CTA Button (1280×158px responsive, #7fee40, Guisol 85px)
+- [x] Decorative SVG assets (MOVIE GLOBE, BAT, HAND with parallax, STARS)
+- [x] Parallax hand animation integrated with scroll behavior
+- [x] Bio section with bat background image and stars divider
 - [ ] Dynamic blog post fetching from content collection
 - [ ] Optional: Project showcase with images
 
@@ -318,15 +360,18 @@ All design specifications are documented in:
 ### Key Constants
 
 ```typescript
-// Layout
-PORTFOLIO_MAX_WIDTH = 792px
+// Layout (from code)
+PORTFOLIO_MAX_WIDTH = 1280px     // Actual canvas width (not 792px)
 MOBILE_BREAKPOINT = 968px
+HAND_SCALE = 1.7x                // 2875px width (1513 * 1.7)
+HAND_OFFSET_LEFT = -150px        // Positioned left of center
 
 // Colors
-BG_DARK = #282828
+BG_DARK = #1c1c1c               // Actual background (not #282828)
 TEXT_WHITE = #FFFFFF
 ACCENT_GREEN = #7FEE40
 BUTTON_GRAY = #D9D9D9
+BUTTON_HOVER = #e071e3
 
 // Typography
 FONT_GUISOL = 'Guisol', sans-serif
@@ -360,7 +405,8 @@ FONT_IOSEVKA = 'Iosevka Fixed', monospace
 ### Build Command
 
 ```bash
-pnpm build
+bun build             # Recommended (faster)
+pnpm build            # Alternative
 ```
 
 ### Netlify Configuration
@@ -380,7 +426,7 @@ None currently required for portfolio functionality.
 
 ### Regular Tasks
 
-- Update dependencies monthly (`pnpm update`)
+- Update dependencies monthly (`bun add -D` or `pnpm update`)
 - Review and merge Chiri theme updates (blog section)
 - Monitor Lighthouse scores
 - Review analytics (if implemented)
@@ -398,9 +444,9 @@ When making significant changes, update:
 
 ## Questions & Decisions Log
 
-### Q: Why 792px width?
+### Q: Why 1280px width (not 792px)?
 
-**A:** Matches Figma canvas dimensions exactly. Creates "poster-style" narrow composition that centers in viewport with side spacing.
+**A:** Matches the actual Figma canvas dimensions. The 792px reference was outdated documentation. 1280px width creates the full poster-style composition with side spacing on larger viewports. The hand asset (2875px at 1.7x scale) intentionally overflows and is clipped at this boundary for dramatic effect.
 
 ### Q: Why not use Tailwind config for custom values?
 

@@ -1,10 +1,19 @@
 # Portfolio Design Specification
 
 **Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`  
-**Last Updated**: 2025-12-24  
-**Implementation Status**: Portfolio sections implemented (Header, Ticker, Projects, Blog, Bio sections)
+**Last Updated**: 2025-12-27  
+**Implementation Status**: Portfolio sections complete (Header, Ticker, Projects, Blog, Bio, Parallax Hand, Contact Button)
 
 This document serves as the source of truth for the portfolio site design, extracted from the Figma design file.
+
+## Recent Changes (December 27, 2025)
+
+### Major Updates
+
+- ✅ **Parallax Hand Animation**: Implemented 1.7x scaled hand (2875px width) with scroll-based parallax animation. Hand overflows container and is clipped at 1280px boundaries, positioned 150px left of center.
+- ✅ **Font System**: Converted Iosevka ExtraLight Italic from TTC to WOFF2 (10KB subset). Set italic angle to -12° for proper slant rendering.
+- ✅ **Layout Constraints**: Fixed container overflow with `overflow: hidden` on `.portfolio-layout` to properly clip the oversized hand asset.
+- ✅ **Canvas Width Correction**: Updated SPEC to reflect actual 1280px width (not 792px as previously documented).
 
 ## Implementation Status Legend
 
