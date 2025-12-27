@@ -1,7 +1,6 @@
 ---
 import '@/styles/global.css'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import BaseHead from '@/components/layout/BaseHead.astro'
 import PortfolioHeader from '@/components/layout/PortfolioHeader.astro'
 import { themeConfig } from '@/config'
 
@@ -39,6 +38,8 @@ const { title, description } = Astro.props
     flex-direction: column;
     padding-top: 1rem;
     margin: 0 auto;
+    position: relative; /* Contain absolutely positioned children */
+    overflow: hidden; /* Clip overflowing elements like the 1513px hand */
     /*background-color: #282828 !important;*/
   }
 

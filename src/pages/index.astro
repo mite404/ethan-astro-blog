@@ -9,6 +9,7 @@ import batImage from '@/assets/portfolio/BAT_.png'
 import stars from '@/assets/portfolio/STARS.png'
 import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
+import ParallaxHand from '@/components/ui/ParallaxHand'
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
@@ -101,7 +102,7 @@ import Ticker from '@/components/layout/Ticker'
   <DecorativeElements />
 
   <!-- GLOBE Asset -->
-  <div class="flex justify-center w-full pt-3">
+  <div class="flex justify-center w-full pt-3" data-globe-container>
     <Image src={globe} alt="" width={322} height={164} />
   </div>
 
@@ -111,6 +112,12 @@ import Ticker from '@/components/layout/Ticker'
       <span>GET IN TOUCH</span>
     </a>
   </div>
+
+  <!-- SPACING BELOW BUTTON -->
+  <div style="padding-top: 120px;"></div>
+
+  <!-- PARALLAX HAND -->
+  <ParallaxHand client:load />
 </PortfolioLayout>
 
 <style>
