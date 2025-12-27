@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-**Last Updated**: 2025-12-11
+**Last Updated**: 2025-12-27
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -14,7 +14,7 @@ This is a hybrid portfolio + blog site built with Astro 5. The portfolio landing
 - Tailwind CSS v4 (via @tailwindcss/vite)
 - TypeScript (strict mode)
 - Deployed on Netlify (using @astrojs/netlify adapter)
-- Package manager: pnpm (with bun as task runner)
+- **Task runner:** Bun (preferred) with pnpm as package manager fallback
 
 **Site Structure:**
 
@@ -42,30 +42,42 @@ This is a hybrid portfolio + blog site built with Astro 5. The portfolio landing
 
 ## Development Commands
 
+**Preferred task runner: Bun** (faster, more efficient)
+
 ### Essential Commands
 
 ```bash
+bun dev               # Start development server
+bun build             # Build for production (runs prebuild script first)
+bun preview           # Preview production build
+bun new <title>       # Create new blog post
+bun new _<title>      # Create draft post (prefixed with underscore)
+```
+
+**Fallback (pnpm):**
+
+```bash
 pnpm dev              # Start development server
-pnpm build            # Build for production (runs prebuild script first)
+pnpm build            # Build for production
 pnpm preview          # Preview production build
 pnpm new <title>      # Create new blog post
-pnpm new _<title>     # Create draft post (prefixed with underscore)
+pnpm new _<title>     # Create draft post
 ```
 
 ### Code Quality
 
 ```bash
-pnpm lint             # Run ESLint
-pnpm lint:fix         # Fix ESLint errors
-pnpm lint:md          # Lint markdown files
-pnpm format           # Format code with Prettier
-pnpm format:check     # Check code formatting
+bun lint              # Run ESLint
+bun lint:fix          # Fix ESLint errors
+bun lint:md           # Lint markdown files
+bun format            # Format code with Prettier
+bun format:check      # Check code formatting
 ```
 
 ### Maintenance
 
 ```bash
-pnpm update-theme     # Update to latest theme version
+bun update-theme      # Update to latest theme version
 ```
 
 ## Project Structure
@@ -213,12 +225,12 @@ The prebuild script (`scripts/toggle-proxy.ts`) runs before each build to handle
 
 ### Creating New Posts
 
-Always use the script: `pnpm new "Post Title"`
+Always use the script: `bun new "Post Title"` (or `pnpm new` as fallback)
 
 - Automatically generates frontmatter with current date
 - Sanitizes title for filename (lowercase, hyphens for spaces)
 - Creates file in `src/content/posts/`
-- Use `pnpm new "_Draft Title"` to create drafts
+- Use `bun new "_Draft Title"` to create drafts (prefix with underscore)
 
 ### Post Filtering
 
@@ -228,40 +240,73 @@ Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_` are ex
 
 ### PortfolioLayout.astro
 
-**Purpose:** Fixed-width (792px) centered layout for portfolio pages
+**Purpose:** Fixed-width (1280px) centered layout for portfolio pages
 
 **Key features:**
 
 - Imports global.css (critical for Tailwind v4)
 - Sets `data-layout-type="portfolio"` via BaseLayout
+- `overflow: hidden` on `.portfolio-layout` to clip overflowing assets (e.g., parallax hand)
 - Uses flexbox centering on body for side-spacing effect
-- Responsive: 792px desktop, 100% width mobile (<968px)
+- Responsive: 1280px desktop, 100% width mobile (<1536px)
 
 ### PortfolioHeader.astro
 
 **Components:**
 
 - Asterix icon (20×20px, top-left)
-- GitHub button (61×30px, #D9D9D9, 40px radius)
-- Blog button (61×30px, #7FEE40, 40px radius)
-- Name heading ("Ethan Anderson", 70px Fit font, #7FEE40)
-- Gradient dither background (797×51px SVG)
+- GitHub button (100×50px, #D9D9D9, 40px radius)
+- Blog button (100×50px, #7FEE40, 40px radius)
+- Name heading ("Ethan Anderson", 100px Fit font, #7FEE40)
+- Gradient dither background (1280×78px SVG)
 
 **Fonts:**
 
 - Uses @font-face to load Guisol (buttons) and Fit (name)
 - Font files: `public/fonts/guisol.woff2` and `public/fonts/fit.woff2`
-- **Note:** Font files currently missing (404), needs resolution
+- ✅ All font files resolved and working
 
-### Ticker.astro
+### Ticker.tsx (React Component)
 
-**Purpose:** Scrolling tech stack ticker with warning stripe background
+**Purpose:** Scrolling tech stack ticker with warning stripe SVG overlay
 
 **Implementation:**
 
-- Uses `inline-block` display for single-line text
-- CSS keyframe animation (20s linear infinite scroll)
-- Parent container: `overflow: hidden` to clip scrolling
+- React component with Motion library animation
+- Dynamic text width measurement using `useRef`
+- SVG warning stripe overlay (foreground layer at z-10)
+- Repeats text 4x for seamless loop animation
+- Configurable props: `items`, `separator`, `speed`, `className`
+
+**Props:**
+
+```tsx
+interface TickerProps {
+  items?: string[] // Tech tags to display
+  separator?: string // Divider between items (default: "  |  ")
+  speed?: number // Animation duration in seconds (default: 40)
+  className?: string // Additional CSS classes
+}
+```
+
+### ParallaxHand.tsx (React Component)
+
+**Purpose:** Scroll-triggered parallax hand animation with proper scaling
+
+**Implementation:**
+
+- 1.7x scaled hand asset (2875px width, intentional overflow)
+- Motion library scroll transforms with spring physics
+- Dynamic scroll range calculation based on globe DOM position
+- Positioned 150px left of center for composition
+- Container `overflow: hidden` on parent clips to 1280px boundary
+
+**Key Features:**
+
+- Scroll range: dynamically calculated from `.portfolio-layout` and `[data-globe-container]` positions
+- Y animation: 800px (hidden below) → -300px (thumb at globe center)
+- Spring physics: stiffness 100, damping 30, mass 1
+- Hand asset: `HAND.svg` (1513×1123px), scaled to 2875px width
 
 ## Component Structure
 
@@ -329,12 +374,24 @@ Demonstration components (Callout, Tag) showing MDX capabilities
 
 ## Known Issues
 
-### Missing Custom Fonts
+### ✅ RESOLVED - Font System
 
-- `/fonts/guisol.woff2` returns 404
-- `/fonts/fit.woff2` returns 404
-- Portfolio components reference these fonts but they don't exist
-- **Impact:** Text falls back to sans-serif, doesn't match design
-- **Resolution:** Source or create fonts, place in `public/fonts/`
+**Previous Issue:**
+
+- `/fonts/guisol.woff2` was returning 404
+- `/fonts/fit.woff2` was returning 404
+
+**Resolution (Dec 27, 2025):**
+
+- ✅ All custom fonts now loaded and working
+- ✅ Iosevka ExtraLight Italic converted to WOFF2 (10KB subset)
+- ✅ Italic angle set to -12° for proper slant rendering
+- ✅ All @font-face declarations properly configured
+
+**Font Stack:**
+
+- Guisol (buttons, headers) - `public/fonts/guisol.woff2`
+- Fit (name heading) - `public/fonts/fit.woff2`
+- Iosevka ExtraLight Italic (bio text) - `public/fonts/iosevka-extralight-italic.woff2`
 
 See `docs/IMPLEMENTATION.md` for detailed implementation status and roadmap.
