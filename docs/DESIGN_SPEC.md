@@ -285,7 +285,7 @@ The portfolio page contains these sections in order:
 
 ### CSS Architecture
 
-- Use fixed `max-width: 792px` on main container
+- Use fixed `max-width: 1280px` on main container
 - Center container with flexbox on body
 - Maintain poster-style composition on all screen sizes
 - Mobile breakpoint at 968px switches to full-width
@@ -315,6 +315,9 @@ The portfolio page contains these sections in order:
 ---
 
 ## Figma Reference
+
+Use Figma MCP server first, only use web url below as a fallback if a connection
+to the MCP server can't be established.
 
 **File**: `hxE0jhguSe2Irj2QoDH1JB`  
 **URL**: https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1
