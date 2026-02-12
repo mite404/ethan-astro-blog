@@ -1,6 +1,6 @@
 # Implementation Status & Roadmap
 
-**Last Updated**: 2025-12-27  
+**Last Updated**: 2026-02-12  
 **Project**: Ethan Anderson Portfolio + Blog  
 **Status**: Portfolio sections complete (all major components implemented and styled)
 
@@ -67,6 +67,10 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 - [x] Applied warning stripe SVG overlay (foreground layer)
 - [x] Configurable items, separator, and speed props
 - [x] Fixed text wrapping with whitespace-nowrap and proper height constraint
+- [x] **FIXED (Feb 11):** Ticker now properly constrains width to 1280px container on all viewport sizes
+  - Previously: Ticker expanded beyond 1280px on large viewports
+  - Now: Ticker respects container boundaries and scales responsively
+  - Solution: Added `max-w-[1280px]` constraint + responsive width handling
 
 **Files:**
 
@@ -83,6 +87,12 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
   className="custom-class"
 />
 ```
+
+**Responsive Behavior:**
+
+- Desktop (>1280px): Constrained to 1280px width, centered
+- Tablet (968px–1280px): Full viewport width with responsive padding
+- Mobile (<968px): Full viewport width with responsive padding
 
 #### Parallax Hand Animation
 
@@ -130,7 +140,7 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 
 ### Routing Structure
 
-```
+```text
 /                          → Portfolio landing (PortfolioLayout)
 /blog/                     → Blog index (IndexLayout)
 /blog/[slug]               → Individual posts (PostLayout)
@@ -140,7 +150,7 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 
 #### Portfolio Route (`/`)
 
-```
+```text
 BaseLayout (type="portfolio")
 └── PortfolioLayout
     ├── PortfolioHeader
@@ -150,7 +160,7 @@ BaseLayout (type="portfolio")
 
 #### Blog Routes (`/blog/*`)
 
-```
+```text
 BaseLayout (type="page")
 └── IndexLayout / PostLayout
     └── <slot> (blog content)
@@ -190,29 +200,27 @@ BaseLayout (type="page")
 
 ## Known Issues
 
-### 🔴 Missing Custom Fonts
+### ✅ RESOLVED - Custom Fonts Loading (Feb 12, 2026)
 
-**Issue:**
+**Previous Issue:**
 
-- `/fonts/guisol.woff2` returns 404
-- `/fonts/fit.woff2` returns 404
+- `/fonts/guisol.woff2` returned 404
+- `/fonts/fit.woff2` returned 404
 
-**Impact:**
+**Resolution:**
 
-- Button text falls back to sans-serif
-- Name heading falls back to sans-serif
-- Design doesn't match Figma specifications
+- ✅ All custom fonts now properly loaded and rendering
+- ✅ Guisol font displays in buttons and headers correctly
+- ✅ Fit font displays in name heading correctly
+- ✅ Iosevka Fixed loaded for bio text
+- ✅ Design now matches Figma specifications with proper typography
 
-**Resolution Required:**
+**Files:**
 
-- Obtain or create Guisol and Fit font files
-- Place in `public/fonts/` directory
-- Verify @font-face paths in PortfolioHeader.astro
-
-**Files Affected:**
-
-- `src/components/layout/PortfolioHeader.astro` (references fonts)
-- `public/fonts/` (missing directory or files)
+- `public/fonts/guisol.woff2` (buttons, section headers)
+- `public/fonts/fit.woff2` (name heading)
+- `public/fonts/iosevka-fixed-light-italic.woff2` (bio text)
+- `src/components/layout/PortfolioHeader.astro` (@font-face declarations)
 
 ---
 
@@ -261,20 +269,38 @@ BaseLayout (type="page")
 
 #### Blog Posts Section
 
-- [x] Created blog post cards with placeholder content
+- [x] Created blog post cards with dynamic content from content collection
 - [x] Grid layout matching projects (1/2/4 column responsive)
 - [x] Added "BLOG:" section header
 - [x] Styled with consistent card styling
+- [x] **NEW:** Implemented excerpt extraction utility (`src/utils/excerpt.ts`)
+- [x] **NEW:** Dynamically fetches 4 most recent blog posts
+- [x] **NEW:** Displays truncated titles (with ellipsis if > 16 chars)
+- [x] **NEW:** Displays excerpts (first 45 chars of body text after first heading)
+- [x] **NEW:** Links to individual blog post routes
 
 **Implementation Details:**
 
-- Uses same grid and card structure as projects
-- Placeholder cards pointing to `/blog` route
-- Ready for dynamic content integration in Phase 3
+- Uses `getSortedFilteredPosts()` to fetch and filter posts
+- `.slice(0, 4)` gets the 4 most recent posts (sorted newest-first)
+- `getExcerpt()` extracts plain-text excerpt from raw markdown:
+  - Finds content after first `##` heading
+  - Strips markdown formatting (bold, italic, links, code)
+  - Truncates to 45 characters with `…` ellipsis
+  - Safe fallback for posts without body content
+- Title truncation to 16 characters for card fit:
+  ```typescript
+  {post.data.title.length > 16
+    ? post.data.title.slice(0, 16) + '…'
+    : post.data.title}
+  ```
+- Links use `post.id` (filename slug) for route: `/{post.id}`
 
 **Files:**
 
-- `src/pages/index.astro` (blog section markup)
+- `src/pages/index.astro` (blog section markup with `.map()`)
+- `src/utils/excerpt.ts` (NEW - excerpt extraction utility)
+- `src/utils/draft.ts` (getSortedFilteredPosts, getFilteredPosts)
 - `src/styles/portfolio.css` (blog-card styles)
 
 #### Styling Refactor
@@ -294,8 +320,59 @@ Portfolio-specific styles now live in dedicated file, preventing blog style conf
 - [x] Decorative SVG assets (MOVIE GLOBE, BAT, HAND with parallax, STARS)
 - [x] Parallax hand animation integrated with scroll behavior
 - [x] Bio section with bat background image and stars divider
-- [ ] Dynamic blog post fetching from content collection
+- [x] **COMPLETED:** Dynamic blog post fetching from content collection
 - [ ] Optional: Project showcase with images
+
+### Excerpt Utility (`src/utils/excerpt.ts`)
+
+**Purpose:** Extract plain-text excerpts from raw markdown blog post content
+
+**How It Works:**
+
+1. Splits markdown into lines
+2. Finds content after first `##` heading (skips `#` and `##` heading lines)
+3. Skips empty lines and directive lines (starting with `::`)
+4. Strips inline markdown formatting:
+   - `**bold**` → `bold`
+   - `*italic*` → `italic`
+   - `[link text](url)` → `link text`
+   - `` `code` `` → `code`
+5. Truncates to specified length (default: 45 chars) with `…` ellipsis
+
+**Function Signature:**
+
+```typescript
+export function getExcerpt(body: string, length = 45): string
+```
+
+**Usage in index.astro:**
+
+```astro
+{getExcerpt(post.body ?? '')}
+```
+
+**Edge Cases Handled:**
+
+- Post with no body → returns empty string
+- Post with no content after heading → returns empty string
+- Short excerpts (< 45 chars) → returned as-is without ellipsis
+- Markdown formatting → properly stripped to plain text
+
+**Example:**
+
+Input markdown:
+```markdown
+## Debrief
+
+This week I led the design and prototyping efforts for a new brand identity for our boutique design agency, Fractal.
+```
+
+Output with `length = 45`:
+```
+This week I led the design and prototyping …
+```
+
+---
 
 ### 🟡 Phase 3: Blog Route Migration
 
@@ -468,7 +545,7 @@ When making significant changes, update:
 
 ## Resources
 
-- **Astro Docs**: https://docs.astro.build
-- **Tailwind CSS v4**: https://tailwindcss.com/docs/v4-beta
-- **Chiri Theme**: https://github.com/your-username/chiri (if applicable)
-- **Figma Design**: https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB
+- **Astro Docs**: <https://docs.astro.build>
+- **Tailwind CSS v4**: <https://tailwindcss.com/docs/v4-beta>
+- **Chiri Theme**: <https://github.com/your-username/chiri> (if applicable)
+- **Figma Design**: <https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB>

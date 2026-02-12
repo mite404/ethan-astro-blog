@@ -1,14 +1,45 @@
 # Portfolio Design Specification
 
 **Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`  
-**Last Updated**: 2025-12-27  
+**Last Updated**: 2026-02-12  
 **Implementation Status**: Portfolio sections complete (Header, Ticker, Projects, Blog, Bio, Parallax Hand, Contact Button)
 
 This document serves as the source of truth for the portfolio site design, extracted from the Figma design file.
 
-## Recent Changes (December 27, 2025)
+## Recent Changes (February 12, 2026)
 
-### Major Updates
+### Bug Fixes & Refinements
+
+- ✅ **Custom Fonts Resolution**: All custom fonts now loading correctly
+  - Guisol font displays in buttons and section headers
+  - Fit font displays in name heading
+  - Iosevka Fixed displays in bio text
+  - Design now matches Figma specifications with proper typography
+- ✅ **Ticker Width Constraint Fix**: Ticker component now properly constrains to 1280px on all viewport sizes
+  - Previously: Ticker expanded beyond container on large viewports
+  - Now: Respects 1280px boundary with responsive scaling
+  - Solution: Added `max-w-[1280px]` constraint to Ticker wrapper
+  - Responsive behavior:
+    - Desktop (>1280px): 1280px fixed width, centered
+    - Tablet (968px–1280px): Full viewport with responsive padding
+    - Mobile (<968px): Full viewport with responsive padding
+
+### Previous Changes (February 12, 2026)
+
+- ✅ **Blog Section Completion**: Implemented dynamic blog post cards with real content from the content collection
+  - Displays 4 most recent blog posts sorted newest-first
+  - Excerpt extraction utility (`getExcerpt()`) pulls first ~45 characters from post body
+  - Titles truncated to 16 characters with ellipsis for card fit
+  - Links to individual blog post routes
+- ✅ **Excerpt Utility**: Created `src/utils/excerpt.ts` to extract plain-text content from markdown
+  - Finds content after first `##` heading
+  - Strips inline markdown formatting (bold, italic, links, code)
+  - Safe fallback for posts without body text
+- ✅ **Blog Cards Styling**: Font size adjusted from 1.875rem (30px) to 16px for better layout fit
+  - Prevents title overflow on responsive grid
+  - Maintains visual hierarchy while fitting card constraints
+
+### Earlier Changes (December 27, 2025)
 
 - ✅ **Parallax Hand Animation**: Implemented 1.7x scaled hand (2875px width) with scroll-based parallax animation. Hand overflows container and is clipped at 1280px boundaries, positioned 150px left of center.
 - ✅ **Font System**: Converted Iosevka ExtraLight Italic from TTC to WOFF2 (10KB subset). Set italic angle to -12° for proper slant rendering.
@@ -46,8 +77,8 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 ### Primary Colors
 
 | Color Name | Hex Code  | Usage                     |
-| ---------- | --------- | ------------------------- | --------- |
-| Background | `#282828` | Main page background      | #1c1c1c ? |
+| ---------- | --------- | ------------------------- |
+| Background | `#282828` | Main page background      |
 | White      | `#FFFFFF` | Primary text, UI elements |
 | Neon Green | `#7FEE40` | Accent color, CTAs, name  |
 | Light Gray | `#D9D9D9` | GitHub button background  |
@@ -134,7 +165,7 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Border Radius**: 40px
 - **Background**: #D9D9D9
 - **Text**: "GITHUB" (Guisol, 20px, Black)
-- **Link**: https://github.com/mite404
+- **Link**: <https://github.com/mite404>
 - **Hover Effect**: Text color changes to #e071e3
 
 ##### Blog Button
@@ -329,6 +360,6 @@ Use Figma MCP server first, only use web url below as a fallback if a connection
 to the MCP server can't be established.
 
 **File**: `hxE0jhguSe2Irj2QoDH1JB`  
-**URL**: https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1
+**URL**: <https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1>
 
 For detailed measurements and visual specifications, refer to the Figma design file.

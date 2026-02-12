@@ -58,7 +58,7 @@ maintaining blog functionality.
 
 ### Root Configuration Files
 
-```
+```text
 astro.config.ts           # Main Astro config with integrations
 tsconfig.json             # TypeScript configuration with @ alias
 src/config.ts             # Theme config (single source of truth)
@@ -71,7 +71,7 @@ package.json              # Dependencies and scripts
 
 #### `/src/content` - Content Collections
 
-```
+```text
 content/
 ├── posts/                # Blog posts (markdown/MDX files)
 │   └── _assets/          # Post-associated assets
@@ -86,7 +86,7 @@ content/
 
 #### `/src/pages` - Routes & Templates
 
-```
+```text
 pages/
 ├── index.astro           # Homepage - displays post listings
 ├── [...slug].astro       # Dynamic route for blog posts
@@ -100,7 +100,7 @@ pages/
 
 #### `/src/layouts` - Template Hierarchy
 
-```
+```text
 layouts/
 ├── BaseLayout.astro      # Root layout (HTML, theme, globals)
 ├── IndexLayout.astro     # Extends BaseLayout for listing pages
@@ -109,7 +109,7 @@ layouts/
 
 #### `/src/components` - UI Components
 
-```
+```text
 components/
 ├── layout/               # Structural components
 │   ├── Header.astro
@@ -139,7 +139,7 @@ components/
 
 #### `/src/plugins` - Custom Markdown Processing
 
-```
+```text
 plugins/
 ├── remark-embedded-media.mjs  # Embedded media (videos, tweets,
 │                               # Spotify, YouTube, Bilibili, X, GitHub,
@@ -165,7 +165,7 @@ plugins/
 
 #### `/src/utils` - Utility Functions
 
-```
+```text
 utils/
 ├── draft.ts              # Draft post filtering logic
 ├── date.ts               # Date formatting utilities
@@ -176,7 +176,7 @@ utils/
 
 #### `/src/types` - TypeScript Definitions
 
-```
+```text
 types/
 ├── index.ts
 ├── config.types.ts       # Theme config type definitions
@@ -187,7 +187,7 @@ types/
 
 #### `/src/styles` - Stylesheets
 
-```
+```text
 styles/
 └── *.css                 # Global and component-scoped styles
 ```
@@ -256,7 +256,7 @@ Central configuration object controlling site behavior:
 
 ### Scripts (from `package.json`)
 
-```
+```text
 pnpm dev              # Start development server
 pnpm build            # Build → runs prebuild script first
 pnpm preview          # Preview production build
@@ -334,7 +334,7 @@ environments.
   (allows `self` + `unsafe-inline` for scripts/styles, bilibili embeds)
 - **Cache Strategy**:
   - Homepage `/`: 30min (short - frequent changes)
-  - Blog posts `/*/ `: 24hrs (longer - stable content)
+  - Blog posts `/*/`: 24hrs (longer - stable content)
   - Static assets `/_astro/*`, `/assets/*`, fonts: 1 year (immutable)
   - Images: 1 year (immutable)
 - **Redirects**: `/_astro/*` → `/_astro/:splat` (200 rewrite)

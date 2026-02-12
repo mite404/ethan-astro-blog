@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ethan Anderson Portfolio — Design System</title>
+    <style>
+      /* =========================================
+       @FONT-FACE DECLARATIONS (From Repo)
+       ========================================= */
+
+      @font-face {
+        font-family: 'Fit';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('../public/fonts/fit-regular.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Guisol';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('../public/fonts/guisol.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Iosevka Fixed Light';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url('../public/fonts/iosevka-fixed-light-italic.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Aptos Narrow';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('../public/fonts/aptos-narrow.woff2') format('woff2');
+      }
+
+      /* =========================================
+       DESIGN TOKENS
+       ========================================= */
+
+      :root {
+        /* Primary Colors */
+        --color-bg: #1c1c1c;
+        --color-text: #fefefe;
+        --color-accent: #7fee40;
+        --color-accent-secondary: #e071e3;
+        --color-button-text: #1c1c1c;
+        --color-subtle: rgba(255, 255, 255, 0.7);
+        --color-muted: rgba(255, 255, 255, 0.5);
+        --color-border: rgba(255, 255, 255, 1);
+
+        /* Typography - Font Families */
+        --font-fit: 'Fit', sans-serif;
+        --font-guisol: 'Guisol', sans-serif;
+        --font-iosevka: 'Iosevka Fixed Light', monospace;
+        --font-aptos: 'Aptos Narrow', sans-serif;
+        --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+        /* Spacing */
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+        --space-2xl: 48px;
+
+        /* Border Radius */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 40px;
+        --radius-xl: 77px;
+
+        /* Transitions */
+        --transition-fast: 200ms ease;
+      }
+
+      /* =========================================
+       BASE STYLES
+       ========================================= */
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        background-color: var(--color-bg);
+      }
+
+      body {
+        font-family: var(--font-system);
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        padding: var(--space-2xl);
+      }
+
+      /* =========================================
+       LAYOUT
+       ========================================= */
+
+      .page {
+        min-height: 100vh;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .header {
+        padding-bottom: var(--space-2xl);
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .header h1 {
+        font-family: var(--font-fit);
+        font-size: 56px;
+        font-weight: 400;
+        color: var(--color-accent);
+        margin-bottom: var(--space-md);
+      }
+
+      .header p {
+        font-family: var(--font-system);
+        font-size: 14px;
+        color: var(--color-subtle);
+        margin: 0;
+      }
+
+      /* =========================================
+       SECTION STYLES
+       ========================================= */
+
+      .section {
+        margin-bottom: var(--space-2xl);
+      }
+
+      .section-title {
+        font-family: var(--font-guisol);
+        font-size: 28px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-text);
+        margin-bottom: var(--space-lg);
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* =========================================
+       COLOR PALETTE
+       ========================================= */
+
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .color-card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .color-swatch {
+        width: 100%;
+        height: 120px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: var(--space-sm);
+        font-family: var(--font-system);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .color-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .color-name {
+        font-family: var(--font-guisol);
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
+
+      .color-value {
+        font-family: var(--font-system);
+        font-size: 12px;
+        color: var(--color-subtle);
+        font-family: monospace;
+      }
+
+      /* =========================================
+       TYPOGRAPHY
+       ========================================= */
+
+      .typography-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .typography-item {
+        border-left: 2px solid var(--color-accent);
+        padding-left: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .typography-item-title {
+        font-family: var(--font-system);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+      }
+
+      .typography-item-sample {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .typography-item-spec {
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--color-muted);
+      }
+
+      /* Typography Samples */
+      .sample-portfolio-name {
+        font-family: var(--font-fit);
+        font-size: 100px;
+        font-weight: 400;
+        color: var(--color-accent);
+        line-height: 1em;
+      }
+
+      .sample-section-title {
+        font-family: var(--font-guisol);
+        font-size: 100px;
+        font-weight: 400;
+        color: var(--color-text);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .sample-bio-top {
+        font-family: var(--font-iosevka);
+        font-size: 45px;
+        font-style: italic;
+        font-weight: 400;
+        color: var(--color-text);
+        line-height: 1;
+      }
+
+      .sample-bio-btm {
+        font-family: var(--font-guisol);
+        font-size: 40px;
+        font-weight: 400;
+        color: var(--color-text);
+        line-height: 1;
+      }
+
+      .sample-card-title {
+        font-family: var(--font-guisol);
+        font-size: 30px;
+        font-weight: 400;
+        color: var(--color-text);
+        text-transform: uppercase;
+      }
+
+      .sample-card-description {
+        font-family: var(--font-aptos);
+        font-size: 15px;
+        color: var(--color-subtle);
+        line-height: 1.6;
+      }
+
+      .sample-card-link {
+        font-family: var(--font-aptos);
+        font-size: 15px;
+        color: var(--color-text);
+      }
+
+      .sample-card-details {
+        font-family: var(--font-aptos);
+        font-size: 13px;
+        color: var(--color-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* =========================================
+       BUTTONS
+       ========================================= */
+
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .button-showcase {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+      }
+
+      .button-spec {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .button-spec-title {
+        font-family: var(--font-system);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+      }
+
+      .button-spec-details {
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--color-muted);
+        margin-bottom: var(--space-md);
+      }
+
+      /* Button Styles */
+      .btn-nav {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 50px;
+        border-radius: var(--radius-lg);
+        font-family: var(--font-guisol);
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 0.91em;
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .btn-nav-gh {
+        background-color: var(--color-text);
+        color: var(--color-button-text);
+      }
+
+      .btn-nav-gh:hover {
+        color: var(--color-accent-secondary);
+      }
+
+      .btn-nav-blog {
+        background-color: var(--color-accent);
+        color: var(--color-button-text);
+      }
+
+      .btn-nav-blog:hover {
+        color: var(--color-accent-secondary);
+      }
+
+      .btn-touch {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 800px;
+        height: 158px;
+        border-radius: var(--radius-xl);
+        background-color: var(--color-accent);
+        font-family: var(--font-guisol);
+        font-size: 85px;
+        font-weight: 400;
+        color: var(--color-text);
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .btn-touch:hover {
+        color: var(--color-accent-secondary);
+      }
+
+      .button-row {
+        display: flex;
+        gap: var(--space-lg);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      /* =========================================
+       CARDS
+       ========================================= */
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .card-title {
+        font-family: var(--font-guisol);
+        font-size: 19px;
+        font-weight: 400;
+        color: var(--color-text);
+        text-transform: uppercase;
+      }
+
+      .card-description {
+        font-family: var(--font-aptos);
+        font-size: 15px;
+        color: var(--color-subtle);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .card-link {
+        font-family: var(--font-aptos);
+        font-size: 15px;
+        color: var(--color-text);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+      }
+
+      .card-link:hover {
+        color: var(--color-accent-secondary);
+      }
+
+      .card-details {
+        font-family: var(--font-aptos);
+        font-size: 13px;
+        color: var(--color-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0;
+      }
+
+      /* =========================================
+       SPACING REFERENCE
+       ========================================= */
+
+      .spacing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .spacing-item {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .spacing-swatch {
+        width: 100%;
+        background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
+        border-radius: var(--radius-sm);
+      }
+
+      .spacing-label {
+        font-family: var(--font-system);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-text);
+      }
+
+      .spacing-value {
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--color-subtle);
+      }
+
+      /* =========================================
+       RESPONSIVE
+       ========================================= */
+
+      @media (max-width: 768px) {
+        body {
+          padding: var(--space-lg);
+        }
+
+        .header h1 {
+          font-size: 36px;
+        }
+
+        .sample-portfolio-name {
+          font-size: 48px;
+        }
+
+        .sample-section-title {
+          font-size: 48px;
+        }
+
+        .sample-bio-top {
+          font-size: 24px;
+        }
+
+        .sample-bio-btm {
+          font-size: 24px;
+        }
+
+        .color-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .spacing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .btn-touch {
+          width: 800px;
+          height: 120px;
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Header -->
+      <div class="header">
+        <h1>Portfolio Design System</h1>
+        <p>Ethan Anderson — Design tokens, typography, components, and UI patterns</p>
+      </div>
+
+      <!-- Color Palette Section -->
+      <div class="section">
+        <h2 class="section-title">Color Palette</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #1c1c1c; border-color: #7fee40">
+              Primary BG
+            </div>
+            <div class="color-info">
+              <div class="color-name">Primary Background</div>
+              <div class="color-value">#1c1c1c</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #fefefe">Text</div>
+            <div class="color-info">
+              <div class="color-name">Primary Text</div>
+              <div class="color-value">#fefefe</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #7fee40">Accent</div>
+            <div class="color-info">
+              <div class="color-name">Accent Color</div>
+              <div class="color-value">#7fee40</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: #e071e3">Secondary Accent</div>
+            <div class="color-info">
+              <div class="color-name">Secondary Accent (Hover)</div>
+              <div class="color-value">#e071e3</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: rgba(255, 255, 255, 0.7)">
+              Subtle
+            </div>
+            <div class="color-info">
+              <div class="color-name">Subtle Text (70%)</div>
+              <div class="color-value">rgba(255, 255, 255, 0.7)</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-swatch" style="background-color: rgba(255, 255, 255, 0.5)">Muted</div>
+            <div class="color-info">
+              <div class="color-name">Muted Text (50%)</div>
+              <div class="color-value">rgba(255, 255, 255, 0.5)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography Section -->
+      <div class="section">
+        <h2 class="section-title">Typography</h2>
+        <div class="typography-grid">
+          <div class="typography-item">
+            <div class="typography-item-title">Portfolio Name Heading</div>
+            <div class="typography-item-sample">
+              <div class="sample-portfolio-name">Ethan Anderson</div>
+              <div class="typography-item-spec">
+                Font: Fit | Size: 100px | Weight: 400 | Color: #7fee40
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Section Title</div>
+            <div class="typography-item-sample">
+              <div class="sample-section-title">PROJECTS:</div>
+              <div class="typography-item-spec">
+                Font: Guisol | Size: 100px | Weight: 400 | Letter-spacing: 0.05em | Text-transform:
+                uppercase
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Bio Heading (Top)</div>
+            <div class="typography-item-sample">
+              <div class="sample-bio-top">Creative tools & DX</div>
+              <div class="typography-item-spec">
+                Font: Iosevka Fixed Light | Size: 45px | Style: Italic | Line-height: 1
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Bio Heading (Bottom)</div>
+            <div class="typography-item-sample">
+              <div class="sample-bio-btm">19 years of systems thinking</div>
+              <div class="typography-item-spec">
+                Font: Guisol | Size: 40px | Weight: 400 | Line-height: 1
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Card Title</div>
+            <div class="typography-item-sample">
+              <div class="sample-card-title">PROJECT TITLE</div>
+              <div class="typography-item-spec">
+                Font: Guisol | Size: 30px | Weight: 400 | Text-transform: uppercase
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Card Description</div>
+            <div class="typography-item-sample">
+              <div class="sample-card-description">
+                A brief description of the project content goes here with multiple lines to show
+                line height and spacing.
+              </div>
+              <div class="typography-item-spec">
+                Font: Aptos Narrow | Size: 15px | Line-height: 1.6 | Color: rgba(255, 255, 255, 0.7)
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Card Link</div>
+            <div class="typography-item-sample">
+              <div class="sample-card-link">GitHub | Live</div>
+              <div class="typography-item-spec">
+                Font: Aptos Narrow | Size: 15px | Transition: 200ms ease
+              </div>
+            </div>
+          </div>
+
+          <div class="typography-item">
+            <div class="typography-item-title">Card Meta Details</div>
+            <div class="typography-item-sample">
+              <div class="sample-card-details">REACT • TYPESCRIPT • TAILWIND</div>
+              <div class="typography-item-spec">
+                Font: Aptos Narrow | Size: 13px | Letter-spacing: 0.05em | Text-transform: uppercase
+                | Color: rgba(255, 255, 255, 0.5)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons Section -->
+      <div class="section">
+        <h2 class="section-title">Buttons & CTAs</h2>
+        <div class="buttons-grid">
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Navigation Buttons</div>
+              <div class="button-spec-details">
+                GitHub Button: 100px × 50px, #fefefe bg, 40px radius<br />
+                Blog Button: 100px × 50px, #7fee40 bg, 40px radius<br />
+                Font: Guisol, 22px, 0.91em line-height, UPPERCASE<br />
+                Hover state: text color #e071e3
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="btn-nav btn-nav-gh">GITHUB</button>
+              <button class="btn-nav btn-nav-blog">BLOG</button>
+            </div>
+          </div>
+
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Primary CTA Button — "GET IN TOUCH"</div>
+              <div class="button-spec-details">
+                800px × 158px (full portfolio width)<br />
+                #7fee40 bg, 77px radius<br />
+                Font: Guisol, 85px, #fefefe text, UPPERCASE<br />
+                Hover state: text color #e071e3<br />
+                <strong>Note:</strong> Height 158px provides intentional padding around text
+              </div>
+            </div>
+            <button class="btn-touch">GET IN TOUCH</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Section -->
+      <div class="section">
+        <h2 class="section-title">Card Components</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-title">PROJECT TITLE</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub</a>
+            <a href="#" class="card-link">| Live</a>
+            <p class="card-details">REACT • TYPESCRIPT • TAILWIND</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">ANOTHER PROJECT</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub</a>
+            <a href="#" class="card-link">| Live</a>
+            <p class="card-details">NEXT.JS • SUPABASE • FIGMA</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">BLOG POST</div>
+            <p class="card-description">
+              A brief description of the blog post content goes here with insights about
+              development.
+            </p>
+            <a href="#" class="card-link">Read More...</a>
+            <p class="card-details">ASTRO • WEB DEV • DESIGN</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spacing Reference Section -->
+      <div class="section">
+        <h2 class="section-title">Spacing System</h2>
+        <div class="spacing-grid">
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 4px"></div>
+            <div class="spacing-label">XS</div>
+            <div class="spacing-value">4px</div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 8px"></div>
+            <div class="spacing-label">SM</div>
+            <div class="spacing-value">8px</div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 16px"></div>
+            <div class="spacing-label">MD</div>
+            <div class="spacing-value">16px</div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 24px"></div>
+            <div class="spacing-label">LG</div>
+            <div class="spacing-value">24px</div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 32px"></div>
+            <div class="spacing-label">XL</div>
+            <div class="spacing-value">32px</div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-swatch" style="height: 48px"></div>
+            <div class="spacing-label">2XL</div>
+            <div class="spacing-value">48px</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design Tokens Summary -->
+      <div class="section">
+        <h2 class="section-title">Design Tokens Summary</h2>
+        <div style="border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 24px">
+          <pre
+            style="
+              color: rgba(255, 255, 255, 0.8);
+              font-family: monospace;
+              font-size: 13px;
+              line-height: 1.8;
+              overflow-x: auto;
+            "
+          ><span style="color: #7fee40;">/* COLORS */</span>
+--color-bg: #1c1c1c
+--color-text: #fefefe
+--color-accent: #7fee40
+--color-accent-secondary: #e071e3
+--color-button-text: #1c1c1c
+--color-subtle: rgba(255, 255, 255, 0.7)
+--color-muted: rgba(255, 255, 255, 0.5)
+
+<span style="color: #7fee40;">/* TYPOGRAPHY */</span>
+--font-fit: 'Fit' (portfolio name)
+--font-guisol: 'Guisol' (headings & buttons)
+--font-iosevka: 'Iosevka Fixed Light' (bio, italic)
+--font-aptos: 'Aptos Narrow' (card content)
+
+<span style="color: #7fee40;">/* SIZING */</span>
+Navigation buttons: 100px × 50px, radius: 40px
+CTA button: 800px × 158px (responsive, no max-width), radius: 77px
+Portfolio layout: 1280px max-width (fixed)
+
+<span style="color: #7fee40;">/* TYPOGRAPHY SCALES */</span>
+Portfolio Name: 100px (Fit)
+Section Titles: 100px (Guisol, uppercase)
+Bio Top: 45px (Iosevka, italic)
+Bio Bottom: 40px (Guisol)
+Card Title: 30px (Guisol, uppercase)
+CTA Button: 85px (Guisol, uppercase)
+Nav Buttons: 22px (Guisol, uppercase)
+
+<span style="color: #7fee40;">/* TRANSITIONS */</span>
+--transition-fast: 200ms ease (hover states)</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
