@@ -45,9 +45,9 @@ pubDate: '${new Date().toISOString().split('T')[0]}'
 try {
   writeFileSync(fullPath, content)
   if (isDraft) {
-    console.log(`📝 Draft created: ${fullPath}`)
+    console.warn(`📝 Draft created: ${fullPath}`)
   } else {
-    console.log(`✅ Post created: ${fullPath}`)
+    console.warn(`✅ Post created: ${fullPath}`)
   }
 } catch (error) {
   console.error('⚠️ Failed to create post:', error)

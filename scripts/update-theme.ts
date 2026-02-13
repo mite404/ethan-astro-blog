@@ -28,9 +28,9 @@ try {
   const newCommit = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim()
 
   if (currentCommit === newCommit) {
-    console.log('🤗 No updates available, already up to date')
+    console.warn('🤗 No updates available, already up to date')
   } else {
-    console.log('✅ Theme updated')
+    console.warn('✅ Theme updated')
   }
 } catch (error) {
   // Check if there's a merge conflict
@@ -38,7 +38,7 @@ try {
   const mergeHeadFile = path.join(gitDirectory, 'MERGE_HEAD')
 
   if (fs.existsSync(mergeHeadFile)) {
-    console.log('⚠️ Update fetched with merge conflicts. Please resolve manually')
+    console.warn('⚠️ Update fetched with merge conflicts. Please resolve manually')
   } else {
     console.error('❌ Update failed:', error)
     process.exit(1)

@@ -10,12 +10,12 @@ import stars from '@/assets/portfolio/STARS.png'
 import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
 import ParallaxHand from '@/components/ui/ParallaxHand'
-import { getFilteredPosts, getSortedFilteredPosts } from '@/utils/draft'
+import { getSortedFilteredPosts } from '@/utils/draft'
 import { getExcerpt } from '@/utils/excerpt'
 
 const posts = await getSortedFilteredPosts()
 const mostRecentPosts = posts.slice(0, 4)
-console.log(mostRecentPosts.map((p) => p.data.title))
+console.warn(mostRecentPosts.map((p) => p.data.title))
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
