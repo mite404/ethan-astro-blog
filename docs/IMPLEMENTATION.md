@@ -138,15 +138,83 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 
 ---
 
-## Current Architecture
+## Architecture Reference
 
 ### Routing Structure
+
+**Current:**
+
+- `src/pages/index.astro` - Portfolio landing page (uses PortfolioLayout)
+- `src/pages/[...slug].astro` - Dynamic routes for blog posts (uses getStaticPaths)
+- `src/pages/404.astro` - 404 error page
+- `src/pages/api/` - API routes for dynamic functionality
+- `src/pages/open-graph/` - Open Graph image generation
+- `src/pages/rss.xml.ts` and `src/pages/atom.xml.ts` - Feed generation
+
+**Route Hierarchy:**
 
 ```text
 /                          → Portfolio landing (PortfolioLayout)
 /blog/                     → Blog index (IndexLayout)
 /blog/[slug]               → Individual posts (PostLayout)
 ```
+
+**Planned (Phase 3):**
+
+- Move blog routes to `src/pages/blog/index.astro` and `src/pages/blog/[...slug].astro`
+- Keep portfolio at `/`
+- Update internal links and navigation
+
+### Custom Remark/Rehype Plugins
+
+Located in `src/plugins/`, these process markdown content:
+
+- **remark-embedded-media.mjs** - Handles embedded media (videos, tweets, etc.)
+- **remark-reading-time.mjs** - Calculates reading time
+- **remark-toc.mjs** - Generates table of contents
+- **rehype-image-processor.mjs** - Processes images for optimization
+- **rehype-copy-code.mjs** - Adds copy button to code blocks
+- **rehype-cleanup.mjs** - Cleans up HTML output
+
+### Configuration Files
+
+- **src/config.ts** - Main theme configuration (site info, general settings, date format, post features)
+- **astro.config.ts** - Astro configuration with Tailwind v4 Vite plugin
+- **tailwind.config.js** - Minimal config (v4 auto-scans via imports)
+- **netlify.toml** - Netlify deployment config with headers and caching rules
+
+### Path Aliases
+
+The project uses `@/` as an alias for `src/` directory (configured in astro.config.ts).
+
+### Build Process
+
+The prebuild script (`scripts/toggle-proxy.ts`) runs before each build to handle proxy configuration
+for deployment environments.
+
+### Component Organization
+
+**UI Components** (`src/components/ui/`)
+
+- Reusable UI elements: ThemeManager, TableOfContents, ImageViewer, CopyCode, LinkCard, etc.
+
+**Layout Components** (`src/components/layout/`)
+
+- Structural components: Header, Footer, BaseHead, TransitionWrapper, PortfolioHeader, Ticker
+
+**Widgets** (`src/components/widgets/`)
+
+- Complex feature components for homepage sections
+
+**Example Components** (`src/components/examples/`)
+
+- Demonstration components (Callout, Tag) showing MDX capabilities
+
+### TypeScript Configuration
+
+- Extends Astro's strict TypeScript config with `strictNullChecks: true`
+- Path alias `@/` resolves to `src/` directory
+- All files (except dist) are included in TypeScript checking
 
 ### Layout Hierarchy
 
@@ -439,7 +507,7 @@ This week I led the design and prototyping …
 
 All design specifications are documented in:
 
-- **`docs/SPEC.md`** - Complete Figma design specs
+- **`docs/portfolio-design-system.html`**
 - **Figma File**: `hxE0jhguSe2Irj2QoDH1JB`
 
 ### Key Constants
@@ -528,13 +596,6 @@ When making significant changes, update:
 ---
 
 ## Questions & Decisions Log
-
-### Q: Why 1280px width (not 792px)?
-
-**A:** Matches the actual Figma canvas dimensions. The 792px reference was
-outdated documentation. 1280px width creates the full poster-style composition
-with side spacing on larger viewports. The hand asset (2875px at 1.7x scale)
-intentionally overflows and is clipped at this boundary for dramatic effect.
 
 ### Q: Why not use Tailwind config for custom values?
 

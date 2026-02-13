@@ -4,30 +4,11 @@ import { useEffect, useState } from 'react'
 export default function ParallaxHand() {
   // State for globe position and mount status
   const [globeOffsetTop, setGlobeOffsetTop] = useState(0)
+  const [scrollRange, setScrollRange] = useState({ start: 0, end: 0 })
   const [mounted, setMounted] = useState(false)
 
   // Track page scroll
   const { scrollY } = useScroll()
-
-  // Calculate scroll range dynamically
-  // We need to calculate when the globe bottom enters the viewport
-  const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0
-  const pageScrollHeight =
-    typeof document !== 'undefined' ? document.documentElement.scrollHeight - viewportHeight : 0
-
-  // Calculate the absolute position of the globe bottom from page top
-  const globeBottomAbsolute =
-    globeOffsetTop +
-    (typeof document !== 'undefined'
-      ? document.querySelector('.portfolio-layout')?.offsetTop || 0
-      : 0)
-
-  // Start animating when the globe's bottom edge enters the viewport (from below)
-  // This happens when scrollY reaches: globeBottom - viewportHeight
-  const scrollRange = {
-    start: globeBottomAbsolute - viewportHeight,
-    end: pageScrollHeight
-  }
 
   // Transform scroll to Y position
   // The hand SVG scaled 1.7x (2572×1910px) frames the button with thumb reaching globe center
@@ -48,21 +29,44 @@ export default function ParallaxHand() {
         const globeBottomFromPageTop = rect.bottom + scrollTop
 
         // Find the .portfolio-layout container
-        const portfolioLayout = document.querySelector('.portfolio-layout')
+        const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
         const layoutOffsetTop = portfolioLayout ? portfolioLayout.offsetTop : 0
 
         // Calculate globe position relative to .portfolio-layout
         const globeOffsetFromLayout = globeBottomFromPageTop - layoutOffsetTop
 
+        console.warn('🖐️ Calculated position:', {
+          globeOffsetFromLayout,
+          globeBottomFromPageTop,
+          layoutOffsetTop,
+          viewportHeight: window.innerHeight
+        })
         setGlobeOffsetTop(globeOffsetFromLayout)
+
+        // Update scroll range
+        // Start: when globe bottom is at viewport bottom (globe just entering view)
+        // End: bottom of page
+        const pageHeight = document.documentElement.scrollHeight - window.innerHeight
+        setScrollRange({
+          start: 0, // Start animation at top of page
+          end: pageHeight // End at bottom of scrollable area
+        })
+      } else {
+        console.error('❌ Globe container [data-globe-container] not found!')
       }
     }
 
-    calculateGlobePosition()
-    setMounted(true)
+    // Delay calculation to ensure DOM is fully rendered
+    const timer = setTimeout(() => {
+      calculateGlobePosition()
+      setMounted(true)
+    }, 100)
 
     window.addEventListener('resize', calculateGlobePosition)
-    return () => window.removeEventListener('resize', calculateGlobePosition)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', calculateGlobePosition)
+    }
   }, [])
 
   // Don't render until mounted (SSR safety)
