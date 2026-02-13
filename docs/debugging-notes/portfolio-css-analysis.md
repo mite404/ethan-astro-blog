@@ -38,11 +38,15 @@
 ### Problem 1: Missing Tailwind CSS Import
 
 **Root Cause:**
-The project uses **Tailwind CSS v4** (via `@tailwindcss/vite` plugin), which has a different architecture than v3:
+The project uses **Tailwind CSS v4** (via `@tailwindcss/vite` plugin), which has a different
+architecture than v3:
 
-1. **Tailwind v4 doesn't use a `content` array in config** - it automatically scans files based on CSS imports
-2. **Tailwind v4 requires the base CSS to be imported** - the main CSS file (`src/styles/global.css`) contains `@import 'tailwindcss'`
-3. **PortfolioLayout.astro didn't import global.css** - only blog layouts (IndexLayout, PostLayout, BlogIndexLayout) imported it
+1. **Tailwind v4 doesn't use a `content` array in config** - it automatically scans files based on
+   CSS imports
+2. **Tailwind v4 requires the base CSS to be imported** - the main CSS file (`src/styles/global.css`)
+   contains `@import 'tailwindcss'`
+3. **PortfolioLayout.astro didn't import global.css** - only blog layouts (IndexLayout, PostLayout,
+   BlogIndexLayout) imported it
 
 **Impact:**
 
@@ -53,24 +57,23 @@ The project uses **Tailwind CSS v4** (via `@tailwindcss/vite` plugin), which has
 **Evidence:**
 
 ```astro
-// Before fix - src/layouts/PortfolioLayout.astro
-
-import BaseLayout from '@/layouts/BaseLayout.astro' import BaseHead from '@/components/layout/BaseHead.astro'
-// No global.css import!
+// Before fix - src/layouts/PortfolioLayout.astro import BaseLayout from
+'@/layouts/BaseLayout.astro' import BaseHead from '@/components/layout/BaseHead.astro' // No
+global.css import!
 ```
 
 vs.
 
 ```astro
-// Blog layouts had the import - src/layouts/IndexLayout.astro
-
-import '@/styles/global.css' // This line was missing in PortfolioLayout import BaseHead from '@/components/layout/BaseHead.astro'
+// Blog layouts had the import - src/layouts/IndexLayout.astro import '@/styles/global.css' // This
+line was missing in PortfolioLayout import BaseHead from '@/components/layout/BaseHead.astro'
 ```
 
 ### Problem 2: Incorrect Display Model for Ticker
 
 **Root Cause:**
-The Ticker component used `h-[1.5em]` to constrain height, but this was applied to a block-level div element without proper overflow handling:
+The Ticker component used `h-[1.5em]` to constrain height, but this was applied to a block-level div
+element without proper overflow handling:
 
 ```astro
 // Before fix
@@ -139,7 +142,8 @@ const { title, description } = Astro.props
 **Why this works:**
 
 - Tailwind v4 uses Vite's import system to determine which files need Tailwind processing
-- Importing `global.css` (which contains `@import 'tailwindcss'`) ensures Tailwind processes the portfolio page
+- Importing `global.css` (which contains `@import 'tailwindcss'`) ensures Tailwind processes the
+  portfolio page
 - All Tailwind utility classes in portfolio components now generate corresponding CSS rules
 - The Tailwind Vite plugin scans imported files and their dependencies
 
@@ -322,7 +326,8 @@ pnpm build
 
 ### Tailwind CSS v4 Differences
 
-This project uses **Tailwind CSS v4** via `@tailwindcss/vite`, which has important differences from v3:
+This project uses **Tailwind CSS v4** via `@tailwindcss/vite`, which has important differences
+from v3:
 
 1. **No `content` configuration required** - Tailwind v4 automatically scans based on CSS imports
 2. **CSS-first configuration** - Use `@import 'tailwindcss'` in CSS files
@@ -338,7 +343,8 @@ This project uses **Tailwind CSS v4** via `@tailwindcss/vite`, which has importa
    })
    ```
 
-4. **Import-based scanning** - Files are scanned for Tailwind classes only if they're in the import graph of a file that imports the Tailwind CSS
+4. **Import-based scanning** - Files are scanned for Tailwind classes only if they're in the import
+   graph of a file that imports the Tailwind CSS
 
 ### Layout Type System
 
@@ -371,7 +377,8 @@ The cascade order for portfolio pages is now:
 
 ## Best Practices Applied
 
-1. **Single Source of Truth:** Global styles in one place (`global.css`), specialized overrides in layout files
+1. **Single Source of Truth:** Global styles in one place (`global.css`), specialized overrides in
+   layout files
 2. **Specificity Management:** Used attribute selectors instead of `!important` flags
 3. **Conditional Styling:** Leveraged `data-` attributes for clean style separation
 4. **Import Hygiene:** Ensured all layouts import the base CSS bundle
@@ -398,7 +405,8 @@ The cascade order for portfolio pages is now:
 2. **Consider CSS modules:** For more complex components, CSS modules could provide better isolation
 3. **Document layout types:** Add comments in BaseLayout.astro explaining the `type` prop system
 4. **Test responsive behavior:** Verify portfolio layout on various screen sizes
-5. **Consider Tailwind config:** While v4 doesn't require content paths, custom theme extensions should go in `tailwind.config.js`
+5. **Consider Tailwind config:** While v4 doesn't require content paths, custom theme extensions
+   should go in `tailwind.config.js`
 
 ---
 

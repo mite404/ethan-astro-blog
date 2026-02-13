@@ -407,13 +407,15 @@ when React evaluates the code. Always put hooks first, conditionals second.
 ### 🐛 Bug #5: Typography Rendering Mismatch Between Figma & Browser (Feb 13, 2026)
 
 **The Problem:**
-Project and blog card titles looked noticeably different in the browser vs Figma. Letters appeared tighter/more condensed in Chrome, while Figma showed more breathing room between glyphs.
+Project and blog card titles looked noticeably different in the browser vs Figma. Letters appeared
+tighter/more condensed in Chrome, while Figma showed more breathing room between glyphs.
 
 **Root Cause Analysis:**
 
 - Figma uses Skia text rendering engine
 - Chrome uses OS text shaping (CoreText on macOS)
-- Global CSS setting `text-rendering: optimizeLegibility` was causing browser to apply aggressive kerning, tightening letter spacing beyond designer intent
+- Global CSS setting `text-rendering: optimizeLegibility` was causing browser to apply aggressive
+  kerning, tightening letter spacing beyond designer intent
 - Font file: Guisol Regular at 30px (1.875rem)
 - Figma specs: 0% letter-spacing, auto line-height
 
@@ -428,10 +430,157 @@ text-rendering: geometricPrecision;
 **Why This Works:**
 
 - `letter-spacing: 0.02em` → Compensates for Chrome's tighter kerning, matches Figma's visual spacing
-- `text-rendering: geometricPrecision` → Overrides inherited `optimizeLegibility`, trusts the font's designed spacing rather than browser-applied optimizations
+- `text-rendering: geometricPrecision` → Overrides inherited `optimizeLegibility`, trusts the font's
+  designed spacing rather than browser-applied optimizations
 
 **Learning:**
-Display fonts (like Guisol) benefit from `geometricPrecision` because they're explicitly designed with precise spacing. Body text benefits from `optimizeLegibility` for readability. Different font types need different rendering hints.
+Display fonts (like Guisol) benefit from `geometricPrecision` because they're explicitly designed with
+precise spacing. Body text benefits from `optimizeLegibility` for readability. Different font types
+need different rendering hints.
+
+---
+
+### 🐛 Bug #6: HTML Attributes Overriding CSS Styles (Feb 13, 2026)
+
+**The Problem:**
+
+Project preview images (200×125px) were added to the cards with CSS margins:
+
+```css
+.project-image {
+  margin-top: 0.9375rem; /* 15px */
+  margin-bottom: 1.5625rem; /* 25px */
+}
+```
+
+But in the browser, the images had **zero margins**. The CSS wasn't applying at all.
+
+**The Diagnosis:**
+
+Using Chrome DevTools, I inspected the computed styles and found something unexpected:
+
+```html
+<!-- What was rendered in index.astro -->
+<img
+  src="{project.image}"
+  alt="{`${project.title}"
+  preview`}
+  class="project-image"
+  width="200"
+  height="125"
+/>
+```
+
+The `width="200"` and `height="125"` **HTML attributes** were present. While these
+directly control image dimensions, they have **higher specificity** than CSS
+margins.
+
+> [!Warning]
+> Technical inaccuracy: HTML width/height attributes don't override CSS margins.
+>
+> The explanation states that HTML width="200" and height="125" have "higher specificity than CSS
+> margins," but this is incorrect. HTML dimension attributes on <img> act as presentational hints for
+> the width/height CSS properties only — they cannot affect margin, padding, or any other CSS
+> property. They also don't fit into CSS specificity the way described in the hierarchy block.
+
+> [!Tip]
+> If .project-image margins weren't applying, the likely cause was either:
+>
+> - The selector not matching (e.g., CSS not loaded, or a specificity conflict with another rule)
+> - Another CSS rule overriding the margins
+>
+> The practical advice (preferring CSS for sizing) is still sound, but the stated "why" is misleading.
+> Consider revising the explanation to avoid teaching an incorrect mental model of the cascade.
+
+**Why This Matters:**
+
+CSS specificity hierarchy:
+
+```
+Element tag (img)          ← Lowest
+.class selectors           ← Medium (what we used)
+#id selectors              ← Higher
+Inline style=""            ← Highest (except !important)
+HTML attributes            ← Tricky middle ground
+```
+
+HTML attributes on elements like `<img>` have **implicit weight** in the cascade.
+They're not "specificity" in the CSS sense, but they override CSS properties
+when the properties conflict with their own rendering logic.
+
+**The Fix:**
+
+Remove the inline `width` and `height` HTML attributes:
+
+```astro
+{
+  project.image && (
+    <img
+      src={project.image}
+      alt={`${project.title} preview`}
+      class="project-image"
+      {
+      /* ❌ Removed: width="200" height="125" */ }
+    />
+  )
+}
+```
+
+Now CSS can control all sizing and spacing:
+
+```css
+.project-image {
+  width: 12.5rem; /* 200px */
+  height: 7.8125rem; /* 125px */
+  aspect-ratio: 8/5;
+  object-fit: cover;
+  margin-top: 0.9375rem;
+  margin-bottom: 1.5625rem;
+}
+```
+
+**The Lesson:**
+
+When styling HTML elements, be aware:
+
+1. **Element-level attributes** (like `width`, `height`, `href`) can override CSS
+2. **Inspect applied rules in DevTools** — look for both CSS and HTML attributes
+3. **Check the source markup** — don't assume the HTML is clean
+4. **Prefer CSS for styling** — keep HTML attributes for semantic purposes only
+
+**Why This Happened:**
+
+In Astro, when passing dimensions to `<img>`, it's common to set them as attributes
+for performance (tells browser image dimensions before download). But when you _also_
+want CSS to control spacing/margins, the HTML attributes create a conflict.
+
+**Best Practice:**
+
+```astro
+<!-- Good: Use img with alt only, let CSS handle sizing -->
+<img src={url} alt="description" class="responsive-image" />
+
+<!-- Avoid: HTML dimensions override CSS -->
+<img src={url} alt="description" width="200" height="125" class="card-image" />
+```
+
+If you need to communicate dimensions to the browser for performance, use the `sizes`
+attribute or set dimensions in CSS instead:
+
+```css
+img.card-image {
+  width: 200px;
+  height: 125px;
+  /* Now CSS controls it, not HTML attributes */
+}
+```
+
+**Director's Commentary:**
+
+This is a subtle but important lesson about the HTML/CSS cascade. HTML attributes
+aren't "style", but they act like low-level style overrides. Always be explicit:
+either let HTML attributes control layout, or use CSS — don't mix them on the same
+element.
 
 ---
 
@@ -439,7 +588,8 @@ Display fonts (like Guisol) benefit from `geometricPrecision` because they're ex
 
 ### Font Rendering & Cross-Platform Consistency
 
-**Core Insight**: Different design tools and browsers render fonts differently due to underlying text rendering engines. Figma ≠ Chrome ≠ Safari.
+**Core Insight**: Different design tools and browsers render fonts differently due to underlying text
+rendering engines. Figma ≠ Chrome ≠ Safari.
 
 **The Challenge:**
 
@@ -479,7 +629,8 @@ Font names in CSS must **exactly match** the `font-family` declaration in `@font
 - ❌ `font-family: 'Iosevka Fixed Light'` (doesn't exist in @font-face)
 - ✅ `font-family: 'Iosevka Fixed'` (matches @font-face declaration)
 
-When mismatched, the browser falls back to system fonts and applies synthetic italics/bolds, which degrades quality significantly.
+When mismatched, the browser falls back to system fonts and applies synthetic italics/bolds, which
+degrades quality significantly.
 
 ### Design System Documentation as Source of Truth
 
