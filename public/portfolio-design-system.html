@@ -26,7 +26,7 @@
       }
 
       @font-face {
-        font-family: 'Iosevka Fixed Light';
+        font-family: 'Iosevka Fixed';
         font-style: italic;
         font-weight: 400;
         font-display: swap;
@@ -211,6 +211,9 @@
         font-family: monospace;
       }
 
+      .highlight {
+        color: #e071e3;
+      }
       /* =========================================
        TYPOGRAPHY
        ========================================= */
@@ -261,9 +264,9 @@
 
       .sample-section-title {
         font-family: var(--font-guisol);
-        font-size: 100px;
+        font-size: 6.25rem;
         font-weight: 400;
-        color: var(--color-text);
+        color: white;
         text-transform: uppercase;
         letter-spacing: 0.05em;
       }
@@ -273,15 +276,15 @@
         font-size: 45px;
         font-style: italic;
         font-weight: 400;
-        color: var(--color-text);
-        line-height: 1;
+        color: white;
+        line-height: 105%;
       }
 
       .sample-bio-btm {
         font-family: var(--font-guisol);
-        font-size: 40px;
+        font-size: 2.5rem;
         font-weight: 400;
-        color: var(--color-text);
+        color: white;
         line-height: 1;
       }
 
@@ -289,27 +292,35 @@
         font-family: var(--font-guisol);
         font-size: 30px;
         font-weight: 400;
-        color: var(--color-text);
-        text-transform: uppercase;
+        color: #ffffff;
+        line-height: normal;
       }
 
       .sample-card-description {
         font-family: var(--font-aptos);
-        font-size: 15px;
-        color: var(--color-subtle);
+        font-size: 0.938rem;
+        color: rgba(255, 255, 255, 0.7);
         line-height: 1.6;
+        font-style: normal;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
       }
 
       .sample-card-link {
+        display: inline-block;
         font-family: var(--font-aptos);
-        font-size: 15px;
-        color: var(--color-text);
+        font-size: 0.938rem;
+        color: #fefefe;
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+        transition: color 0.2s ease;
       }
 
       .sample-card-details {
         font-family: var(--font-aptos);
-        font-size: 13px;
-        color: var(--color-muted);
+        font-size: 0.813rem;
+        color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.05em;
       }
@@ -444,36 +455,41 @@
 
       .card-title {
         font-family: var(--font-guisol);
-        font-size: 19px;
+        font-size: 30px;
         font-weight: 400;
-        color: var(--color-text);
-        text-transform: uppercase;
+        color: #ffffff;
+        line-height: normal;
       }
 
       .card-description {
         font-family: var(--font-aptos);
-        font-size: 15px;
-        color: var(--color-subtle);
+        font-size: 0.938rem;
+        color: rgba(255, 255, 255, 0.7);
         line-height: 1.6;
-        margin: 0;
+        font-style: normal;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
       }
 
       .card-link {
+        display: inline-block;
         font-family: var(--font-aptos);
-        font-size: 15px;
-        color: var(--color-text);
+        font-size: 0.938rem;
+        color: #fefefe;
         text-decoration: none;
-        transition: color var(--transition-fast);
+        margin-bottom: 0.75rem;
+        transition: color 0.2s ease;
       }
 
       .card-link:hover {
-        color: var(--color-accent-secondary);
+        color: #e071e3;
       }
 
       .card-details {
         font-family: var(--font-aptos);
-        font-size: 13px;
-        color: var(--color-muted);
+        font-size: 0.813rem;
+        color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin: 0;
@@ -572,7 +588,7 @@
     <div class="page">
       <!-- Header -->
       <div class="header">
-        <h1>Portfolio Design System</h1>
+        <h1 style="font-size: 100px">Portfolio Design System</h1>
         <p>Ethan Anderson — Design tokens, typography, components, and UI patterns</p>
       </div>
 
@@ -662,7 +678,7 @@
           <div class="typography-item">
             <div class="typography-item-title">Bio Heading (Top)</div>
             <div class="typography-item-sample">
-              <div class="sample-bio-top">Creative tools & DX</div>
+              <div class="sample-bio-top">Creative tools & <span class="highlight">DX</span></div>
               <div class="typography-item-spec">
                 Font: Iosevka Fixed Light | Size: 45px | Style: Italic | Line-height: 1
               </div>
@@ -682,7 +698,7 @@
           <div class="typography-item">
             <div class="typography-item-title">Card Title</div>
             <div class="typography-item-sample">
-              <div class="sample-card-title">PROJECT TITLE</div>
+              <div class="sample-card-title">Project Title</div>
               <div class="typography-item-spec">
                 Font: Guisol | Size: 30px | Weight: 400 | Text-transform: uppercase
               </div>
@@ -715,7 +731,7 @@
           <div class="typography-item">
             <div class="typography-item-title">Card Meta Details</div>
             <div class="typography-item-sample">
-              <div class="sample-card-details">REACT • TYPESCRIPT • TAILWIND</div>
+              <div class="sample-card-details">REACT | TYPESCRIPT | TAILWIND</div>
               <div class="typography-item-spec">
                 Font: Aptos Narrow | Size: 13px | Letter-spacing: 0.05em | Text-transform: uppercase
                 | Color: rgba(255, 255, 255, 0.5)
@@ -766,33 +782,31 @@
         <h2 class="section-title">Card Components</h2>
         <div class="cards-grid">
           <div class="card">
-            <div class="card-title">PROJECT TITLE</div>
+            <div class="card-title">Project Title</div>
             <p class="card-description">
               A brief description of the project content goes here showcasing multiple lines.
             </p>
-            <a href="#" class="card-link">GitHub</a>
-            <a href="#" class="card-link">| Live</a>
-            <p class="card-details">REACT • TYPESCRIPT • TAILWIND</p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">REACT | TYPESCRIPT | TAILWIND</p>
           </div>
 
           <div class="card">
-            <div class="card-title">ANOTHER PROJECT</div>
+            <div class="card-title">Another Project</div>
             <p class="card-description">
               A brief description of the project content goes here showcasing multiple lines.
             </p>
-            <a href="#" class="card-link">GitHub</a>
-            <a href="#" class="card-link">| Live</a>
-            <p class="card-details">NEXT.JS • SUPABASE • FIGMA</p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">NEXT.JS | SUPABASE | FIGMA</p>
           </div>
 
           <div class="card">
-            <div class="card-title">BLOG POST</div>
+            <div class="card-title">Blog Post</div>
             <p class="card-description">
               A brief description of the blog post content goes here with insights about
               development.
             </p>
             <a href="#" class="card-link">Read More...</a>
-            <p class="card-details">ASTRO • WEB DEV • DESIGN</p>
+            <p class="card-details">ASTRO | WEB DEV | DESIGN</p>
           </div>
         </div>
       </div>
@@ -863,7 +877,7 @@
 <span style="color: #7fee40;">/* TYPOGRAPHY */</span>
 --font-fit: 'Fit' (portfolio name)
 --font-guisol: 'Guisol' (headings & buttons)
---font-iosevka: 'Iosevka Fixed Light' (bio, italic)
+--font-iosevka: 'Iosevka Fixed' (bio, italic)
 --font-aptos: 'Aptos Narrow' (card content)
 
 <span style="color: #7fee40;">/* SIZING */</span>
