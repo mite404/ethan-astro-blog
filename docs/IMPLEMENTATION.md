@@ -1,6 +1,6 @@
 # Implementation Status & Roadmap
 
-**Last Updated**: 2026-02-12  
+**Last Updated**: 2026-02-13  
 **Project**: Ethan Anderson Portfolio + Blog  
 **Status**: Portfolio sections complete (all major components implemented and styled)
 
@@ -37,7 +37,8 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 - [x] Debugged Tailwind CSS v4 import issues
 - [x] Added `import '@/styles/global.css'` to PortfolioLayout
 - [x] Implemented conditional body padding using `data-layout-type` attributes
-- [x] Separated blog styles from portfolio using `:not([data-layout-type='portfolio'])` selectors
+- [x] Separated blog styles from portfolio using
+  `:not([data-layout-type='portfolio'])` selectors
 - [x] Removed `!important` overrides in favor of proper CSS specificity
 
 **Files:**
@@ -67,7 +68,8 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 - [x] Applied warning stripe SVG overlay (foreground layer)
 - [x] Configurable items, separator, and speed props
 - [x] Fixed text wrapping with whitespace-nowrap and proper height constraint
-- [x] **FIXED (Feb 11):** Ticker now properly constrains width to 1280px container on all viewport sizes
+- [x] **FIXED (Feb 13):** Ticker now properly constrains width to 1280px
+  container on all viewport sizes
   - Previously: Ticker expanded beyond 1280px on large viewports
   - Now: Ticker respects container boundaries and scales responsively
   - Solution: Added `max-w-[1280px]` constraint + responsive width handling
@@ -200,12 +202,12 @@ BaseLayout (type="page")
 
 ## Known Issues
 
-### ✅ RESOLVED - Custom Fonts Loading (Feb 12, 2026)
+### ✅ RESOLVED - Custom Fonts Loading (Feb 13, 2026)
 
 **Previous Issue:**
 
-- `/fonts/guisol.woff2` returned 404
-- `/fonts/fit.woff2` returned 404
+- `/fonts/guisol.woff2` returned 404 error
+- `/fonts/fit.woff2` returned 404 error
 
 **Resolution:**
 
@@ -217,10 +219,11 @@ BaseLayout (type="page")
 
 **Files:**
 
-- `public/fonts/guisol.woff2` (buttons, section headers)
+- `public/fonts/guisol.woff2` (buttons, headers)
 - `public/fonts/fit.woff2` (name heading)
 - `public/fonts/iosevka-fixed-light-italic.woff2` (bio text)
-- `src/components/layout/PortfolioHeader.astro` (@font-face declarations)
+- `src/components/layout/PortfolioHeader.astro` (@font-face
+  declarations)
 
 ---
 
@@ -241,9 +244,8 @@ BaseLayout (type="page")
 - Font: Iosevka Fixed, 25px, white
 - Line height: 1.25em
 
-**Files to Create:**
-
-- `src/components/portfolio/IntroSection.astro`
+**Note**: Intro sections now integrated directly into index.astro with
+styled text blocks.
 
 #### Projects Section
 
@@ -276,7 +278,8 @@ BaseLayout (type="page")
 - [x] **NEW:** Implemented excerpt extraction utility (`src/utils/excerpt.ts`)
 - [x] **NEW:** Dynamically fetches 4 most recent blog posts
 - [x] **NEW:** Displays truncated titles (with ellipsis if > 16 chars)
-- [x] **NEW:** Displays excerpts (first 45 chars of body text after first heading)
+- [x] **NEW:** Displays excerpts (first 45 chars of body text after first
+  heading)
 - [x] **NEW:** Links to individual blog post routes
 
 **Implementation Details:**
@@ -289,11 +292,13 @@ BaseLayout (type="page")
   - Truncates to 45 characters with `…` ellipsis
   - Safe fallback for posts without body content
 - Title truncation to 16 characters for card fit:
+
   ```typescript
   {post.data.title.length > 16
     ? post.data.title.slice(0, 16) + '…'
     : post.data.title}
   ```
+
 - Links use `post.id` (filename slug) for route: `/{post.id}`
 
 **Files:**
@@ -301,7 +306,7 @@ BaseLayout (type="page")
 - `src/pages/index.astro` (blog section markup with `.map()`)
 - `src/utils/excerpt.ts` (NEW - excerpt extraction utility)
 - `src/utils/draft.ts` (getSortedFilteredPosts, getFilteredPosts)
-- `src/styles/portfolio.css` (blog-card styles)
+- `src/styles/portfolio.css` (blog-card styles for responsive grid)
 
 #### Styling Refactor
 
@@ -361,13 +366,16 @@ export function getExcerpt(body: string, length = 45): string
 **Example:**
 
 Input markdown:
+
 ```markdown
 ## Debrief
 
-This week I led the design and prototyping efforts for a new brand identity for our boutique design agency, Fractal.
+This week I led design and prototyping efforts for a new brand identity for
+our boutique design agency, Fractal.
 ```
 
 Output with `length = 45`:
+
 ```
 This week I led the design and prototyping …
 ```
@@ -523,23 +531,31 @@ When making significant changes, update:
 
 ### Q: Why 1280px width (not 792px)?
 
-**A:** Matches the actual Figma canvas dimensions. The 792px reference was outdated documentation. 1280px width creates the full poster-style composition with side spacing on larger viewports. The hand asset (2875px at 1.7x scale) intentionally overflows and is clipped at this boundary for dramatic effect.
+**A:** Matches the actual Figma canvas dimensions. The 792px reference was
+outdated documentation. 1280px width creates the full poster-style composition
+with side spacing on larger viewports. The hand asset (2875px at 1.7x scale)
+intentionally overflows and is clipped at this boundary for dramatic effect.
 
 ### Q: Why not use Tailwind config for custom values?
 
-**A:** Tailwind v4 uses CSS-first configuration. Arbitrary values (e.g., `w-[61px]`) work out of the box. Custom theme extensions can be added to `tailwind.config.js` if needed for reusable values.
+**A:** Tailwind v4 uses CSS-first configuration. Arbitrary values (e.g.,
+`w-[61px]`) work out of the box. Custom theme extensions can be added to
+`tailwind.config.js` if needed for reusable values.
 
 ### Q: Why separate PortfolioLayout instead of conditional logic in BaseLayout?
 
-**A:** Separation of concerns. Portfolio and blog have fundamentally different layout needs. Easier to maintain and reason about when separate.
+**A:** Separation of concerns. Portfolio and blog have fundamentally different
+layout needs. Easier to maintain and reason about when separate.
 
 ### Q: How does Tailwind v4 scanning work without content array?
 
-**A:** The `@tailwindcss/vite` plugin scans files that import CSS containing `@import 'tailwindcss'`. It follows the import graph automatically.
+**A:** The `@tailwindcss/vite` plugin scans files that import CSS containing
+`@import 'tailwindcss'`. It follows the import graph automatically.
 
 ### Q: Why use data attributes instead of classes for layout types?
 
-**A:** Data attributes are semantic and don't pollute the class namespace. They're perfect for state/type indicators that CSS selectors can target.
+**A:** Data attributes are semantic and don't pollute the class namespace.
+They're perfect for state/type indicators that CSS selectors can target.
 
 ---
 
