@@ -10,7 +10,7 @@ export const projects: Array<Record<string, string>> = [
   {
     title: "'Tap BPM' - Open Source Raycast Extension",
     description:
-      'Engineered and open-sourced a productivity extension using the Raycast API. Optimized user input latency for millisecond-accurate music tempo calculation, handled asynchronous state updates and improved on UX features.',
+      'Engineered and open-sourced a productivity extension using the Raycast API. Optimized user input latency for millisecond-accurate music tempo calculation, handled asynchronous state updates and improved on UX features. Over 1,800 installs!',
     ghLink: 'https://github.com/raycast/extensions/pull/24594',
     liveLink: 'https://www.raycast.com/pernielsentikaer/beat-per-minute',
     details: 'TypeScript | React | Raycast API'
@@ -23,5 +23,13 @@ export const projects: Array<Record<string, string>> = [
     liveLink: 'https://ethananderson.io/',
     details: 'TypeScript | React | Astro | Tailwind | Motion.dev | Figma',
     blogLink: '/week-04/'
+  },
+  {
+    title: 'Phillips Corp. LMS',
+    description:
+      'Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs for automated course sequencing and real-time progress tracking. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder',
+    ghLink: 'https://github.com/mite404/phillips-poc-public',
+    liveLink: 'https://phillips-poc-public.vercel.app/',
+    details: 'TypeScript | React | Tailwind | schadcn/ui'
   }
 ]

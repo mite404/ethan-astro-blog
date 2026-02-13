@@ -115,13 +115,13 @@ body[data-layout-type='portfolio'] .section-title {
    =========================== */
 
 body[data-layout-type='portfolio'] .bio-top {
-  font-family: 'Iosevka Fixed Light', monospace;
+  font-family: 'Iosevka Fixed', monospace;
   font-size: 45px;
   font-style: italic;
   font-weight: 400;
   color: white;
   margin-bottom: 30px;
-  line-height: 1;
+  line-height: 105%;
 }
 
 body[data-layout-type='portfolio'] .bio-top p {
@@ -163,11 +163,12 @@ body[data-layout-type='portfolio'] .blog-card {
 body[data-layout-type='portfolio'] .project-title,
 body[data-layout-type='portfolio'] .blog-title {
   font-family: 'Guisol', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.875rem; /* 30px */
   font-weight: 400;
   color: #ffffff;
-  /*margin-bottom: 0.75rem;*/
-  text-transform: uppercase;
+  line-height: normal;
+  letter-spacing: 0.02em;
+  text-rendering: geometricPrecision;
 }
 
 /* Shared card description styles */
@@ -177,7 +178,10 @@ body[data-layout-type='portfolio'] .blog-description {
   font-size: 0.938rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
+  font-style: normal;
+  font-weight: 400;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 /* Shared card link styles */
