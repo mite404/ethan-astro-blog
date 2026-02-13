@@ -49,15 +49,7 @@ const { title, description } = Astro.props
     width: 100%;
   }
 
-  /* At 2xl breakpoint (1536px), lock to 1280px and center */
-  @media (min-width: 1536px) {
-    .portfolio-layout {
-      max-width: 1280px;
-    }
-  }
-
-  /* On mobile/tablet, allow full width */
-  @media (max-width: 1535px) {
+  @media (max-width: 1280px) {
     .portfolio-layout {
       max-width: 100%;
       padding: 1rem;
