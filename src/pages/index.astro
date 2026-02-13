@@ -10,6 +10,12 @@ import stars from '@/assets/portfolio/STARS.png'
 import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
 import ParallaxHand from '@/components/ui/ParallaxHand'
+import { getFilteredPosts, getSortedFilteredPosts } from '@/utils/draft'
+import { getExcerpt } from '@/utils/excerpt'
+
+const posts = await getSortedFilteredPosts()
+const mostRecentPosts = posts.slice(0, 4)
+console.log(mostRecentPosts.map((p) => p.data.title))
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
@@ -76,7 +82,20 @@ import ParallaxHand from '@/components/ui/ParallaxHand'
   <section class="bordered pl-8 pt-2.5">
     <h2 class="section-title">BLOG:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="blog-card">
+      {
+        mostRecentPosts.map((post) => (
+          <div class="blog-card">
+            <h3 class="blog-title">
+              {post.data.title.length > 16 ? post.data.title.slice(0, 16) + '…' : post.data.title}
+            </h3>
+            <p class="blog-description">{getExcerpt(post.body ?? '')}</p>
+            <a href={`/${post.id}`} class="blog-link">
+              Read More...
+            </a>
+          </div>
+        ))
+      }
+      <!-- <div class="blog-card">
         <h3 class="blog-title">Recent Post 1</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
         <a href="/blog" class="blog-link">Read More...</a>
@@ -95,7 +114,7 @@ import ParallaxHand from '@/components/ui/ParallaxHand'
         <h3 class="blog-title">Recent Post 4</h3>
         <p class="blog-description">A brief description of the blog post content goes here...</p>
         <a href="/blog" class="blog-link">Read More...</a>
-      </div>
+      </div> -->
     </div>
   </section>
 

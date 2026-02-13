@@ -163,7 +163,7 @@ body[data-layout-type='portfolio'] .blog-card {
 body[data-layout-type='portfolio'] .project-title,
 body[data-layout-type='portfolio'] .blog-title {
   font-family: 'Guisol', sans-serif;
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #ffffff;
   /*margin-bottom: 0.75rem;*/
