@@ -3,7 +3,7 @@
 **Purpose**: A living document capturing key learnings, debugging insights, and
 architectural decisions for this project.
 
-**Last Updated**: February 13, 2026
+**Last Updated**: February 13, 2026 (Typography & Font Rendering Session)
 
 ---
 
@@ -79,9 +79,9 @@ instead of loose files in random folders.
 const posts = await getCollection('posts')
 
 // Each post has:
-post.id        // "week-07" (filename without extension)
-post.data      // { title: "...", pubDate: Date, image?: string }
-post.body      // Raw markdown string
+post.id // "week-07" (filename without extension)
+post.data // { title: "...", pubDate: Date, image?: string }
+post.body // Raw markdown string
 ```
 
 ### Why Two Layout Systems?
@@ -92,16 +92,14 @@ post.body      // Raw markdown string
 
 ```astro
 <!-- BaseLayout.astro sets the attribute -->
-<body data-layout-type="portfolio">  <!-- or "page" for blog -->
+<body data-layout-type="portfolio">
+  <!-- or "page" for blog -->
 
-<!-- CSS targets specific layouts -->
-body[data-layout-type='portfolio'] {
-  /* Portfolio-only styles */
-}
+  <!-- CSS targets specific layouts -->
+  body[data-layout-type='portfolio'] {/* Portfolio-only styles */}
 
-body:not([data-layout-type='portfolio']) {
-  /* Blog-only styles */
-}
+  body:not([data-layout-type='portfolio']) {/* Blog-only styles */}</body
+>
 ```
 
 **Why not separate sites?** Shared infrastructure (build, deployment, content system)
@@ -160,15 +158,13 @@ export function getExcerpt(body: string, length = 45): string {
 
       // Strip markdown formatting
       const clean = trimmed
-        .replace(/\*\*(.*?)\*\*/g, '$1')  // **bold**
-        .replace(/\*(.*?)\*/g, '$1')      // *italic*
+        .replace(/\*\*(.*?)\*\*/g, '$1') // **bold**
+        .replace(/\*(.*?)\*/g, '$1') // *italic*
         .replace(/\[(.*?)\]\(.*?\)/g, '$1') // [link](url)
-        .replace(/`(.*?)`/g, '$1')        // `code`
+        .replace(/`(.*?)`/g, '$1') // `code`
 
       // Truncate with ellipsis
-      return clean.length > length 
-        ? clean.slice(0, length) + '…' 
-        : clean
+      return clean.length > length ? clean.slice(0, length) + '…' : clean
     }
   }
   return ''
@@ -326,7 +322,7 @@ export default function ParallaxHand() {
   // ❌ BAD: Module scope code runs BEFORE hooks complete
   const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0
   const globeBottomAbsolute =
-    globeOffsetTop + 
+    globeOffsetTop +
     (typeof document !== 'undefined'
       ? document.querySelector('.portfolio-layout')?.offsetTop || 0
       : 0)
@@ -359,9 +355,9 @@ export default function ParallaxHand() {
 
   // ✅ Conditionals inline in the computed value
   const scrollRange = {
-    start: globeOffsetTop - 
+    start: globeOffsetTop -
       (typeof window !== 'undefined' ? window.innerHeight : 0),
-    end: typeof document !== 'undefined' ? 
+    end: typeof document !== 'undefined' ?
       document.documentElement.scrollHeight : 0
   }
 }
@@ -408,6 +404,96 @@ when React evaluates the code. Always put hooks first, conditionals second.
 
 ---
 
+### 🐛 Bug #5: Typography Rendering Mismatch Between Figma & Browser (Feb 13, 2026)
+
+**The Problem:**
+Project and blog card titles looked noticeably different in the browser vs Figma. Letters appeared tighter/more condensed in Chrome, while Figma showed more breathing room between glyphs.
+
+**Root Cause Analysis:**
+
+- Figma uses Skia text rendering engine
+- Chrome uses OS text shaping (CoreText on macOS)
+- Global CSS setting `text-rendering: optimizeLegibility` was causing browser to apply aggressive kerning, tightening letter spacing beyond designer intent
+- Font file: Guisol Regular at 30px (1.875rem)
+- Figma specs: 0% letter-spacing, auto line-height
+
+**The Solution:**
+Added two CSS properties to `.project-title` and `.blog-title`:
+
+```css
+letter-spacing: 0.02em;
+text-rendering: geometricPrecision;
+```
+
+**Why This Works:**
+
+- `letter-spacing: 0.02em` → Compensates for Chrome's tighter kerning, matches Figma's visual spacing
+- `text-rendering: geometricPrecision` → Overrides inherited `optimizeLegibility`, trusts the font's designed spacing rather than browser-applied optimizations
+
+**Learning:**
+Display fonts (like Guisol) benefit from `geometricPrecision` because they're explicitly designed with precise spacing. Body text benefits from `optimizeLegibility` for readability. Different font types need different rendering hints.
+
+---
+
+## Behind the Scenes: February 13 Session Insights
+
+### Font Rendering & Cross-Platform Consistency
+
+**Core Insight**: Different design tools and browsers render fonts differently due to underlying text rendering engines. Figma ≠ Chrome ≠ Safari.
+
+**The Challenge:**
+
+- You designed titles in Figma (using Skia rendering)
+- Implementation in Chrome/Safari uses OS text shaping
+- Without compensating, designs look subtly different
+
+**Best Practice Pattern:**
+
+```css
+/* For display/heading fonts (Guisol, Fit) */
+.heading {
+  text-rendering: geometricPrecision;
+  letter-spacing: 0.02em; /* Adjust based on visual comparison */
+}
+
+/* For body fonts (system, sans-serif) */
+body {
+  text-rendering: optimizeLegibility;
+  /* Browser handles spacing intelligently */
+}
+```
+
+**Verification Method:**
+
+1. Take screenshot in Figma at 100% zoom
+2. Take screenshot in browser at 100% zoom
+3. Compare letter spacing visually
+4. Adjust `letter-spacing` until they match
+5. Lock in the value
+
+### Font Loading & Cascading Styles
+
+**Important Discovery:**
+Font names in CSS must **exactly match** the `font-family` declaration in `@font-face`.
+
+- ❌ `font-family: 'Iosevka Fixed Light'` (doesn't exist in @font-face)
+- ✅ `font-family: 'Iosevka Fixed'` (matches @font-face declaration)
+
+When mismatched, the browser falls back to system fonts and applies synthetic italics/bolds, which degrades quality significantly.
+
+### Design System Documentation as Source of Truth
+
+**Workflow That Works:**
+
+1. `portfolio.css` is the source of truth (implementation)
+2. Design system HTML mirrors portfolio.css exactly
+3. Figma is the reference for visual specs (colors, spacing, sizing)
+4. When updating styles, update all three in sync
+
+This prevents the design system from becoming outdated documentation.
+
+---
+
 ## Director's Commentary (Best Practices)
 
 ### Understanding Astro's Static Generation
@@ -425,8 +511,8 @@ it needs to know every possible URL.
 export async function getStaticPaths() {
   // Return array of all possible routes
   return [
-    { params: { slug: 'week-07' } },    // → /week-07
-    { params: { slug: 'week-05' } },    // → /week-05
+    { params: { slug: 'week-07' } }, // → /week-07
+    { params: { slug: 'week-05' } }, // → /week-05
     { params: { slug: 'nested/path' } } // → /nested/path
   ]
 }
@@ -504,9 +590,7 @@ frontmatter** (`data`) to avoid naming conflicts.
 
 ```typescript
 // Ternary pattern
-const truncated = str.length > maxLen
-  ? str.slice(0, maxLen) + '…'
-  : str
+const truncated = str.length > maxLen ? str.slice(0, maxLen) + '…' : str
 
 // As reusable function
 function truncate(str: string, len: number): string {
@@ -518,10 +602,10 @@ function truncate(str: string, len: number): string {
 
 ```typescript
 const clean = text
-  .replace(/\*\*(.*?)\*\*/g, '$1')      // **bold** → bold
-  .replace(/\*(.*?)\*/g, '$1')          // *italic* → italic
-  .replace(/\[(.*?)\]\(.*?\)/g, '$1')   // [text](url) → text
-  .replace(/`(.*?)`/g, '$1')            // `code` → code
+  .replace(/\*\*(.*?)\*\*/g, '$1') // **bold** → bold
+  .replace(/\*(.*?)\*/g, '$1') // *italic* → italic
+  .replace(/\[(.*?)\]\(.*?\)/g, '$1') // [text](url) → text
+  .replace(/`(.*?)`/g, '$1') // `code` → code
 ```
 
 **Why chain?** Each `.replace()` returns a new string, so they compose
@@ -533,10 +617,10 @@ naturally.
 
 ```typescript
 // ❌ WRONG
-const { data } = asyncFunction()  // data is undefined
+const { data } = asyncFunction() // data is undefined
 
 // ✅ RIGHT
-const { data } = await asyncFunction()  // data is the resolved value
+const { data } = await asyncFunction() // data is the resolved value
 ```
 
 **Top-level `await` in Astro:**
@@ -545,7 +629,7 @@ Astro supports top-level `await` in frontmatter and route files:
 
 ```astro
 ---
-const posts = await getCollection('posts')  // ✅ Works
+const posts = await getCollection('posts') // ✅ Works
 ---
 ```
 
@@ -554,15 +638,17 @@ const posts = await getCollection('posts')  // ✅ Works
 **The `&&` Operator (Show or Nothing):**
 
 ```jsx
-{project.blogLink && (
-  <>
-    {' '}
-    |{' '}
-    <a href={project.blogLink} class="project-link">
-      Post
-    </a>
-  </>
-)}
+{
+  project.blogLink && (
+    <>
+      {' '}
+      |{' '}
+      <a href={project.blogLink} class="project-link">
+        Post
+      </a>
+    </>
+  )
+}
 ```
 
 **How it works:**
@@ -579,17 +665,15 @@ const posts = await getCollection('posts')  // ✅ Works
 **The Ternary Operator (Show This or That):**
 
 ```jsx
-{project.blogLink ? (
-  <a href={project.blogLink}>Post</a>
-) : (
-  <span>No post</span>
-)}
+{
+  project.blogLink ? <a href={project.blogLink}>Post</a> : <span>No post</span>
+}
 ```
 
 **When to use each:**
 
-- **`&&`** — Show something *or nothing* (most common)
-- **Ternary `? :`** — Show one of *two things* (fallback message, loading state, etc.)
+- **`&&`** — Show something _or nothing_ (most common)
+- **Ternary `? :`** — Show one of _two things_ (fallback message, loading state, etc.)
 
 **Why fragments are needed:**
 
@@ -617,11 +701,11 @@ TypeScript or component type.
 
 ```typescript
 // Guard against undefined
-getExcerpt(post.body ?? '')  // If body is undefined, use ''
+getExcerpt(post.body ?? '') // If body is undefined, use ''
 
 // Why not ||?
-'' || 'fallback'            // → 'fallback' (empty string falsy)
-'' ?? 'fallback'            // → '' (null/undefined trigger fallback)
+'' || 'fallback' // → 'fallback' (empty string falsy)
+'' ?? 'fallback' // → '' (null/undefined trigger fallback)
 ```
 
 **Safe Array Operations:**
@@ -629,8 +713,8 @@ getExcerpt(post.body ?? '')  // If body is undefined, use ''
 ```typescript
 // .slice() is non-destructive and safe
 const arr = [1, 2, 3]
-arr.slice(0, 10)     // Returns [1, 2, 3] (doesn't crash on over-request)
-arr.slice(-4)        // Last 4 items (or fewer if array is smaller)
+arr.slice(0, 10) // Returns [1, 2, 3] (doesn't crash on over-request)
+arr.slice(-4) // Last 4 items (or fewer if array is smaller)
 ```
 
 ---
@@ -654,7 +738,7 @@ import { getSortedFilteredPosts } from '@/utils/draft'
 
 const posts = await getSortedFilteredPosts()
 // Newest first, drafts excluded
-const recent4 = posts.slice(0, 4)  // First 4 = most recent
+const recent4 = posts.slice(0, 4) // First 4 = most recent
 ```
 
 **Extract excerpt:**
@@ -662,19 +746,22 @@ const recent4 = posts.slice(0, 4)  // First 4 = most recent
 ```typescript
 import { getExcerpt } from '@/utils/excerpt'
 
-const excerpt = getExcerpt(post.body ?? '', 45)  // 45 chars, safe fallback
+const excerpt = getExcerpt(post.body ?? '', 45) // 45 chars, safe fallback
 ```
 
 **Dynamic rendering in Astro:**
 
 ```astro
-{posts.map((post) => (
-  <div class="card">
-    <h3>{post.data.title}</h3>
-    <p>{getExcerpt(post.body ?? '')}</p>
-    <a href={`/${post.id}`}>Read More</a>
-  </div>
-))}  <!-- JSX-like syntax in Astro templates -->
+{
+  posts.map((post) => (
+    <div class="card">
+      <h3>{post.data.title}</h3>
+      <p>{getExcerpt(post.body ?? '')}</p>
+      <a href={`/${post.id}`}>Read More</a>
+    </div>
+  ))
+}
+<!-- JSX-like syntax in Astro templates -->
 ```
 
 ### Build Commands

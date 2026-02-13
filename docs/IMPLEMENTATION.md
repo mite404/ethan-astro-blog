@@ -38,7 +38,7 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 - [x] Added `import '@/styles/global.css'` to PortfolioLayout
 - [x] Implemented conditional body padding using `data-layout-type` attributes
 - [x] Separated blog styles from portfolio using
-  `:not([data-layout-type='portfolio'])` selectors
+      `:not([data-layout-type='portfolio'])` selectors
 - [x] Removed `!important` overrides in favor of proper CSS specificity
 
 **Files:**
@@ -69,7 +69,7 @@ Both sections coexist in a single Astro 5 codebase with isolated styling systems
 - [x] Configurable items, separator, and speed props
 - [x] Fixed text wrapping with whitespace-nowrap and proper height constraint
 - [x] **FIXED (Feb 13):** Ticker now properly constrains width to 1280px
-  container on all viewport sizes
+      container on all viewport sizes
   - Previously: Ticker expanded beyond 1280px on large viewports
   - Now: Ticker respects container boundaries and scales responsively
   - Solution: Added `max-w-[1280px]` constraint + responsive width handling
@@ -293,6 +293,49 @@ BaseLayout (type="page")
 - `src/components/layout/PortfolioHeader.astro` (@font-face
   declarations)
 
+### ✅ RESOLVED - Typography Rendering Mismatch Between Figma & Browser (Feb 13, 2026)
+
+**Previous Issue:**
+
+- Project and blog card titles appeared tighter/more condensed in Chrome than in Figma design
+- Letters lacked breathing room compared to design reference
+- Visual discrepancy between design intent and implementation
+
+**Root Cause:**
+
+- Global CSS `text-rendering: optimizeLegibility` was applying aggressive kerning
+- Figma uses Skia text rendering engine
+- Chrome uses OS text shaping (CoreText on macOS)
+- Different rendering engines = different letter spacing
+
+**Resolution:**
+
+```css
+.project-title,
+.blog-title {
+  letter-spacing: 0.02em;
+  text-rendering: geometricPrecision;
+}
+```
+
+**Technical Explanation:**
+
+- `text-rendering: geometricPrecision` overrides inherited `optimizeLegibility`, trusts font's designed
+  spacing
+- `letter-spacing: 0.02em` compensates for cross-platform rendering differences
+- Display fonts (Guisol, Fit) need `geometricPrecision`; body fonts benefit from `optimizeLegibility`
+
+**Verification Method:**
+
+1. Screenshot Figma at 100% zoom
+2. Screenshot browser at 100% zoom
+3. Compare letter spacing visually
+4. Adjust `letter-spacing` value until they match (0.02em achieved visual parity)
+
+**Lesson Learned:**
+Different text rendering engines produce different results. Cross-platform design consistency requires
+explicit font-rendering hints and letter-spacing adjustments.
+
 ---
 
 ## Upcoming Work
@@ -347,7 +390,7 @@ styled text blocks.
 - [x] **NEW:** Dynamically fetches 4 most recent blog posts
 - [x] **NEW:** Displays truncated titles (with ellipsis if > 16 chars)
 - [x] **NEW:** Displays excerpts (first 45 chars of body text after first
-  heading)
+      heading)
 - [x] **NEW:** Links to individual blog post routes
 
 **Implementation Details:**
@@ -362,9 +405,9 @@ styled text blocks.
 - Title truncation to 16 characters for card fit:
 
   ```typescript
-  {post.data.title.length > 16
-    ? post.data.title.slice(0, 16) + '…'
-    : post.data.title}
+  {
+    post.data.title.length > 16 ? post.data.title.slice(0, 16) + '…' : post.data.title
+  }
   ```
 
 - Links use `post.id` (filename slug) for route: `/{post.id}`
@@ -617,6 +660,55 @@ layout needs. Easier to maintain and reason about when separate.
 
 **A:** Data attributes are semantic and don't pollute the class namespace.
 They're perfect for state/type indicators that CSS selectors can target.
+
+---
+
+## TODO: Tomorrow's Tasks
+
+### 🔤 Font Size Standardization
+
+**Issue:** Card titles in `portfolio-design-system.html` use `30px`, but `portfolio.css` uses
+`1.5rem` (≈24px).
+
+**Why:** Design system HTML uses absolute pixel values for reference, while production CSS uses
+relative units for responsiveness. The Guisol font subset is working correctly—this is purely
+a CSS mismatch.
+
+**Options:**
+
+1. Update `portfolio.css` card titles to `30px` (match design system reference)
+2. Update design system HTML to `24px` (match current production)
+
+**Decision:** Determine which size looks better in the live site, then standardize both files.
+
+**Files to update:**
+
+- `src/styles/portfolio.css` (lines 162-169: `.project-title` and `.blog-title`)
+- `docs/portfolio-design-system.html` (line 289: `.sample-card-title`)
+
+---
+
+### 📍 Public File Structure for Resume & Design System
+
+**Requirement:** Serve `resume.pdf` and `portfolio-design-system.html` as downloadable links from
+the portfolio site.
+
+**Plan:**
+
+1. Move `docs/portfolio-design-system.html` → `public/portfolio-design-system.html`
+2. Add `resume.pdf` → `public/resume.pdf`
+3. Update project card link to point to `/portfolio-design-system.html`
+4. Add resume download link (determine placement in design)
+
+**Note:** Files in `public/` are served as static assets with no special configuration needed.
+Netlify will cache them automatically based on `netlify.toml` headers.
+
+**Files to create/update:**
+
+- `public/resume.pdf` (create, upload file)
+- `public/portfolio-design-system.html` (move from docs)
+- `src/pages/index.astro` (update link references)
+- Update any links in `src/data/projects.ts` if using static links
 
 ---
 
