@@ -15,7 +15,6 @@ import { getExcerpt } from '@/utils/excerpt'
 
 const posts = await getSortedFilteredPosts()
 const mostRecentPosts = posts.slice(0, 4)
-console.warn(mostRecentPosts.map((p) => p.data.title))
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
@@ -33,12 +32,27 @@ console.warn(mostRecentPosts.map((p) => p.data.title))
           <div class="project-card">
             <h3 class="project-title">{project.title}</h3>
             <p class="project-description">{project.description}</p>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
+            <a href={project.ghLink} target="_blank" rel="noopener noreferrer" class="project-link">
               GitHub
+            </a>{' '}
+            |{' '}
+            <a
+              href={project.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link"
+            >
+              Live
             </a>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" class="project-link">
-              | Live
-            </a>
+            {project.blogLink && (
+              <>
+                {' '}
+                |{' '}
+                <a href={project.blogLink} class="project-link">
+                  Post
+                </a>
+              </>
+            )}
             <p class="project-details">{project.details}</p>
           </div>
         ))
@@ -86,7 +100,7 @@ console.warn(mostRecentPosts.map((p) => p.data.title))
         mostRecentPosts.map((post) => (
           <div class="blog-card">
             <h3 class="blog-title">
-              {post.data.title.length > 16 ? post.data.title.slice(0, 16) + '…' : post.data.title}
+              {post.data.title.length > 18 ? post.data.title.slice(0, 18) + '…' : post.data.title}
             </h3>
             <p class="blog-description">{getExcerpt(post.body ?? '')}</p>
             <a href={`/${post.id}`} class="blog-link">
@@ -95,26 +109,6 @@ console.warn(mostRecentPosts.map((p) => p.data.title))
           </div>
         ))
       }
-      <!-- <div class="blog-card">
-        <h3 class="blog-title">Recent Post 1</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
-      </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 2</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
-      </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 3</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
-      </div>
-      <div class="blog-card">
-        <h3 class="blog-title">Recent Post 4</h3>
-        <p class="blog-description">A brief description of the blog post content goes here...</p>
-        <a href="/blog" class="blog-link">Read More...</a>
-      </div> -->
     </div>
   </section>
 
