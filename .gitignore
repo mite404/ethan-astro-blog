@@ -28,3 +28,5 @@ pnpm-debug.log*
 # Netlify build output
 .netlify/
 
+# rumdl cache
+.rumdl_cache

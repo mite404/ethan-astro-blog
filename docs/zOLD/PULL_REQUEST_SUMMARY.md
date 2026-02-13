@@ -45,7 +45,8 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 - **Issue**: grad-dither-group.svg expanded beyond 797px spec before layout breakpoint
 - **Root Cause**: Using `w-full` class without max-width constraint
 - **Fix**: Added inline styles in PortfolioHeader.astro:40:
-  ```
+
+  ```text
   style="width: 100%; max-width: 797px; object-fit: cover;"
   ```
 
