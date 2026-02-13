@@ -30,6 +30,9 @@ const mostRecentPosts = posts.slice(0, 4)
       {
         projects.map((project) => (
           <div class="project-card">
+            {project.image && (
+              <img src={project.image} alt={`${project.title} preview`} class="project-image" />
+            )}
             <h3 class="project-title">{project.title}</h3>
             <p class="project-description">{project.description}</p>
             <a href={project.ghLink} target="_blank" rel="noopener noreferrer" class="project-link">
