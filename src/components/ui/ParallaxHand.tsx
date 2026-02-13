@@ -29,13 +29,13 @@ export default function ParallaxHand() {
         const globeBottomFromPageTop = rect.bottom + scrollTop
 
         // Find the .portfolio-layout container
-        const portfolioLayout = document.querySelector('.portfolio-layout')
+        const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
         const layoutOffsetTop = portfolioLayout ? portfolioLayout.offsetTop : 0
 
         // Calculate globe position relative to .portfolio-layout
         const globeOffsetFromLayout = globeBottomFromPageTop - layoutOffsetTop
 
-        console.log('🖐️ Calculated position:', {
+        console.warn('🖐️ Calculated position:', {
           globeOffsetFromLayout,
           globeBottomFromPageTop,
           layoutOffsetTop,
@@ -52,7 +52,7 @@ export default function ParallaxHand() {
           end: pageHeight // End at bottom of scrollable area
         })
       } else {
-        console.warn('❌ Globe container [data-globe-container] not found!')
+        console.error('❌ Globe container [data-globe-container] not found!')
       }
     }
 
