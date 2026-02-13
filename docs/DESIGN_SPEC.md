@@ -10,6 +10,37 @@ extracted from the Figma design file.
 
 ## Recent Changes (February 13, 2026)
 
+### Typography & Font Rendering
+
+#### Project/Blog Card Titles Font Rendering Fix
+
+- **Issue**: Titles appeared tighter/more condensed in Chrome vs Figma reference
+- **Root Cause**: Global `text-rendering: optimizeLegibility` was causing aggressive kerning on
+  display fonts
+- **Solution**:
+  - Added `letter-spacing: 0.02em` to match Figma's visual spacing
+  - Added `text-rendering: geometricPrecision` to override inherited rendering hint
+  - This ensures display fonts like Guisol render with proper breathing room between letters
+- **Technical Details**: Display fonts need `geometricPrecision` to maintain designer-intended
+  spacing
+- body text benefits from `optimizeLegibility` for readability
+- **Verification**: Compared Figma screenshot (100% zoom) with Chrome screenshot (100% zoom)
+
+#### Font Stack Corrections
+
+- ✅ Fixed Iosevka Fixed font name (was incorrectly referenced as "Iosevka Fixed Light")
+- ✅ Font family names must exactly match `@font-face` declarations
+- ✅ Verified all custom fonts loading correctly with proper variants
+
+#### Design System Documentation Synchronization
+
+- ✅ Updated `portfolio-design-system.html` to mirror `portfolio.css` exactly
+- ✅ Removed uppercase text-transform from card titles to match camelCase in Figma
+- ✅ Updated all typography samples to match source of truth
+- ✅ All card component styling now synchronized with production CSS
+
+---
+
 ### Bug Fixes & Refinements
 
 - ✅ **Custom Fonts Resolution**: All custom fonts now loading correctly
