@@ -33,7 +33,7 @@ export const projects: Array<Record<string, string>> = [
       'Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs for automated course sequencing and real-time progress tracking. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder',
     ghLink: 'https://github.com/mite404/phillips-poc-public',
     liveLink: 'https://phillips-poc-public.vercel.app/',
-    details: 'TypeScript | React | Tailwind | schadcn/ui',
+    details: 'TypeScript | React | Tailwind | shadcn/ui',
     image: '/assets/portfolio/phillips-poc.png'
   }
 ]

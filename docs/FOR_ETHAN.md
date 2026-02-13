@@ -475,6 +475,23 @@ The `width="200"` and `height="125"` **HTML attributes** were present. While the
 directly control image dimensions, they have **higher specificity** than CSS
 margins.
 
+> [!Warning]
+> Technical inaccuracy: HTML width/height attributes don't override CSS margins.
+>
+> The explanation states that HTML width="200" and height="125" have "higher specificity than CSS
+> margins," but this is incorrect. HTML dimension attributes on <img> act as presentational hints for
+> the width/height CSS properties only — they cannot affect margin, padding, or any other CSS
+> property. They also don't fit into CSS specificity the way described in the hierarchy block.
+
+> [!Tip]
+> If .project-image margins weren't applying, the likely cause was either:
+>
+> - The selector not matching (e.g., CSS not loaded, or a specificity conflict with another rule)
+> - Another CSS rule overriding the margins
+>
+> The practical advice (preferring CSS for sizing) is still sound, but the stated "why" is misleading.
+> Consider revising the explanation to avoid teaching an incorrect mental model of the cascade.
+
 **Why This Matters:**
 
 CSS specificity hierarchy:

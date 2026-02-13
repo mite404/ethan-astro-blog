@@ -57,31 +57,31 @@ body[data-layout-type='portfolio'] .btn-nav-gh,
   text-decoration: none;
 }
 
-.btn-nav-gh {
+body[data-layout-type='portfolio'] .btn-nav-gh {
   background-color: #fefefe;
 }
 
-.btn-nav-blog {
+body[data-layout-type='portfolio'] .btn-nav-blog {
   background-color: #7fee40;
 }
 
-.btn-nav-resume {
+body[data-layout-type='portfolio'] .btn-nav-resume {
   background-color: #e071e3;
 }
 
-.btn-nav-gh:hover {
+body[data-layout-type='portfolio'] .btn-nav-gh:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.btn-nav-blog:hover {
+body[data-layout-type='portfolio'] .btn-nav-blog:hover {
   background-color: #e071e3;
 }
 
-.btn-nav-resume:hover {
+body[data-layout-type='portfolio'] .btn-nav-resume:hover {
   background-color: #7fee40;
 }
 
-.btn-touch {
+body[data-layout-type='portfolio'] .btn-touch {
   /* Button styling */
   display: flex;
   align-items: center;
@@ -190,7 +190,7 @@ body[data-layout-type='portfolio'] .blog-title {
   color: #ffffff;
   line-height: normal;
   letter-spacing: 0.02em;
-  text-rendering: geometricPrecision;
+  text-rendering: geometricprecision;
 }
 
 /* Shared card description styles */
