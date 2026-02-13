@@ -2,11 +2,14 @@
 
 **Last Updated**: 2025-12-27
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with code in this
+repository.
 
 ## Project Overview
 
-This is a hybrid portfolio + blog site built with Astro 5. The portfolio landing page uses a fixed-width poster-style composition (792px), while the blog section is based on the Chiri theme with responsive design.
+This is a hybrid portfolio + blog site built with Astro 5. The portfolio
+landing page uses a fixed-width poster-style composition (792px), while the
+blog section uses the Chiri theme with responsive design.
 
 **Key technologies:**
 
@@ -143,12 +146,14 @@ The key to separating portfolio from blog styles:
 
 1. **BaseLayout sets `data-layout-type` attribute** on `<body>` element
 2. **global.css uses conditional selectors:**
+
    ```css
    /* Blog-specific padding (NOT applied to portfolio) */
    body:not([data-layout-type='portfolio']) {
      padding: 6rem 1.5rem 1.5rem 1.5rem;
    }
    ```
+
 3. **Each layout imports global.css** to load Tailwind v4
 4. **Layout-specific styles use scoped or global blocks** as needed
 
@@ -219,7 +224,8 @@ The project uses `@/` as an alias for `src/` directory (configured in astro.conf
 
 ### Build Process
 
-The prebuild script (`scripts/toggle-proxy.ts`) runs before each build to handle proxy configuration for deployment environments.
+The prebuild script (`scripts/toggle-proxy.ts`) runs before each build to
+handle proxy configuration for deployment environments.
 
 ## Working with Posts
 
@@ -234,7 +240,8 @@ Always use the script: `bun new "Post Title"` (or `pnpm new` as fallback)
 
 ### Post Filtering
 
-Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_` are excluded from production but visible in development.
+Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_`
+are excluded from production but visible in development.
 
 ## Portfolio Components
 
@@ -246,7 +253,8 @@ Draft filtering logic is in `src/utils/draft.ts`. Posts starting with `_` are ex
 
 - Imports global.css (critical for Tailwind v4)
 - Sets `data-layout-type="portfolio"` via BaseLayout
-- `overflow: hidden` on `.portfolio-layout` to clip overflowing assets (e.g., parallax hand)
+- `overflow: hidden` on `.portfolio-layout` to clip overflowing assets
+  (e.g., parallax hand)
 - Uses flexbox centering on body for side-spacing effect
 - Responsive: 1280px desktop, 100% width mobile (<1536px)
 
@@ -359,13 +367,16 @@ Demonstration components (Callout, Tag) showing MDX capabilities
 
 ### Design System
 
-- **Reference docs/portfolio-design-system.html** — Complete, interactive design system reference with all colors, typography, spacing, and component styles
-- **Figma file:** hxE0jhguSe2Irj2QoDH1JB (source of truth for design decisions)
+- **Reference docs/portfolio-design-system.html** — Complete, interactive
+  design system with colors, typography, spacing, and components
+- **Figma file:** hxE0jhguSe2Irj2QoDH1JB (source of truth for design)
 - **Layout:** 792px fixed width, poster-style composition
 
 ### General
 
-- **Link cards require an adapter**: The `linkCard` feature needs a server adapter (Netlify, Vercel, etc.). Set `linkCard: false` in config.ts if deploying as static HTML
+- **Link cards require an adapter**: The `linkCard` feature needs a server
+  adapter (Netlify, Vercel, etc.). Set `linkCard: false` in config.ts if
+  deploying as static HTML
 - **Math support**: Uses KaTeX for math rendering via remark-math and rehype-katex
 - **Image optimization**: Uses Sharp for image processing with CSS inlining via @playform/inline
 - **Theme toggle**: Can be enabled/disabled in config.ts (defaults to system theme)
@@ -413,19 +424,24 @@ Neither are you, but we both strive for accuracy.
 
 ## 🗣️ Explanation Style
 
-- **Avoid Jargon:** If technical terms are necessary, define them immediately using plain language.
-- **Visual Descriptions:** Describe code flow visually (e.g., "Imagine the data flowing like a signal chain on a soundboard").
-- **Scaffolding:** When introducing complex logic, break it down into "scenes" or "beats" rather than a wall of text.
+- **Avoid Jargon:** Define technical terms immediately with plain
+  language.
+- **Visual Descriptions:** Describe code flow visually (e.g., "Imagine data
+  flowing like a signal chain on a soundboard").
+- **Scaffolding:** Break complex logic into "scenes" or "beats" rather
+  than a wall of text.
 
 ## 📚 The "FOR_ETHAN.md" Learning Log
 
 Maintain a living document at `docs/FOR_ETHAN.md`.
-Update this file significantly after every major feature implementation or refactor.
+Update this file after every major feature implementation or refactor.
 
 - **Structure:**
   1. **The Story So Far:** High-level narrative of the project.
   2. **Cast & Crew (Architecture):** How components talk to each other (using film analogies).
   3. **Behind the Scenes (Decisions):** Why we chose Stack X over Stack Y.
-  4. **Bloopers (Bugs & Fixes):** Detailed breakdown of bugs, why they happened, and the logic used to solve them.
-  5. **Director's Commentary:** Best practices and "Senior Engineer" mindset tips derived from the current work.
+  4. **Bloopers (Bugs & Fixes):** Detailed breakdown of bugs, why they
+     happened, and the logic used to solve them.
+  5. **Director's Commentary:** Best practices and "Senior Engineer" mindset
+     tips derived from the current work.
 - **Tone:** Engaging, magazine-style, memorable. Not a textbook.

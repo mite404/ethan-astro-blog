@@ -1,10 +1,12 @@
 # Iterate Over Blog Posts on Portfolio — Tutorial
 
-**Goal:** Display the 4 most recent blog posts on the portfolio landing page with truncated titles and body excerpts pulled from the raw markdown.
+**Goal:** Display the 4 most recent blog posts on the portfolio landing page
+with truncated titles and body excerpts pulled from the raw markdown.
 
 **Estimated Time:** ~35 minutes  
 **Learning Style:** Hybrid (fill-in-blanks + guided concepts)  
-**Prerequisites:** Basic Astro knowledge, familiarity with this project's structure
+**Prerequisites:** Basic Astro knowledge, familiarity with this project's
+structure
 
 ---
 
@@ -24,7 +26,8 @@
 ### How Astro Content Collections Work (First Principles)
 
 **What are they?**  
-Astro's content collections let you define typed groups of markdown/MDX files. You define a schema, and Astro gives you a typed API to query your content.
+Astro's content collections let you define typed groups of markdown/MDX files.
+You define a schema, and Astro gives you a typed API to query your content.
 
 **Where they're defined in this project:**
 
@@ -44,22 +47,26 @@ const posts = defineCollection({
 
 **What you get back from a query:**
 
-Each `CollectionEntry<'posts'>` has:
+Each `CollectionEntry<'posts'>` entry has:
 
 | Property | Type | What It Contains |
 |----------|------|------------------|
 | `id` | `string` | Filename without extension (e.g., `"week-07"`) |
 | `data` | `object` | Parsed frontmatter (`title`, `pubDate`, `image`, etc.) |
-| `body` | `string` | Raw markdown content **below the frontmatter** |
+| `body` | `string` | Raw markdown content **below frontmatter** |
 
-**Real-world analogy:** Think of a content collection like a database table — each `.md` file is a row, the frontmatter fields are typed columns, and `.body` is a large text field.
+**Real-world analogy:** Think of a content collection like a database table.
+Each `.md` file is a row, the frontmatter fields are typed columns, and `.body`
+is a large text field.
 
 ---
 
 ### The `.body` Property — Your Key to Excerpts
 
 **What is it?**  
-`post.body` returns the raw markdown as a string, everything below the `---` frontmatter fence. It does **not** render the markdown — it's just the source text.
+`post.body` returns the raw markdown as a string, everything below the `---`
+frontmatter fence. It does **not** render the markdown — it's just the source
+text.
 
 **Where it's already used in this project:**
 
@@ -69,11 +76,14 @@ const rawHtml = markdownParser.render(post.body || '')
 
 // src/components/widgets/About.astro — checks if content exists
 const hasContent = aboutEntry?.body
-  ? aboutEntry.body.replace(/<!--[\s\S]*?-->/g, '').trim().length > 0
+  ? aboutEntry.body.replace(/<!--[\s\S]*?-->/g, '').trim()
+      .length > 0
   : false
 ```
 
-**Why this matters:** You don't need a custom remark plugin or file system reads. The `.body` property gives you exactly what you need to extract an excerpt.
+**Why this matters:** You don't need a custom remark plugin or file system
+reads. The `.body` property gives you exactly what you need to extract an
+excerpt.
 
 ---
 
@@ -95,7 +105,8 @@ identity for our boutique design agency, Fractal...
 
 **Key observations:**
 
-1. **Frontmatter** — Titles are full descriptive phrases (e.g., `"The Hidden Superpower of Cross-Domain Pattern Recognition: Week 07"`)
+1. **Frontmatter** — Titles are full descriptive phrases (e.g.,
+   `"The Hidden Superpower of Cross-Domain Pattern Recognition: Week 07"`)
 2. **First heading is `##` (h2)** — Not `#` (h1). Posts start with `## Debrief`
 3. **Body text follows immediately** — The paragraph after the first heading is what we want to extract
 4. **Titles are long** — Most exceed 16 characters, so truncation will be common
@@ -111,12 +122,13 @@ identity for our boutique design agency, Fractal...
 **Flow:**
 
 ```text
-1. getCollection('posts')          → All posts from content collection
-2. .filter(post => !post.id.startsWith('_'))  → Remove drafts (files starting with _)
-3. .sort((a, b) => b.pubDate - a.pubDate)     → Sort newest first
+1. getCollection('posts')  → All posts from content collection
+2. .filter(post => !post.id.startsWith('_'))  → Remove drafts
+3. .sort((a, b) => b.pubDate - a.pubDate)  → Sort newest first
 ```
 
-**Returns:** `CollectionEntry<'posts'>[]` — newest post at index 0, oldest at the end.
+**Returns:** `CollectionEntry<'posts'>[]` — newest post at index 0, oldest at
+the end.
 
 **Current usage in `index.astro`:**
 
@@ -154,10 +166,12 @@ We need to:
 
 1. Skip past the first `##` heading
 2. Find the first paragraph of actual body text
-3. Strip markdown formatting (`**bold**`, `*italic*`, `[links](url)`, `` `code` ``)
+3. Strip markdown formatting (`**bold**`, `*italic*`, `[links](url)`,
+   `` `code` ``)
 4. Return the first 45 characters with an ellipsis
 
-**Strategy:** Split by lines, walk through them, find the first non-empty, non-heading line after a `##` heading.
+**Strategy:** Split by lines, walk through them, find the first non-empty,
+non-heading line after a `##` heading.
 
 ---
 
@@ -228,28 +242,36 @@ export function getExcerpt(body: string, length = 45): string {
 3. When we find this line, we know everything after it is body content
 4. We set our flag and `continue` to skip the heading line itself
 
-**Why not check for `#` (h1)?** Because your blog posts don't use h1 headings in the body — they start with `## Debrief`. The frontmatter `title` field serves as the h1.
+**Why not check for `#` (h1)?** Blog posts don't use h1 headings in the
+body — they start with `## Debrief`. The frontmatter `title` field serves
+as the h1.
 
 **TODO 2 — Skip unwanted lines:**
 
 **Conceptual Process:**
 
 1. Empty lines (`trimmed.length === 0`) — just whitespace, skip
-2. Sub-headings (`trimmed.startsWith('#')`) — we want body text, not another heading
-3. Custom directives (`trimmed.startsWith('::')`) — Astro directives like `::github{repo="..."}`, not readable text
+2. Sub-headings (`trimmed.startsWith('#')`) — we want body text, not another
+   heading
+3. Custom directives (`trimmed.startsWith('::')`) — Astro directives like
+   `::github{repo="..."}`, not readable text
 
-**Why skip these?** We want the first actual sentence of prose, not structural markdown elements.
+**Why skip these?** We want the first actual sentence of prose, not structural
+markdown elements.
 
 **TODO 3 — Strip formatting and truncate:**
 
 **Conceptual Process:**
 
-1. Markdown formatting appears inline: `**bold**`, `*italic*`, `[text](url)`, `` `code` ``
+1. Markdown formatting appears inline: `**bold**`, `*italic*`, `[text](url)`,
+   `` `code` ``
 2. Each has a regex pattern that captures the inner text
 3. Chain `.replace()` calls to strip them all
 4. Check the length — if over 45 characters, slice and add `…`
 
-**Why strip formatting?** The excerpt appears as plain text in a card. Markdown syntax characters like `**` and `[]()` would look broken outside of a renderer.
+**Why strip formatting?** The excerpt appears as plain text in a card.
+Markdown syntax characters like `**` and `[]()` would look broken outside of a
+renderer.
 
 ---
 
@@ -260,7 +282,8 @@ Given this input from `week-07.md`:
 ```markdown
 ## Debrief
 
-This week I led the design and prototyping efforts for a new brand identity for our boutique design agency, Fractal.
+This week I led design and prototyping efforts for a new brand identity for
+our boutique design agency, Fractal.
 ```
 
 **Expected output with `length = 45`:**
@@ -308,7 +331,8 @@ const mostRecent4Posts = posts.slice(-4)       // Gets LAST 4 = OLDEST 4
 
 **Why it's wrong:**
 
-`getSortedFilteredPosts()` sorts by `pubDate` descending — **newest first**. So:
+`getSortedFilteredPosts()` sorts by `pubDate` descending — **newest first**.
+So:
 
 ```text
 Index 0: "The Hidden Superpower of Cross-Domain Pattern Recognition: Week 07" ← newest
@@ -319,7 +343,9 @@ Index 4: "Mastering the Forms vs. Winning the Duel: Week 02"
 Index 5: "The Mountain and the Map: Week 01" ← oldest
 ```
 
-`.slice(-4)` takes the **last** 4 items from the array — that's `week-03`, `week-02`, `week-01`, and whichever is 4th from the end. These are the **oldest** posts, not the newest.
+`.slice(-4)` takes the **last** 4 items from the array — that's `week-03`,
+`week-02`, `week-01`, and whichever is 4th from the end. These are the **oldest**
+posts, not the newest.
 
 ---
 
@@ -335,11 +361,16 @@ const mostRecent4Posts = posts.slice(-4)
 
 **Conceptual Process:**
 
-1. `.slice(start, end)` returns elements from `start` up to (but not including) `end`
+1. `.slice(start, end)` returns elements from `start` up to (but not including)
+   `end`
 2. To get the first 4 elements: `.slice(0, 4)`
-3. Since `posts` is sorted newest-first, index 0–3 are the 4 most recent posts
+3. Since `posts` is sorted newest-first, index 0–3 are the 4 most recent
+   posts
 
-**Why this matters:** This is a common bug when working with sorted arrays. Always check: "Which end are my desired items at?" The sort order of `getSortedFilteredPosts()` puts newest at index 0, so we want the beginning, not the end.
+**Why this matters:** This is a common bug when working with sorted arrays.
+Always check: "Which end are my desired items at?" The sort order of
+`getSortedFilteredPosts()` puts newest at index 0, so we want the beginning,
+not the end.
 
 ---
 
@@ -398,7 +429,8 @@ You've learned:
 ))}
 ```
 
-**Key difference:** Instead of 4 copy-pasted `<div>` blocks, we use `.map()` to iterate over the posts array and generate one card per post.
+**Key difference:** Instead of 4 copy-pasted `<div>` blocks, we use `.map()` to
+iterate over the posts array and generate one card per post.
 
 ---
 
@@ -423,7 +455,8 @@ At the top of `src/pages/index.astro`, in the frontmatter block (`---`):
 
 ### Step 3.2: Replace the Hardcoded Blog Section
 
-Find the `<!-- BLOG Section -->` in `index.astro`. The inner grid currently has 4 hardcoded `<div class="blog-card">` blocks.
+Find the `<!-- BLOG Section -->` in `index.astro`. The inner grid currently
+has 4 hardcoded `<div class="blog-card">` blocks.
 
 Replace all 4 hardcoded cards with a single `.map()`:
 
@@ -459,7 +492,8 @@ Replace all 4 hardcoded cards with a single `.map()`:
 
 **Conceptual Process:**
 
-1. The title lives at `post.data.title` (e.g., `"The Hidden Superpower of Cross-Domain Pattern Recognition: Week 07"`)
+1. The title lives at `post.data.title` (e.g.,
+   `"The Hidden Superpower of Cross-Domain Pattern Recognition: Week 07"`)
 2. Most titles are well over 16 characters — truncation will be common
 3. If it's longer than 16 characters, slice it and add `…`
 4. If it's 16 characters or shorter, display it as-is
@@ -479,7 +513,9 @@ Replace all 4 hardcoded cards with a single `.map()`:
 | `Brush Yourself Off: Week 05` | `Brush Yourself O…` |
 | `Rust & Polish: Week 04` | `Rust & Polish: W…` |
 
-**Why 16 characters?** Your card titles use Guisol at 30px. At that font size, 16 characters is roughly the max that fits in a single card column without wrapping awkwardly in a 4-column grid.
+**Why 16 characters?** Your card titles use Guisol at 30px. At that font size,
+16 characters is roughly the max that fits in a single card column without
+wrapping awkwardly in a 4-column grid.
 
 **TODO 2 — Display the excerpt:**
 
@@ -490,7 +526,8 @@ Replace all 4 hardcoded cards with a single `.map()`:
 3. Use the nullish coalescing operator `??` for safety: `post.body ?? ''`
 4. Pattern: `{getExcerpt(post.body ?? '')}`
 
-**Why `?? ''`?** Defensive coding — if `.body` is somehow `undefined`, the function receives an empty string instead of crashing.
+**Why `?? ''`?** Defensive coding — if `.body` is `undefined`, the
+function receives an empty string instead of crashing.
 
 **TODO 3 — Link to the post:**
 
@@ -564,8 +601,8 @@ Scroll down to the **BLOG:** section on the portfolio page. You should see:
 
 **4 cards** with real data instead of placeholder text:
 
-| Card | Expected Title (truncated) | Expected Excerpt (first ~45 chars) |
-|------|----------------------------|--------------------------------------|
+| Card | Expected Title | Expected Excerpt (first ~45 chars) |
+|------|----------------|--------------------------------------|
 | 1 | `The Hidden Super…` | `This week I led the design and prototyping …` |
 | 2 | `Brush Yourself O…` | `This week I led an effort to build a reusab…` |
 | 3 | `Rust & Polish: W…` | *(first 45 chars of week-04's body after ## heading)* |
@@ -580,9 +617,9 @@ Scroll down to the **BLOG:** section on the portfolio page. You should see:
 - [ ] **4 cards render** (not 3, not 5)
 - [ ] **Titles are real** (not "Recent Post 1")
 - [ ] **Titles truncate at 16 chars** with `…` if needed
-- [ ] **Descriptions show body text** (not frontmatter, not the heading itself)
+- [ ] **Descriptions show body text** (not frontmatter, not heading itself)
 - [ ] **Descriptions truncate at 45 chars** with `…`
-- [ ] **"Read More..." links work** — clicking navigates to the actual post
+- [ ] **"Read More..." links work** — clicking navigates to actual post
 - [ ] **Posts are in newest-first order** (week-07 first, not week-01)
 
 ---
@@ -591,11 +628,14 @@ Scroll down to the **BLOG:** section on the portfolio page. You should see:
 
 **What if you have fewer than 4 published posts?**
 
-`.slice(0, 4)` handles this gracefully — if there are only 3 posts, it returns all 3. The grid will render 3 cards instead of 4, which is valid behavior for a responsive grid.
+`.slice(0, 4)` handles this gracefully — if there are only 3 posts, it returns
+all 3. The grid will render 3 cards instead of 4, which is valid behavior for a
+responsive grid.
 
 **What if a post has no body?**
 
-`getExcerpt(post.body ?? '')` returns `''` — the description paragraph will be empty but won't crash.
+`getExcerpt(post.body ?? '')` returns `''` — the description paragraph will be
+empty but won't crash.
 
 ---
 
@@ -658,34 +698,45 @@ function truncate(str: string, len: number): string {
 ))}
 ```
 
-**Important:** In Astro's JSX-like syntax, `.map()` must be wrapped in `{ }` and the callback uses `( )` not `{ }` for implicit return.
+**Important:** In Astro's JSX-like syntax, `.map()` must be wrapped in `{ }`
+and the callback uses `( )` not `{ }` for implicit return.
 
 ### Troubleshooting
 
 **Problem:** "Cannot find module '@/utils/excerpt'"  
-**Solution:** Make sure you created the file at exactly `src/utils/excerpt.ts` (not `src/util/` or `src/utils/excerpts.ts`)
+**Solution:** Verify the file is at exactly `src/utils/excerpt.ts` (not
+`src/util/` or `src/utils/excerpts.ts`)
 
 **Problem:** Excerpts are empty  
-**Solution:** Check that your function looks for `##` (h2), not `#` (h1). Your posts start with `## Debrief`, not an h1.
+**Solution:** Check that your function looks for `##` (h2), not `#` (h1). Your
+posts start with `## Debrief`, not h1.
 
 **Problem:** Still seeing placeholder text ("Recent Post 1")  
-**Solution:** Make sure you replaced all 4 hardcoded `<div class="blog-card">` blocks with the `.map()` loop. Check for leftover HTML below the loop.
+**Solution:** Verify you replaced all 4 hardcoded `<div class="blog-card">`
+blocks with the `.map()` loop. Check for leftover HTML below the loop.
 
 **Problem:** Posts are in wrong order (oldest first)  
-**Solution:** Verify you changed `.slice(-4)` to `.slice(0, 4)`. The negative slice takes from the end of the array (oldest posts).
+**Solution:** Verify you changed `.slice(-4)` to `.slice(0, 4)`. The negative
+slice takes from the end of the array (oldest posts).
 
 **Problem:** "Read More..." link goes to 404  
-**Solution:** Check the `href` value. It should be `` {`/${post.id}`} ``. Verify that `post.id` matches your `[...slug].astro` route pattern.
+**Solution:** Check the `href` value. It should be `` {`/${post.id}`} ``. Verify
+`post.id` matches your `[...slug].astro` route pattern.
 
 ---
 
 ### Key Takeaways
 
-1. **`post.body` gives you raw markdown** — No need for remark plugins or file reads to extract text
-2. **Sort order matters for slicing** — Always check which end of the array your data lives at
-3. **Parse markdown by walking lines** — Simple string splitting is often enough; you don't always need an AST parser
-4. **Strip formatting for plain text** — Regex `.replace()` chains handle inline markdown formatting
-5. **Defensive coding with `??`** — Guard against undefined values at data boundaries
+1. **`post.body` gives you raw markdown** — No need for remark plugins or
+   file reads to extract text
+2. **Sort order matters for slicing** — Always check which end of the array
+   your data lives at
+3. **Parse markdown by walking lines** — Simple string splitting is often
+   enough; you don't always need an AST parser
+4. **Strip formatting for plain text** — Regex `.replace()` chains handle
+   inline markdown formatting
+5. **Defensive coding with `??`** — Guard against undefined values at data
+   boundaries
 
 ---
 

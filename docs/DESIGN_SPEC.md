@@ -1,12 +1,14 @@
 # Portfolio Design Specification
 
 **Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`  
-**Last Updated**: 2026-02-12  
-**Implementation Status**: Portfolio sections complete (Header, Ticker, Projects, Blog, Bio, Parallax Hand, Contact Button)
+**Last Updated**: 2026-02-13  
+**Implementation Status**: Portfolio sections complete (Header, Ticker,
+Projects, Blog, Bio, Parallax Hand, Contact Button)
 
-This document serves as the source of truth for the portfolio site design, extracted from the Figma design file.
+This document serves as the source of truth for the portfolio site design,
+extracted from the Figma design file.
 
-## Recent Changes (February 12, 2026)
+## Recent Changes (February 13, 2026)
 
 ### Bug Fixes & Refinements
 
@@ -15,7 +17,8 @@ This document serves as the source of truth for the portfolio site design, extra
   - Fit font displays in name heading
   - Iosevka Fixed displays in bio text
   - Design now matches Figma specifications with proper typography
-- ✅ **Ticker Width Constraint Fix**: Ticker component now properly constrains to 1280px on all viewport sizes
+- ✅ **Ticker Width Constraint Fix**: Ticker component now properly constrains
+  to 1280px on all viewport sizes
   - Previously: Ticker expanded beyond container on large viewports
   - Now: Respects 1280px boundary with responsive scaling
   - Solution: Added `max-w-[1280px]` constraint to Ticker wrapper
@@ -26,25 +29,34 @@ This document serves as the source of truth for the portfolio site design, extra
 
 ### Previous Changes (February 12, 2026)
 
-- ✅ **Blog Section Completion**: Implemented dynamic blog post cards with real content from the content collection
+- ✅ **Blog Section Completion**: Implemented dynamic blog post cards with
+  real content from the content collection
   - Displays 4 most recent blog posts sorted newest-first
-  - Excerpt extraction utility (`getExcerpt()`) pulls first ~45 characters from post body
+  - Excerpt extraction utility (`getExcerpt()`) pulls first ~45 characters
+    from post body
   - Titles truncated to 16 characters with ellipsis for card fit
   - Links to individual blog post routes
-- ✅ **Excerpt Utility**: Created `src/utils/excerpt.ts` to extract plain-text content from markdown
+- ✅ **Excerpt Utility**: Created `src/utils/excerpt.ts` to extract
+  plain-text content from markdown
   - Finds content after first `##` heading
   - Strips inline markdown formatting (bold, italic, links, code)
   - Safe fallback for posts without body text
-- ✅ **Blog Cards Styling**: Font size adjusted from 1.875rem (30px) to 16px for better layout fit
+- ✅ **Blog Cards Styling**: Font size adjusted from 1.875rem (30px) to 16px
+  for better layout fit
   - Prevents title overflow on responsive grid
   - Maintains visual hierarchy while fitting card constraints
 
 ### Earlier Changes (December 27, 2025)
 
-- ✅ **Parallax Hand Animation**: Implemented 1.7x scaled hand (2875px width) with scroll-based parallax animation. Hand overflows container and is clipped at 1280px boundaries, positioned 150px left of center.
-- ✅ **Font System**: Converted Iosevka ExtraLight Italic from TTC to WOFF2 (10KB subset). Set italic angle to -12° for proper slant rendering.
-- ✅ **Layout Constraints**: Fixed container overflow with `overflow: hidden` on `.portfolio-layout` to properly clip the oversized hand asset.
-- ✅ **Canvas Width Correction**: Updated SPEC to reflect actual 1280px width (not 792px as previously documented).
+- ✅ **Parallax Hand Animation**: Implemented 1.7x scaled hand (2875px width)
+  with scroll-based parallax animation. Hand overflows container and is clipped
+  at 1280px boundaries, positioned 150px left of center.
+- ✅ **Font System**: Converted Iosevka ExtraLight Italic from TTC to WOFF2
+  (10KB subset). Set italic angle to -12° for proper slant rendering.
+- ✅ **Layout Constraints**: Fixed container overflow with `overflow: hidden`
+  on `.portfolio-layout` to properly clip the oversized hand asset.
+- ✅ **Canvas Width Correction**: Updated SPEC to reflect actual 1280px width
+  (not 792px as previously documented).
 
 ## Implementation Status Legend
 
@@ -63,7 +75,9 @@ This document serves as the source of truth for the portfolio site design, extra
 - **Height**: 1985px
 - **Layout Type**: Fixed-width, centered composition (poster-style)
 
-The entire portfolio uses a narrow, fixed-width layout that stays centered in the viewport. When the browser width exceeds 1280px, extra space appears on the sides rather than stretching the content.
+The entire portfolio uses a narrow, fixed-width layout that stays centered in
+the viewport. When the browser width exceeds 1280px, extra space appears on the
+sides rather than stretching the content.
 
 ### Responsive Behavior
 
@@ -105,7 +119,8 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Line Height**: 1em
 - **Color**: #7FEE40 (Neon Green)
 - **Text**: "Ethan Anderson"
-- **Position**: Absolute, overlapping gradient dither background (top: 20px, left: 20px)
+- **Position**: Absolute, overlapping gradient dither background (top: 20px,
+  left: 20px)
 
 #### Button Text
 
@@ -199,7 +214,9 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Background**: Warning stripe pattern with diagonal lines
 - **Text Color**: #FFFFFF (White)
 - **Content**: Tech stack badges/tags
-- **Example**: "TypeScript | React | Tailwind | PostgreSQL | Drizzle | BetterAuth | TypeScript | React | Tailwind | PostgreSQL | Drizzle | BetterAuth | TypeScript | React | Tailwind |"
+- **Example**: "TypeScript | React | Tailwind | PostgreSQL | Drizzle |
+  BetterAuth | TypeScript | React | Tailwind | PostgreSQL | Drizzle |
+  BetterAuth | TypeScript | React | Tailwind |"
 
 ### Tagline / Intro Text
 
@@ -209,12 +226,16 @@ The entire portfolio uses a narrow, fixed-width layout that stays centered in th
 - **Width**: 713px
 - **Height**: 120px
 - **Color**: #FFFFFF
-- **Text**: "An early-stage engineer drawn to creative tools and developer experience, where my professional background in video and audio production becomes a technical advantage."
+- **Text**: "An early-stage engineer drawn to creative tools and developer
+  experience, where my professional background in video and audio production
+  becomes a technical advantage."
 
 #### Secondary Tagline
 
 - **Font**: Guisol (gradient/styled text with pink/magenta accents)
-- **Text**: "Bringing 19 years of systems thinking and team leadership within entertainment for brands like VICE & BEYONCÉ to early-stage companies building creative tools."
+- **Text**: "Bringing 19 years of systems thinking and team leadership within
+  entertainment for brands like VICE & BEYONCÉ to early-stage companies
+  building creative tools."
 
 ### Project Cards
 
@@ -360,6 +381,7 @@ Use Figma MCP server first, only use web url below as a fallback if a connection
 to the MCP server can't be established.
 
 **File**: `hxE0jhguSe2Irj2QoDH1JB`  
-**URL**: <https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1>
+**URL**:
+<https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1>
 
 For detailed measurements and visual specifications, refer to the Figma design file.
