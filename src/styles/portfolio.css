@@ -74,11 +74,13 @@ body[data-layout-type='portfolio'] .btn-nav-gh:hover {
 }
 
 body[data-layout-type='portfolio'] .btn-nav-blog:hover {
-  background-color: #e071e3;
+  /*background-color: #e071e3;*/
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 body[data-layout-type='portfolio'] .btn-nav-resume:hover {
-  background-color: #7fee40;
+  /*background-color: #7fee40;*/
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 body[data-layout-type='portfolio'] .btn-touch {
@@ -184,12 +186,13 @@ body[data-layout-type='portfolio'] .project-image {
 /* Shared card title styles */
 body[data-layout-type='portfolio'] .project-title,
 body[data-layout-type='portfolio'] .blog-title {
-  font-family: 'Guisol', sans-serif;
-  font-size: 1.875rem; /* 30px */
+  font-family: 'Aptos Narrow';
+  font-size: 1.875rem;
+  font-style: normal;
   font-weight: 400;
   color: #ffffff;
   line-height: normal;
-  letter-spacing: 0.02em;
+  /*letter-spacing: 0.02em;*/
   text-rendering: geometricprecision;
 }
 
@@ -197,7 +200,7 @@ body[data-layout-type='portfolio'] .blog-title {
 body[data-layout-type='portfolio'] .project-description,
 body[data-layout-type='portfolio'] .blog-description {
   font-family: 'Aptos Narrow', sans-serif;
-  font-size: 0.938rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   font-style: normal;
@@ -225,7 +228,7 @@ body[data-layout-type='portfolio'] .blog-link:hover {
 
 body[data-layout-type='portfolio'] .project-details {
   font-family: 'Aptos Narrow', sans-serif;
-  font-size: 0.813rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;

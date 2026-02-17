@@ -60,7 +60,7 @@ export default function Ticker({
           style={{
             fontFamily: 'Aptos Narrow, sans-serif',
             fontStyle: 'italic',
-            fontSize: '12px',
+            fontSize: '0.75rem',
             color: '#FFFFFF'
           }}
           animate={{
