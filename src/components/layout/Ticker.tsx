@@ -29,7 +29,12 @@ export default function Ticker({
     'Mongoose',
     'Convex',
     'Figma',
-    'Framer Motion'
+    'Motion React',
+    'Google Cloud',
+    'Ollama',
+    'Claude',
+    'Gemini',
+    'Amp'
   ],
   separator = '  |  ',
   speed = 40,
