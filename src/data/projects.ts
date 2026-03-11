@@ -1,4 +1,22 @@
-export const projects: Array<Record<string, string>> = [
+export interface Project {
+  title: string
+  description: string
+  ghLink: string
+  liveLink?: string
+  blogLink?: string
+  details: string
+  image: string
+}
+
+export const projects: Project[] = [
+  {
+    title: 'Agent Dashboard',
+    description:
+      "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",
+    ghLink: 'https://github.com/mite404/claude-agent-dashboard',
+    details: 'TypeScript | React | SQLite | Tailwind',
+    image: '/assets/portfolio/claude-dashboard.png'
+  },
   {
     title: 'TR-08 Web Sequencer',
     description:
@@ -9,23 +27,13 @@ export const projects: Array<Record<string, string>> = [
     image: '/assets/portfolio/tr-08.png'
   },
   {
-    title: "'Tap BPM' - Open Source Raycast Extension",
+    title: 'Open Source Raycast Extension',
     description:
-      'Engineered and open-sourced a productivity extension using the Raycast API. Optimized user input latency for millisecond-accurate music tempo calculation, handled asynchronous state updates and improved on UX features. Over 1,800 installs!',
+      'Engineered and open-sourced a productivity extension, "Tap BPM", using the Raycast API. Optimized user input latency for millisecond-accurate music tempo calculation, handled asynchronous state updates and improved on UX features. Over 1,800 installs!',
     ghLink: 'https://github.com/raycast/extensions/pull/24594',
     liveLink: 'https://www.raycast.com/pernielsentikaer/beat-per-minute',
     details: 'TypeScript | React | Raycast API',
     image: '/assets/portfolio/beat-per-minute-1.png'
-  },
-  {
-    title: 'Portfolio & Blog Site',
-    description:
-      'Designed this very portfolio website! Combining Astro components, React components and remixing a blog template while hacking together my own Apple Music remark directive because remarkjs only supports Spotify.',
-    ghLink: 'https://github.com/mite404/ethan-astro-blog',
-    liveLink: 'https://ethananderson.io/',
-    details: 'TypeScript | Astro | React | Tailwind | Motion React | Figma',
-    blogLink: '/week-04/',
-    image: '/assets/portfolio/portfolio-site.png'
   },
   {
     title: 'Phillips Corp. LMS',

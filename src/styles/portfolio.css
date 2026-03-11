@@ -160,6 +160,7 @@ body[data-layout-type='portfolio'] .btn-touch {
   font-size: 85px;
   font-weight: 400;
   color: #fefefe;
+  letter-spacing: 0.02em;
 
   /* Interaction */
   transition: background-color 0.2s ease;
@@ -180,7 +181,7 @@ body[data-layout-type='portfolio'] .section-title {
   font-weight: 400;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   margin: 0;
   line-height: 1;
 }
@@ -206,8 +207,8 @@ body[data-layout-type='portfolio'] .bio-top p {
 }
 
 body[data-layout-type='portfolio'] .bio-stars-divider {
-  margin-bottom: 65px;
-  margin-top: 100px;
+  margin-bottom: 115px;
+  margin-top: 50px;
   position: relative;
   z-index: 10;
 }
@@ -248,6 +249,12 @@ body[data-layout-type='portfolio'] .project-card,
 body[data-layout-type='portfolio'] .blog-card {
   padding-bottom: 0.625rem;
   padding-right: 0.625rem;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-layout-type='portfolio'] .project-footer {
+  margin-top: auto;
 }
 
 /* Project preview images */
@@ -263,7 +270,7 @@ body[data-layout-type='portfolio'] .project-image {
 
 /* Shared card title styles */
 body[data-layout-type='portfolio'] .project-title {
-  font-family: 'Guisol', sans-serif;
+  font-family: 'Aptos Narrow', sans-serif;
   font-size: 1.875rem;
   font-style: normal;
   font-weight: 400;
