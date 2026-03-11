@@ -1,13 +1,21 @@
-export const projects: Array<Record<string, string>> = [
+export interface Project {
+  title: string
+  description: string
+  ghLink: string
+  liveLink?: string
+  blogLink?: string
+  details: string
+  image: string
+}
+
+export const projects: Project[] = [
   {
     title: 'Claude Agent Dashboard',
     description:
-      'Designed this very portfolio website! Combining Astro components, React components and remixing a blog template while hacking together my own Apple Music remark directive because remarkjs only supports Spotify.',
-    ghLink: 'https://github.com/mite404/ethan-astro-blog',
-    liveLink: 'https://ethananderson.io/',
-    details: 'TypeScript | Astro | React | Tailwind | Motion React | Figma',
-    blogLink: '/week-04/',
-    image: '/assets/portfolio/portfolio-site.png'
+      "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",
+    ghLink: 'https://github.com/mite404/claude-agent-dashboard',
+    details: 'TypeScript | React | SQLite | Tailwind',
+    image: '/assets/portfolio/claude-dashboard.png'
   },
   {
     title: 'TR-08 Web Sequencer',
