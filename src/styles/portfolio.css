@@ -20,10 +20,13 @@ body[data-layout-type='portfolio'] {
 /* Zone 1: from page-top to projects section top border.
    Absolutely positioned relative to .portfolio-layout (position:relative).
    Placed before the header in the DOM via the bg-layer slot, so it renders
-   behind all page content without needing z-index tricks. */
+   behind all page content without needing z-index tricks.
+
+   Note: Adjusted top: 0 → 66px to align bat asset top with ETHAN ANDERSON
+   heading (16px padding + 50px nav), closing the gap before PROJECTS border. */
 body[data-layout-type='portfolio'] .bat-zone-1 {
   position: absolute;
-  top: 0;
+  top: 66px;
   left: 0;
   width: 100%;
   /* Figma: 51.1875rem — increased to 58rem so the bat always reaches the projects
@@ -47,7 +50,7 @@ body[data-layout-type='portfolio'] .bat-zone-1-img {
 body[data-layout-type='portfolio'] .bat-zone-2-wrapper {
   position: relative;
   overflow: hidden;
-  min-height: 800px; /* Increased from 543px to allow stars to move down */
+  min-height: 543px; /* Matches BAT_BOTTOM_CROPPED.png dimensions */
 }
 
 /* Inner content: bio text at local y=191 within zone (Figma 195:5468: y=1587, zone y=1396) */
@@ -67,7 +70,7 @@ body[data-layout-type='portfolio'] .bat-zone-2-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right top; /* bat is in upper-right of zone 2 as well */
+  object-position: center top; /* BAT_BOTTOM_CROPPED fills the 1280×543px zone */
   max-width: none;
 }
 

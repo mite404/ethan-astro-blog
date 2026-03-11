@@ -1,26 +1,22 @@
 ---
 // Decorative elements from Figma designs
 // WAVE (far left), TCHOTCHKES (center), LIQUID (far right)
-import { Image } from 'astro:assets'
-import waveAsset from '@/assets/portfolio/WAVE.svg'
-import liquidAsset from '@/assets/portfolio/LIQUID.svg'
-import tchotchkesAsset from '@/assets/portfolio/TCHOTCHKES.svg'
 ---
 
 <div class="decorative-container">
   <!-- WAVE - Far Left -->
   <div class="decorative-wave">
-    <Image src={waveAsset} alt="" width={35} height={30} />
+    <img src="/assets/portfolio/WAVE.svg" alt="" width="35" height="30" />
   </div>
 
   <!-- TCHOTCHKES - Center (Horizontally Centered) -->
   <div class="decorative-tchotchkes">
-    <Image src={tchotchkesAsset} alt="" width={340} height={29} />
+    <img src="/assets/portfolio/TCHOTCHKES.svg" alt="" width="340" height="29" />
   </div>
 
   <!-- LIQUID - Far Right -->
   <div class="decorative-liquid">
-    <Image src={liquidAsset} alt="" width={34} height={32} />
+    <img src="/assets/portfolio/LIQUID.svg" alt="" width="34" height="32" />
   </div>
 </div>
 

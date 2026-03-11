@@ -4,11 +4,6 @@ import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
 import DecorativeElements from '@/components/layout/DecorativeElements.astro'
 import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
-import { Image } from 'astro:assets'
-import batImage from '@/assets/portfolio/BAT_.png'
-import batTopCropped from '@/assets/portfolio/BAT_TOP_CROPPED.png'
-import stars from '@/assets/portfolio/STARS.png'
-import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
 import ParallaxHand from '@/components/ui/ParallaxHand'
 import { getSortedFilteredPosts } from '@/utils/draft'
@@ -23,7 +18,7 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- Rendered via bg-layer slot so it sits behind PortfolioHeader in the DOM -->
   <Fragment slot="bg-layer">
     <div class="bat-zone-1" aria-hidden="true">
-      <Image src={batTopCropped} alt="" width={1280} height={819} class="bat-zone-1-img" />
+      <img src="/assets/portfolio/BAT_TOP_CROPPED.png" alt="" width="1280" height="819" class="bat-zone-1-img" />
     </div>
   </Fragment>
 
@@ -45,7 +40,7 @@ const mostRecentPosts = posts.slice(0, 4)
     </div>
 
     <div class="bio-stars-divider flex justify-center w-full">
-      <Image src={stars} alt="stars" width={120} height={20} />
+      <img src="/assets/portfolio/STARS.png" alt="stars" width="120" height="20" />
     </div>
   </div>
 
@@ -90,9 +85,10 @@ const mostRecentPosts = posts.slice(0, 4)
   </section>
 
   <!-- BIO BOTTOM Section (below Projects) — bat zone 2 wraps this -->
+  <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
   <div class="bat-zone-2-wrapper">
     <div class="bat-zone-2" aria-hidden="true">
-      <Image src={batImage} alt="" width={3177} height={2565} class="bat-zone-2-img" />
+      <img src="/assets/BAT_BOTTOM_CROPPED.png" alt="" width="1280" height="543" class="bat-zone-2-img" />
     </div>
 
     <div class="bat-zone-2-content relative z-10 pl-8">
@@ -105,7 +101,7 @@ const mostRecentPosts = posts.slice(0, 4)
       </div>
 
       <div class="bio-stars-divider flex justify-center w-full">
-        <Image src={stars} alt="stars" width={120} height={20} />
+        <img src="/assets/portfolio/STARS.png" alt="stars" width="120" height="20" />
       </div>
     </div>
   </div>
@@ -136,7 +132,7 @@ const mostRecentPosts = posts.slice(0, 4)
 
   <!-- GLOBE Asset -->
   <div class="flex justify-center w-full pt-3" data-globe-container>
-    <Image src={globe} alt="" width={322} height={164} />
+    <img src="/assets/portfolio/MOVIE_GLOBE.svg" alt="" width="322" height="164" />
   </div>
 
   <!-- CONTACT BUTTON -->
