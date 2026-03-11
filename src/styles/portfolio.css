@@ -47,7 +47,7 @@ body[data-layout-type='portfolio'] .bat-zone-1-img {
 body[data-layout-type='portfolio'] .bat-zone-2-wrapper {
   position: relative;
   overflow: hidden;
-  min-height: 543px; /* Figma zone height — ensures stars have room at bottom */
+  min-height: 800px; /* Increased from 543px to allow stars to move down */
 }
 
 /* Inner content: bio text at local y=191 within zone (Figma 195:5468: y=1587, zone y=1396) */
@@ -204,6 +204,7 @@ body[data-layout-type='portfolio'] .bio-top p {
 
 body[data-layout-type='portfolio'] .bio-stars-divider {
   margin-bottom: 65px;
+  margin-top: 100px;
   position: relative;
   z-index: 10;
 }
@@ -214,6 +215,7 @@ body[data-layout-type='portfolio'] .bio-btm {
   font-style: italic;
   font-weight: 400;
   color: white;
+  margin-bottom: 30px;
   line-height: 105%;
   position: relative;
   z-index: 10;
