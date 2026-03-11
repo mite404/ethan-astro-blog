@@ -1,14 +1,26 @@
 # Portfolio Design Specification
 
-**Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`  
-**Last Updated**: 2026-02-13  
-**Implementation Status**: Portfolio sections complete (Header, Ticker,
-Projects, Blog, Bio, Parallax Hand, Contact Button)
+**Source**: Figma Design File - `hxE0jhguSe2Irj2QoDH1JB`
+**Last Updated**: 2026-03-11
+**Implementation Status**: Portfolio sections complete with refinements (Header, Ticker,
+Projects, Blog, Bio spacing/positioning, Parallax Hand, Contact Button)
 
 This document serves as the source of truth for the portfolio site design,
 extracted from the Figma design file.
 
-## Recent Changes (February 13, 2026)
+## Recent Changes (March 11, 2026)
+
+### Bio Section Spacing & Star Asset Positioning
+
+- ✅ **Bio Section Spacing Alignment**: Top and bottom bio sections now have identical spacing
+  - Both `.bio-top` and `.bio-btm` have `margin-bottom: 30px`
+  - Star dividers use consistent `margin-top: 100px` and `margin-bottom: 65px`
+- ✅ **Star Asset Positioning**: Stars can now be repositioned freely
+  - Increased `bat-zone-2-wrapper` min-height from 543px → 800px
+  - Removed overflow clipping constraint that prevented repositioning
+  - Container now has breathing room for design adjustments
+
+## Previous Changes (February 13, 2026)
 
 ### Typography & Font Rendering
 
@@ -408,5 +420,8 @@ The portfolio page contains these sections in order:
 
 ## Figma Reference
 
-For detailed measurements and visual specifications, refer to the Figma design file via Figma Desktop
-MCP server.
+For detailed measurements and visual specifications, refer to the Figma design file:
+<https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=195-6373&m=dev>
+
+Reference public/portfolio-design-system.html for all portfolio design decisions including
+colors, typography, spacing, and component styles

@@ -43,10 +43,12 @@ No new dependencies needed. All changes are HTML/CSS/Astro/React.
 ### 1. Header (`PortfolioHeader.astro`)
 
 **Before:**
+
 - Nav buttons: Guisol font, 22px, order: BLOG | GITHUB | RESUME
 - RESUME: no accent mark
 
 **After:**
+
 - Nav buttons: Aptos Narrow font, 20px — same order
 - RESUMÉ: with accent mark on the É
 - Button dimensions unchanged: 100×50px, radius 40px, gap-0
@@ -131,6 +133,7 @@ The single `<section class="bio-container">` with both paragraphs gets split
 into two independent sections, each with its own bat background context.
 
 **Bio Top** (above PROJECTS):
+
 - Text: "An early-stage engineer drawn to **creative tools** and developer
   experience, where my professional background in video and audio production
   becomes a **technical advantage**."
@@ -141,6 +144,7 @@ into two independent sections, each with its own bat background context.
   `overflow: hidden` on the containing element.
 
 **Bio Bottom** (below PROJECTS, above BLOG):
+
 - Text: "Bringing 19 years of **systems thinking and team leadership** within
   entertainment for brands like VICE, SPOTIFY & BEYONCÉ to early-stage
   companies building creative tools."
@@ -163,6 +167,7 @@ once after Bio Top, once after Bio Bottom.
 ### 5. Projects Section (`index.astro` + `portfolio.css`)
 
 **Before card layout:**
+
 - Title: Aptos Narrow (current CSS)
 - Image: 200×125px (`project-image` class)
 - Description: Aptos Narrow 0.875rem
@@ -170,6 +175,7 @@ once after Bio Top, once after Bio Bottom.
 - Details: Aptos Narrow 0.75rem, uppercase
 
 **After card layout (from Figma `195:6304`):**
+
 - **Title: Guisol Regular 30px** — this is a font change! Current CSS uses
   Aptos Narrow for project titles.
 - Image: 200×125px — unchanged
@@ -178,6 +184,7 @@ once after Bio Top, once after Bio Bottom.
 - Tech stack tags line: Aptos Narrow 10px (e.g., "TypeScript | React | Tailwind")
 
 **Section dimensions (match Figma exactly):**
+
 - Border box: 1280×526px, 1px solid white
 - Section title "PROJECTS:": Guisol 100px (matches current `.section-title`)
 - Card columns: 4 equal columns, cards at x≈28, 327, 634, 927 (≈300px each)
@@ -190,11 +197,13 @@ once after Bio Top, once after Bio Bottom.
 ### 6. Blog Section (`index.astro` + `portfolio.css`)
 
 **Before card layout:**
+
 - Title: `.blog-title` class (current font sizing)
 - Description: `.blog-description`
 - Link: "Read More..."
 
 **After card layout (from Figma `195:5434`):**
+
 - **Headline:** Aptos Narrow 30px — the blog card headline uses Aptos Narrow
   (not Guisol), 30px
 - **Description:** Aptos Narrow 12px — same
@@ -204,6 +213,7 @@ once after Bio Top, once after Bio Bottom.
   tag if available.
 
 **Section dimensions:**
+
 - Border box: 1280×286px, 1px solid white (more compact than Projects)
 - Section title "BLOG:": Guisol 100px (unchanged)
 - 4 columns, same x positions as Projects
@@ -228,6 +238,7 @@ make it part of the Headline (wrap headline in `<a>` tag).
 ## Step-by-Step Implementation Order
 
 ### Step 1 — CSS: Header button font
+
 **File:** `src/styles/portfolio.css`
 
 Update `.btn-nav-gh`, `.btn-nav-blog`, `.btn-nav-resume` font-family from
@@ -235,11 +246,13 @@ Update `.btn-nav-gh`, `.btn-nav-blog`, `.btn-nav-resume` font-family from
 from `22px` to `20px`.
 
 ### Step 2 — Header: RESUMÉ spelling
+
 **File:** `src/components/layout/PortfolioHeader.astro`
 
 Change `RESUME` to `RESUMÉ` in the button label.
 
 ### Step 3 — Ticker: Replace SVG stripe with CSS gradient
+
 **File:** `src/components/layout/Ticker.tsx`
 
 The items list is already up to date — no changes needed there.
@@ -250,25 +263,30 @@ stripe fully responsive at any container width without needing an asset.
 Match the stripe color/opacity/width to the existing SVG before removing it.
 
 ### Step 4 — Page reorder: Extract bio into separate sections
+
 **File:** `src/pages/index.astro`
 
 Decompose `<section class="bio-container">` into:
+
 - `BioTop` inline section (above projects)
 - `BioBottom` inline section (below projects)
 - Move stars `<Image>` to appear after each bio paragraph
 
 ### Step 5 — Bio text: Update brand list order
+
 **File:** `src/pages/index.astro`
 
 Keep SQUARESPACE in the brand list. Reorder from `"SPOTIFY, SQUARESPACE, VICE & BEYONCÉ"`
 to `"VICE, SPOTIFY, SQUARESPACE & BEYONCÉ"` to match the new emphasis order.
 
 ### Step 6 — CSS: Bio bottom mixed font
+
 **File:** `src/styles/portfolio.css`
 
 In `.bio-btm`, confirm base font stays Iosevka Fixed Italic. For the
 highlighted `<span class="highlight">` within bio-btm, the Figma uses Guisol
 at a slightly smaller size (40px vs 45px surrounding text). Add:
+
 ```css
 .bio-btm .highlight {
   font-family: 'Guisol', sans-serif;
@@ -277,18 +295,21 @@ at a slightly smaller size (40px vs 45px surrounding text). Add:
 ```
 
 ### Step 7 — CSS: Project card title font
+
 **File:** `src/styles/portfolio.css`
 
 Change `.project-title` font-family from `'Aptos Narrow'` to `'Guisol', sans-serif`.
 Update font-size to `1.875rem` (30px).
 
 ### Step 8 — CSS: Project link size
+
 **File:** `src/styles/portfolio.css`
 
 Reduce `.project-link` font-size from `0.938rem` to `0.625rem` (10px) to match
 Figma spec.
 
 ### Step 9 — Blog cards: Add Subheading element
+
 **File:** `src/pages/index.astro`
 
 In the blog card map, add a `<p class="blog-subheading">` element showing
@@ -296,9 +317,11 @@ the post's publication date (formatted as "Month YYYY"). Place it below the
 description `<p>`.
 
 ### Step 10 — CSS: Blog subheading style
+
 **File:** `src/styles/portfolio.css`
 
 Add new rule:
+
 ```css
 body[data-layout-type='portfolio'] .blog-subheading {
   font-family: 'Aptos Narrow', sans-serif;
@@ -310,18 +333,21 @@ body[data-layout-type='portfolio'] .blog-subheading {
 ```
 
 ### Step 11 — CSS: Blog card title size
+
 **File:** `src/styles/portfolio.css`
 
 Confirm `.blog-title` is `font-size: 1.875rem` (30px) and `font-family: 'Aptos Narrow'`.
 No change needed if current matches.
 
 ### Step 12 — Blog card: Wrap title in link
+
 **File:** `src/pages/index.astro`
 
 Wrap `<h3 class="blog-title">` in `<a href={...}>` and remove the separate
 "Read More..." link if it's no longer in the v2 design.
 
 ### Step 13 — Verify bat backgrounds
+
 **File:** `src/pages/index.astro`, `src/styles/portfolio.css`
 
 After restructuring, ensure both bio sections have appropriate bat background
@@ -330,7 +356,9 @@ reused for both. Bio top section needs the bat at a large scale (overflow),
 bio bottom can share or use a differently positioned instance.
 
 ### Step 14 — Smoke test
+
 Run `bun dev` and verify:
+
 - Page section order matches screenshot
 - Button fonts are Aptos Narrow
 - RESUMÉ has accent mark
