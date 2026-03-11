@@ -8,7 +8,9 @@
 
 ## Overview
 
-Fixed critical layout and styling issues in portfolio components. All portfolio elements now respect the fixed 792px width constraint, backgrounds are unified across portfolio and blog, and theme awareness is properly implemented.
+Fixed critical layout and styling issues in portfolio components. All portfolio elements now respect
+the fixed 792px width constraint, backgrounds are unified across portfolio and blog, and theme
+awareness is properly implemented.
 
 ---
 
@@ -103,7 +105,7 @@ Fixed critical layout and styling issues in portfolio components. All portfolio 
 - <div class="w-full h-[51px]">
 -   <Image src={gradDither} alt="" width={797} height={51} class="w-full h-full object-cover" />
 + <div class="h-[51px]" style="max-width: 797px;">
-+   <Image src={gradDither} alt="" width={797} height={51} class="h-full" style="width: 100%; max-width: 797px; object-fit: cover;" />
++   <Image src={gradDither} alt="" width={797} height={51} class="h-full" style="width: 100%" max-width: 797px; object-fit: cover;" />
   </div>
 ```
 
@@ -217,4 +219,5 @@ No breaking changes. This is a pure enhancement:
 3. ✅ Testing complete
 4. Ready for merge → Phase 2: Portfolio Content Sections
 
-See `docs/IMPLEMENTATION.md` for upcoming Phase 2 work (Intro section, Projects, Blog posts, Contact CTA).
+See `docs/IMPLEMENTATION.md` for upcoming Phase 2 work (Intro section, Projects,
+Blog posts, Contact CTA).

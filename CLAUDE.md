@@ -1,8 +1,10 @@
 # CLAUDE.md
 
-**Last Updated**: 2026-02-13
+**Last Updated**: 2026-03-11
 
 Quick reference for working with this Astro 5 portfolio + blog site.
+
+**Note**: Bio section spacing and star asset positioning refinements completed (2026-03-11)
 
 ## Project Overview
 

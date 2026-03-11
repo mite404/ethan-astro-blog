@@ -6,6 +6,7 @@ import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 import { Image } from 'astro:assets'
 import batImage from '@/assets/portfolio/BAT_.png'
+import batTopCropped from '@/assets/portfolio/BAT_TOP_CROPPED.png'
 import stars from '@/assets/portfolio/STARS.png'
 import globe from '@/assets/portfolio/MOVIE_GLOBE.svg'
 import Ticker from '@/components/layout/Ticker'
@@ -18,9 +19,34 @@ const mostRecentPosts = posts.slice(0, 4)
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
+  <!-- BAT ZONE 1: covers page-top through bio-top section, clipped at projects border -->
+  <!-- Rendered via bg-layer slot so it sits behind PortfolioHeader in the DOM -->
+  <Fragment slot="bg-layer">
+    <div class="bat-zone-1" aria-hidden="true">
+      <Image src={batTopCropped} alt="" width={1280} height={819} class="bat-zone-1-img" />
+    </div>
+  </Fragment>
+
   <!-- TICKER Component -->
   <div class="pt-4 pb-2.5">
     <Ticker client:load />
+  </div>
+
+  <!-- BIO TOP Section (above Projects) -->
+  <!-- pt-[174px]: Figma y=514 − (50nav + 239h1 + 0main-pt + 51ticker) = 174px -->
+  <div class="relative pl-8 pt-[174px]">
+    <div class="bio-top">
+      <p>
+        An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer
+        experience, where my professional background in video and audio production becomes a <span
+          class="highlight">technical advantage</span
+        >.
+      </p>
+    </div>
+
+    <div class="bio-stars-divider flex justify-center w-full">
+      <Image src={stars} alt="stars" width={120} height={20} />
+    </div>
   </div>
 
   <!-- PROJECTS Section -->
@@ -63,37 +89,26 @@ const mostRecentPosts = posts.slice(0, 4)
     </div>
   </section>
 
-  <!-- Bio section with bat background -->
-  <section class="bio-container relative w-full h-[476px]">
-    <!-- Bat background image -->
-    <div class="absolute inset-0 w-full h-full">
-      <Image src={batImage} alt="" width={1280} height={476} class="w-full h-full object-cover" />
+  <!-- BIO BOTTOM Section (below Projects) — bat zone 2 wraps this -->
+  <div class="bat-zone-2-wrapper">
+    <div class="bat-zone-2" aria-hidden="true">
+      <Image src={batImage} alt="" width={3177} height={2565} class="bat-zone-2-img" />
     </div>
 
-    <!-- Text content layered on top -->
-    <div class="relative z-10 flex flex-col justify-start h-full pl-8 pt-[25px]">
-      <div class="bio-top">
+    <div class="bat-zone-2-content relative z-10 pl-8">
+      <div class="bio-btm">
         <p>
-          An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer
-          experience, where my professional background in video and audio production becomes a <span
-            class="highlight">technical advantage</span
-          >.
+          Bringing 19 years of <span class="highlight">systems thinking and team leadership</span> within
+          entertainment for brands like VICE, SPOTIFY, SQUARESPACE & BEYONCÉ to early-stage companies
+          building creative tools.
         </p>
       </div>
 
       <div class="bio-stars-divider flex justify-center w-full">
         <Image src={stars} alt="stars" width={120} height={20} />
       </div>
-
-      <div class="bio-btm">
-        <p>
-          Bringing 19 years of <span class="highlight">systems thinking and team leadership</span> within
-          entertainment for brands like SPOTIFY, SQUARESPACE, VICE & BEYONCÉ to early-stage companies
-          building creative tools.
-        </p>
-      </div>
     </div>
-  </section>
+  </div>
 
   <!-- BLOG Section -->
   <section class="bordered pl-8">
@@ -103,12 +118,14 @@ const mostRecentPosts = posts.slice(0, 4)
         mostRecentPosts.map((post) => (
           <div class="blog-card">
             <h3 class="blog-title">
-              {post.data.title.length > 18 ? post.data.title.slice(0, 18) + '…' : post.data.title}
+              <a href={`/${post.id}`} style="text-decoration: none; color: inherit;">
+                {post.data.title.length > 18 ? post.data.title.slice(0, 18) + '…' : post.data.title}
+              </a>
             </h3>
             <p class="blog-description">{getExcerpt(post.body ?? '')}</p>
-            <a href={`/${post.id}`} class="blog-link">
-              Read More...
-            </a>
+            <p class="blog-subheading">
+              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+            </p>
           </div>
         ))
       }
