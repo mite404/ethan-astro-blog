@@ -10,7 +10,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: 'Claude Agent Dashboard',
+    title: 'Agent Dashboard',
     description:
       "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",
     ghLink: 'https://github.com/mite404/claude-agent-dashboard',
