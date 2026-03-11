@@ -408,11 +408,5 @@ The portfolio page contains these sections in order:
 
 ## Figma Reference
 
-Use Figma MCP server first, only use web url below as a fallback if a connection
-to the MCP server can't be established.
-
-**File**: `hxE0jhguSe2Irj2QoDH1JB`  
-**URL**:
-<https://www.figma.com/design/hxE0jhguSe2Irj2QoDH1JB/Dev-Portfolio-Site?node-id=0-1>
-
-For detailed measurements and visual specifications, refer to the Figma design file.
+For detailed measurements and visual specifications, refer to the Figma design file via Figma Desktop
+MCP server.

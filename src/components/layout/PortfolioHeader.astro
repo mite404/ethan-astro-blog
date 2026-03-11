@@ -1,47 +1,25 @@
 ---
 import asterix from '@/assets/portfolio/asterix.svg'
-import gradDither from '@/assets/portfolio/grad-dither-group.svg'
 import { Image } from 'astro:assets'
 ---
 
 <header class="relative w-full">
-  <!-- Top row with asterix icon and buttons -->
-  <nav class="relative flex items-start justify-between px-0 pt-0">
-    <!-- Asterix icon -->
+  <!-- 195:6363 — nav row: asterix left, buttons right -->
+  <nav class="flex items-start justify-between">
     <div class="w-5 h-5">
       <Image src={asterix} alt="Asterix icon" width={20} height={20} />
     </div>
-
-    <!-- Button container -->
     <div class="flex gap-0">
-      <a href="/blog" class="btn-nav-blog">
-        <span> BLOG </span>
-      </a>
-      <a href="https://github.com/mite404" class="btn-nav-gh">
-        <span> GITHUB </span>
-      </a>
-      <a href="/Ethan_Anderson_Resume.pdf" class="btn-nav-resume">
-        <span> RESUME </span>
-      </a>
+      <a href="/blog" class="btn-nav-blog"><span>BLOG</span></a>
+      <a href="https://github.com/mite404" class="btn-nav-gh"><span>GITHUB</span></a>
+      <a href="/Ethan_Anderson_Resume.pdf" class="btn-nav-resume"><span>RESUMÉ</span></a>
     </div>
   </nav>
 
-  <!-- Name text with gradient dither background -->
-  <div class="relative">
-    <!-- Gradient dither background -->
-    <div class="w-7xl h-[78px]">
-      <Image src={gradDither} alt="" width={1280} height={78} />
-    </div>
-
-    <!-- Name text - positioned absolutely to overlap the gradient -->
-    <h1 class="portfolio-name absolute top-5 pb-2.5 left-8">Ethan Anderson</h1>
-  </div>
-
-  <!-- Spacer to push content below the absolutely-positioned name -->
-  <div class="h-[18px]"></div>
+  <!-- 195:6373 — name: full-width, in-flow below nav -->
+  <h1 class="portfolio-name">Ethan Anderson</h1>
 </header>
 
 <style>
   /* portfolio styles: src/styles/portfolio.css */
-  /* Component-specific styles only if needed */
 </style>

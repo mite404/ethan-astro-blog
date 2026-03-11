@@ -14,6 +14,64 @@ body[data-layout-type='portfolio'] {
 }
 
 /* ===========================
+   BAT BACKGROUND ZONES
+   =========================== */
+
+/* Zone 1: from page-top to projects section top border.
+   Absolutely positioned relative to .portfolio-layout (position:relative).
+   Placed before the header in the DOM via the bg-layer slot, so it renders
+   behind all page content without needing z-index tricks. */
+body[data-layout-type='portfolio'] .bat-zone-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Figma: 51.1875rem — increased to 58rem so the bat always reaches the projects
+     border regardless of font-rendering variance. section.bordered has bg-color
+     so any overshoot is covered. */
+  height: 58rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+body[data-layout-type='portfolio'] .bat-zone-1-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* pre-cropped to zone dimensions — fills naturally */
+  height: auto;
+  max-width: none;
+}
+
+/* Zone 2: wraps bio-bottom section. Figma 225:57: 1280×543px */
+body[data-layout-type='portfolio'] .bat-zone-2-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 543px; /* Figma zone height — ensures stars have room at bottom */
+}
+
+/* Inner content: bio text at local y=191 within zone (Figma 195:5468: y=1587, zone y=1396) */
+body[data-layout-type='portfolio'] .bat-zone-2-content {
+  padding-top: 191px;
+}
+
+body[data-layout-type='portfolio'] .bat-zone-2 {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+body[data-layout-type='portfolio'] .bat-zone-2-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right top; /* bat is in upper-right of zone 2 as well */
+  max-width: none;
+}
+
+/* ===========================
    TICKER COMPONENT
    =========================== */
 
@@ -28,10 +86,11 @@ body[data-layout-type='portfolio'] .ticker-container {
 
 body[data-layout-type='portfolio'] .portfolio-name {
   font-family: 'Fit', sans-serif;
-  font-size: 100px;
+  font-size: 19.7rem; /* Figma 195:6373: 316px */
+  font-style: normal;
   font-weight: 400;
   color: #7fee40;
-  line-height: 1em;
+  line-height: 0.756; /* 239px cap-height ÷ 316px = collapses box to visual height */
 }
 
 body[data-layout-type='portfolio'] .btn-nav-gh,
@@ -45,9 +104,9 @@ body[data-layout-type='portfolio'] .btn-nav-gh,
   height: 50px;
   border-radius: 40px;
 
-  /* Text styling */
-  font-family: 'Guisol', sans-serif;
-  font-size: 22px;
+  /* Text styling — Figma 195:6363: Aptos Narrow Regular 20px */
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1;
   color: #1c1c1c;
@@ -135,6 +194,8 @@ body[data-layout-type='portfolio'] .bio-top {
   color: white;
   margin-bottom: 30px;
   line-height: 105%;
+  position: relative;
+  z-index: 10;
 }
 
 body[data-layout-type='portfolio'] .bio-top p {
@@ -143,18 +204,30 @@ body[data-layout-type='portfolio'] .bio-top p {
 
 body[data-layout-type='portfolio'] .bio-stars-divider {
   margin-bottom: 65px;
+  position: relative;
+  z-index: 10;
 }
 
 body[data-layout-type='portfolio'] .bio-btm {
-  font-family: 'Guisol', sans-serif;
-  font-size: 2.5rem;
+  font-family: 'Iosevka Fixed', monospace;
+  font-size: 45px;
+  font-style: italic;
   font-weight: 400;
   color: white;
-  line-height: 1;
+  line-height: 105%;
+  position: relative;
+  z-index: 10;
 }
 
 body[data-layout-type='portfolio'] .bio-btm p {
   margin: 0 !important;
+}
+
+body[data-layout-type='portfolio'] .bio-btm .highlight {
+  font-family: 'Iosevka Fixed', monospace;
+  font-size: 40px;
+  font-style: italic;
+  color: #e071e3;
 }
 
 body[data-layout-type='portfolio'] .highlight {
@@ -184,7 +257,17 @@ body[data-layout-type='portfolio'] .project-image {
 }
 
 /* Shared card title styles */
-body[data-layout-type='portfolio'] .project-title,
+body[data-layout-type='portfolio'] .project-title {
+  font-family: 'Guisol', sans-serif;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: normal;
+  /*letter-spacing: 0.02em;*/
+  text-rendering: geometricprecision;
+}
+
 body[data-layout-type='portfolio'] .blog-title {
   font-family: 'Aptos Narrow';
   font-size: 1.875rem;
@@ -210,7 +293,16 @@ body[data-layout-type='portfolio'] .blog-description {
 }
 
 /* Shared card link styles */
-body[data-layout-type='portfolio'] .project-link,
+body[data-layout-type='portfolio'] .project-link {
+  display: inline-block;
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 0.938rem;
+  color: #fefefe;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+
 body[data-layout-type='portfolio'] .blog-link {
   display: inline-block;
   font-family: 'Aptos Narrow', sans-serif;
@@ -234,11 +326,21 @@ body[data-layout-type='portfolio'] .project-details {
   letter-spacing: 0.05em;
 }
 
+body[data-layout-type='portfolio'] .blog-subheading {
+  font-family: 'Aptos Narrow', sans-serif;
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
 /* ===========================
    SECTION BORDERS
    =========================== */
 
 body[data-layout-type='portfolio'] section.bordered {
+  background-color: #1c1c1c; /* covers any bat texture overshoot from zone-1 */
   border: 1px solid rgba(255, 255, 255, 1);
 }
 

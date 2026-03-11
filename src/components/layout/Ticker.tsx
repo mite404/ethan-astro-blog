@@ -56,8 +56,16 @@ export default function Ticker({
   // const estimatedWidth = fullText.length * 8 // ~8px per character
 
   return (
-    <div className={`relative w-full overflow-hidden h-[25px] pt-1.5 ${className}`}>
-      {/* Animated text layer (background) */}
+    <div
+      className={`relative w-full overflow-hidden h-[25px] ${className}`}
+      style={{
+        borderLeft: '5.63px solid #ffffff',
+        borderRight: '5.63px solid #ffffff',
+        borderTop: '1.98px solid #ffffff',
+        borderBottom: '1.98px solid #ffffff'
+      }}
+    >
+      {/* Animated text layer */}
       <div className="absolute inset-0 h-full flex items-center">
         <motion.div
           ref={textRef}
@@ -65,7 +73,7 @@ export default function Ticker({
           style={{
             fontFamily: 'Aptos Narrow, sans-serif',
             fontStyle: 'italic',
-            fontSize: '0.75rem',
+            fontSize: '.875rem',
             color: '#FFFFFF'
           }}
           animate={{
@@ -81,16 +89,6 @@ export default function Ticker({
           {repeatedText}
         </motion.div>
       </div>
-
-      {/* SVG frame layer (foreground) */}
-      <img
-        src="/assets/portfolio/warning-strip.svg"
-        alt=""
-        width="1280"
-        height="25"
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
-        style={{ objectFit: 'fill' }}
-      />
     </div>
   )
 }
