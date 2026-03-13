@@ -94,11 +94,14 @@ body[data-layout-type='portfolio'] .portfolio-name {
   font-weight: 400;
   color: #7fee40;
   line-height: 0.756; /* 239px cap-height ÷ 316px = collapses box to visual height */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body[data-layout-type='portfolio'] .btn-nav-gh,
-.btn-nav-blog,
-.btn-nav-resume {
+body[data-layout-type='portfolio'] .btn-nav-blog,
+body[data-layout-type='portfolio'] .btn-nav-resume {
   /* Button styling */
   display: flex;
   align-items: center;

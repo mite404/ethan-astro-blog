@@ -1,6 +1,6 @@
 # Implementation Status & Roadmap
 
-**Last Updated**: 2026-03-11
+**Last Updated**: 2026-03-13
 **Project**: Ethan Anderson Portfolio + Blog
 **Status**: Portfolio sections complete (all major components implemented and styled) + Bio section refinements complete
 
@@ -269,6 +269,91 @@ BaseLayout (type="page")
 ---
 
 ## Known Issues
+
+### ⏳ OUTSTANDING - Vite CSS Module Cache Invalidation: Nav Button Hover (Mar 13, 2026)
+
+**User-Facing Bug:**
+
+Navigation buttons (BLOG, GITHUB, RESUMÉ) at the top of the portfolio page only trigger hover states in the top 10–20px of the 50px pill-shaped button area, instead of across the entire button height. This regression appeared after recent changes to `portfolio.css` and bat background image paths.
+
+**Root Cause:**
+
+Vite's CSS module deduplication combined with a duplicate import pattern caused the browser to serve stale compiled CSS:
+
+1. **Import pattern:** `global.css` has `@import './portfolio.css'` (line 4)
+2. **Duplicate:** `src/pages/index.astro` also had `import '@/styles/portfolio.css'` in its frontmatter
+3. **Deduplication:** When both files import the same module, Vite optimizes by caching the compiled result
+4. **Cache staleness:** When `portfolio.css` was updated with new bat-zone-1 rules (position: absolute, height: 58rem) and font-size changes (19.7rem), Vite didn't invalidate the cached version
+5. **Result:** Browser received old CSS missing the "BAT BACKGROUND ZONES" section entirely
+
+**Evidence:**
+
+Chrome DevTools inspection revealed:
+- `.bat-zone-1` element with `position: static` (should be `absolute`)
+- Nav buttons positioned at y=835px instead of y=16px
+- `.portfolio-name` with `font-size: 100px` instead of `19.7rem`
+- Old hover colors (purple/green) instead of current scheme
+- All CSS rules for bat-zone-1 missing from loaded stylesheets
+
+**Secondary Issues Discovered:**
+
+1. Bat image path broken: `/assets/portfolio/BAT_TOP_CROPPED.png` → file moved to `/assets/BAT_TOP_CROPPED.png`
+2. Duplicate Ticker frame appearing around component (symptom of stale CSS)
+
+**The Fix:**
+
+Three-part solution:
+
+```bash
+# 1. Clear Vite module cache
+rm -rf node_modules/.vite/
+
+# 2. Restart development server (forces CSS recompilation)
+bun dev
+```
+
+Then in code:
+
+```astro
+# 3a. Remove duplicate import from src/pages/index.astro (line 2)
+# DELETE: import '@/styles/portfolio.css'
+
+# 3b. Fix bat image path in src/pages/index.astro (line 23)
+# FROM: src="/assets/portfolio/BAT_TOP_CROPPED.png"
+# TO:   src="/assets/BAT_TOP_CROPPED.png"
+```
+
+After restart, hard-refresh browser (Cmd+Shift+R / Ctrl+Shift+R) to load fresh CSS.
+
+**Why This Happened:**
+
+The architecture imports `portfolio.css` in two places:
+- Global: `global.css` → imported by PortfolioLayout
+- Page-level: `index.astro` → direct import in component
+
+Vite's import deduplication is a performance optimization: it prevents duplicate CSS from being compiled and bundled. However, when CSS changes after the initial cache, Vite doesn't automatically invalidate the cache until the dependency graph is rebuilt (which requires clearing `.vite/` or restarting dev server).
+
+**Prevention:**
+
+Remove the duplicate import pattern. Since `global.css` already imports `portfolio.css`, `index.astro` doesn't need to. The CSS file reaches `index.astro` through the layout hierarchy:
+
+```
+index.astro
+→ PortfolioLayout.astro
+→ BaseLayout.astro
+→ imports global.css
+→ imports portfolio.css
+```
+
+**Files Affected:**
+
+- `src/pages/index.astro` (duplicate import removed, bat path fixed)
+- `src/styles/portfolio.css` (unchanged, but was being served stale)
+- `global.css` (unchanged, still imports portfolio.css)
+
+**Status:** Pending user restart and verification. Once dev server restarts with cache cleared, nav button hover should work across full 50px button height.
+
+---
 
 ### ✅ RESOLVED - Custom Fonts Loading (Feb 13, 2026)
 
