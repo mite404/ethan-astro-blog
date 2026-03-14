@@ -370,14 +370,7 @@ body[data-layout-type='portfolio'] section.bordered {
    RESPONSIVE ADJUSTMENTS
    =========================== */
 
-/* iPhone SE: 375px viewport */
-@media (max-width: 480px) {
-  body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 8.75rem; /* 140px — spans name across most of width */
-  }
-}
-
-/* Desktop */
+/* Tablet & smaller desktops */
 @media (max-width: 950px) {
   body[data-layout-type='portfolio'] .portfolio-name {
     font-size: 60px;
@@ -388,6 +381,7 @@ body[data-layout-type='portfolio'] section.bordered {
   }
 }
 
+/* Tablet portrait & small devices */
 @media (max-width: 640px) {
   body[data-layout-type='portfolio'] .portfolio-name {
     font-size: 40px;
@@ -403,5 +397,12 @@ body[data-layout-type='portfolio'] section.bordered {
 
   body[data-layout-type='portfolio'] .bio-btm {
     font-size: 24px;
+  }
+}
+
+/* iPhone SE: 375px viewport */
+@media (max-width: 480px) {
+  body[data-layout-type='portfolio'] .portfolio-name {
+    font-size: 8.75rem; /* 140px — spans name across most of width */
   }
 }
