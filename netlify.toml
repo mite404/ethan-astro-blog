@@ -22,6 +22,11 @@ from = "/_astro/*"
 to = "/_astro/:splat"
 status = 200
 
+[[redirects]]
+from = "/:slug"
+to = "/blog/:slug"
+status = 301
+
 # Global headers
 [[headers]]
 for = "/*"

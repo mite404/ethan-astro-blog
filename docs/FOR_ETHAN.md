@@ -3,7 +3,7 @@
 **Purpose**: A living document capturing key learnings, debugging insights, and
 architectural decisions for this project.
 
-**Last Updated**: February 13, 2026 (Typography & Font Rendering Session)
+**Last Updated**: March 13, 2026 (Phase 3 Blog Migration & CSS Cascade Debugging)
 
 ---
 
@@ -584,7 +584,348 @@ element.
 
 ---
 
-## Behind the Scenes: February 13 Session Insights
+### 🐛 Bug #7: Navigation Button Hover States Broken on Large Heading (March 13, 2026)
+
+**The Setup:**
+
+Portfolio header nav buttons (GitHub, Blog, Resumé) worked perfectly on desktop but exhibited a strange behavior: clicking/hovering only worked in the top 10–20px of the 50px pill buttons. Below that, the buttons were unclickable—as if they were hidden behind an invisible overlay.
+
+**The Visual Symptom:**
+
+```
+┌─────────────────────────────────────┐
+│  ✓ Hover works here (10px)          │  ← Top slice works
+├─────────────────────────────────────┤
+│  ✗ Hover fails here (40px)          │  ← Bottom 40px unresponsive
+└─────────────────────────────────────┘
+```
+
+**The Root Cause Investigation:**
+
+Initial suspects:
+- ❌ `bat-zone-1` (background image overlay) — Removed temporarily, still broken
+- ❌ Stacking context z-index issues
+- ✅ **The real culprit: The `portfolio-name` h1 element**
+
+The h1 had:
+```css
+.portfolio-name {
+  font-size: 19.7rem; /* 316px */
+  line-height: 0.756; /* 239px visual height */
+  margin: [missing] /* implicitly 0.67em above & below */
+  padding: [missing]
+}
+```
+
+**Why This Broke Hover:**
+
+CSS line-height creates an **invisible line box** that's larger than the visual text. With a 19.7rem font-size:
+- Visual height (collapsed): ~239px
+- DOM box height (line-height): 0.756 × 316px = ~239px ✓
+- **But the margins auto-calculated**: 0.67em × 316px = ~212px above + ~212px below
+- **Total h1 box**: 239px + 212px + 212px = **~663px tall**
+
+This massive invisible margin box extended far below the visible text, **overlapping the nav buttons** and blocking pointer events.
+
+```
+┌─ h1 DOM box starts (top: 66px)
+│
+│  "ETHAN ANDERSON" (visible 239px)
+│
+│  [invisible margin-bottom zone: 212px] ← Nav buttons sit here!
+│
+└─ h1 DOM box ends (top + 663px = 729px)
+
+Nav buttons (y: 0-50px) ← Inside the invisible h1 box = unclickable!
+```
+
+**The Fix:**
+
+Explicit margin/padding reset to clip the invisible box to visual bounds:
+
+```css
+.portfolio-name {
+  font-size: 19.7rem;
+  line-height: 0.756;
+  margin: 0;      /* ← Kill auto margins */
+  padding: 0;     /* ← Kill auto padding */
+  overflow: hidden; /* ← Clip any overshoot */
+}
+```
+
+**The Lesson:**
+
+Line-height isn't just visual—it creates an actual DOM box. Large font sizes with collapsed line-heights can create massive invisible boxes that break interactivity.
+
+**Film Analogy:**
+
+Imagine a spotlight (h1) with a huge invisible safety zone around it. Even though you can only see the bright center, the safety zone extends far beyond and blocks people from interacting with objects inside it. Resetting margin/padding shrinks that zone to just the visible light.
+
+---
+
+### 🐛 Bug #8: Media Query Cascade Inverted (March 13, 2026)
+
+**The Problem:**
+
+Added an iPhone SE responsive breakpoint:
+
+```css
+@media (max-width: 480px) {
+  .portfolio-name { font-size: 8.75rem; }
+}
+```
+
+But on a 375px phone, the font-size was still 40px instead of the intended 140px.
+
+**Root Cause:**
+
+CSS cascade applies rules in **file order**. At 375px viewport, multiple media queries matched:
+
+```css
+/* Order in file:        At 375px:        Winner (last in cascade) */
+@media (max-width: 480px) { ... }    ✓ Matches → 8.75rem
+@media (max-width: 950px) { ... }    ✓ Matches → 60px (overrides 480px!)
+@media (max-width: 640px) { ... }    ✓ Matches → 40px (overrides all!)
+```
+
+Because 950px and 640px rules came **after** 480px in the file, they won the cascade despite being broader breakpoints.
+
+**The Fix:**
+
+Reorder from **largest → smallest** so specific breakpoints apply last:
+
+```css
+@media (max-width: 950px) { ... }    /* Broad: 950px and below */
+@media (max-width: 640px) { ... }    /* Narrower: 640px and below */
+@media (max-width: 480px) { ... }    /* Specific: 480px and below ← wins! */
+```
+
+Now at 375px:
+1. 950px matches → 60px
+2. 640px matches → 40px (overrides)
+3. 480px matches → 8.75rem (final winner ✓)
+
+**The Lesson:**
+
+Media query specificity isn't about the `max-width` number—it's about file order. The **last matching rule wins**. Think of it as a stack: narrower breakpoints should be on top.
+
+**Best Practice:**
+
+```css
+/* Desktop first (largest screens) */
+@media (max-width: 1200px) { /* iPad Pro, laptops */ }
+@media (max-width: 768px) { /* iPad, tablets */ }
+@media (max-width: 480px) { /* iPhone, small phones */ }
+```
+
+---
+
+### 🐛 Bug #9: Bat Texture Gap in Bio-Top Section (March 13, 2026)
+
+**The Problem:**
+
+`bat-zone-1` (decorative texture behind bio-top text) had an unwanted gap between the asset and the text below, while `bat-zone-2` (texture behind bio-bottom) aligned perfectly.
+
+Both zones were the same width (1280px), but only zone 2 looked correct.
+
+**Root Cause:**
+
+**Zone 1** used:
+```css
+.bat-zone-1-img {
+  height: auto; /* Scales based on image aspect ratio */
+}
+.bat-zone-1 {
+  height: 58rem; /* Fixed container */
+}
+```
+
+If the image was wider than tall (landscape aspect), it would be shorter than 58rem, leaving white space below.
+
+**Zone 2** used:
+```css
+.bat-zone-2-img {
+  object-fit: cover; /* Fills container completely */
+  object-position: center top;
+}
+.bat-zone-2-wrapper {
+  min-height: 33.9375rem;
+}
+```
+
+**The Attempted Fix & Why It Failed:**
+
+Initially changed zone 1 to:
+```css
+height: 100%;
+object-fit: cover;
+```
+
+This filled the space but **covered the bio-top text**, since both the texture and text were in the same container.
+
+**Current Status:**
+
+The gap remains. The solution needs either:
+1. Adjust the container height to match actual image dimensions
+2. Reduce spacing below bio-top text to compensate
+3. Check Figma design specs for intended container height
+
+(This bug remains open for design decision.)
+
+**The Insight:**
+
+`object-fit: cover` works when:
+- Image is layered **behind** content (z-index managed)
+- OR container height matches image aspect ratio naturally
+
+When both conditions fail (image covers content or heights mismatch), you need a different approach.
+
+---
+
+### 🎉 Phase 3 Complete: Blog URL Migration (March 13, 2026)
+
+**What Was Done:**
+
+Migrated all blog post URLs from root `/week-07` to namespaced `/blog/week-07` structure.
+
+**The Architecture Chain:**
+
+```
+Blog Index           → Post Links         → Dynamic Router    → Post Content
+(blog/index.astro)   (PostList.astro)     (blog/[...slug].astro) (PostLayout)
+
+Serves: /blog/       Generates:           Catches:           Renders:
+                     /blog/week-07        /blog/{post.id}    Full post HTML
+```
+
+**Step-by-Step:**
+
+1. **Blog Index Page** (`src/pages/blog/index.astro`)
+   - Imports `PostList` component
+   - Renders list of all non-draft posts
+
+2. **Link Generation** (`src/components/widgets/PostList.astro:17`)
+   - Changed from: `href={`/${post.id}/`}`
+   - Changed to: `href={`/blog/${post.id}/`}`
+   - Each post ID (e.g., "week-07") becomes `/blog/week-07`
+
+3. **Dynamic Routing** (`src/pages/blog/[...slug].astro`)
+   - Catches `/blog/*` requests via `getStaticPaths()`
+   - Maps `post.id` to route parameter
+   - Renders via `PostLayout` component
+
+4. **Legacy URL Handling** (`netlify.toml:26-28`)
+   ```toml
+   [[redirects]]
+   from = "/:slug"
+   to = "/blog/:slug"
+   status = 301
+   ```
+   - Old `/week-07` links redirect to `/blog/week-07`
+   - Returns 301 (permanent redirect)
+   - Search engines update their indexes
+
+**Verification Results:**
+
+```bash
+/blog/week-07/  → 200 ✅ (routing works)
+/week-07/       → 301 ✅ (redirect works)
+```
+
+**Key Insights:**
+
+1. **File-based routing in Astro**: The directory structure matches the URL path
+   - `src/pages/blog/[...slug].astro` → `/blog/*` routes
+   - Old `src/pages/[...slug].astro` → root `/` routes (already deleted)
+
+2. **Dynamic paths require `getStaticPaths()`**: At build time, Astro needs to know every URL
+   ```typescript
+   export async function getStaticPaths() {
+     const posts = await getCollection('posts')
+     return posts
+       .filter((post) => !post.id.startsWith('_'))
+       .map((post) => ({
+         params: { slug: post.id },  // post.id = filename without extension
+         props: post
+       }))
+   }
+   ```
+
+3. **Three-layer redirect strategy**:
+   - New links point to `/blog/` (future-proof)
+   - Old links redirect via netlify.toml (backward compatible)
+   - Netlify handles redirects before serving (no extra HTML)
+
+**Director's Commentary:**
+
+This migration was the toughest coordination challenge of Phase 3:
+- Delete old routing file without breaking anything
+- Update internal links in two places (PostList, index)
+- Configure redirects for external/old links
+- Verify build generates correct static files
+
+The Astro content system made it easy once you understand the pipeline:
+`getStaticPaths()` → `[...slug]` → URL → HTML file. No magic, just
+structured mapping.
+
+---
+
+## Behind the Scenes: March 13 Session Insights
+
+### CSS Cascade Subtleties
+
+**Discovery**: The CSS cascade is more subtle than "later rules override earlier ones." For media queries:
+
+- **Media query matching** is boolean (true/false), not hierarchical
+- **When multiple media queries match**, the **last one in the file** wins
+- **Order matters more than specificity**
+
+This means your media query structure needs to be:
+
+```css
+/* Broad (affects 1280px and below) */
+@media (max-width: 1280px) { }
+
+/* Medium (affects 640px and below) */
+@media (max-width: 640px) { }
+
+/* Specific (affects 480px and below – applies last) */
+@media (max-width: 480px) { }
+```
+
+### Typography as an Invisible Layout Tool
+
+**Discovery**: `line-height` creates real, invisible DOM boxes that affect interactivity, not just appearance.
+
+When you use:
+- Large font-size (19.7rem)
+- Collapsed line-height (0.756)
+- Implicit margins (auto-calculated from line-height)
+
+...you get an enormous invisible box that can block pointer events and break layouts.
+
+**Best Practice**:
+```css
+.large-display-font {
+  font-size: 19.7rem;
+  line-height: 0.756;
+  margin: 0;        /* Explicit zero, not auto */
+  padding: 0;       /* Explicit zero, not auto */
+  overflow: hidden;  /* Clip any overshoot */
+}
+```
+
+### Image Scaling Strategies
+
+**Discovery**: `object-fit: cover` isn't always the right solution. It has prerequisites:
+
+- Must not overlap content above it
+- Container dimensions should match image aspect ratio OR
+- Image must be absolutely positioned behind content
+
+When mixing `object-fit` with text overlay, z-index management becomes critical. Sometimes reducing container height or adjusting spacing is the better fix than forcing the image to fill.
+
+---
 
 ### Font Rendering & Cross-Platform Consistency
 

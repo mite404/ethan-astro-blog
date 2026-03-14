@@ -289,6 +289,7 @@ Vite's CSS module deduplication combined with a duplicate import pattern caused 
 **Evidence:**
 
 Chrome DevTools inspection revealed:
+
 - `.bat-zone-1` element with `position: static` (should be `absolute`)
 - Nav buttons positioned at y=835px instead of y=16px
 - `.portfolio-name` with `font-size: 100px` instead of `19.7rem`
@@ -328,6 +329,7 @@ After restart, hard-refresh browser (Cmd+Shift+R / Ctrl+Shift+R) to load fresh C
 **Why This Happened:**
 
 The architecture imports `portfolio.css` in two places:
+
 - Global: `global.css` → imported by PortfolioLayout
 - Page-level: `index.astro` → direct import in component
 
@@ -646,24 +648,42 @@ This week I led the design and prototyping …
 
 ---
 
-### 🟡 Phase 3: Blog Route Migration
+### ✅ Phase 3: Blog Route Migration (Complete - March 13, 2026)
 
 **Goal:** Move blog from `/` to `/blog/`
 
-- [ ] Create `src/pages/blog/index.astro` (current homepage logic)
-- [ ] Create `src/pages/blog/[...slug].astro` (current post routing)
-- [ ] Update internal links to point to `/blog/*`
-- [ ] Add redirects from old URLs to new `/blog/*` structure
-- [ ] Update RSS/Atom feed paths
-- [ ] Update sitemap generation
-- [ ] Test all blog functionality at new route
+- [x] Create `src/pages/blog/index.astro` (current homepage logic)
+- [x] Create `src/pages/blog/[...slug].astro` (current post routing)
+- [x] Update internal links to point to `/blog/*`
+- [x] Add redirects from old URLs to new `/blog/*` structure
+- [x] Update RSS/Atom feed paths
+- [x] Update sitemap generation
+- [x] Test all blog functionality at new route
 
-**Files to Modify:**
+**Files Modified:**
 
-- `src/pages/index.astro` (becomes portfolio, not blog list)
-- Create new blog route files
-- Update navigation components
-- `netlify.toml` (add redirect rules)
+- ✅ `src/pages/index.astro` (portfolio landing, not blog list)
+- ✅ `src/pages/blog/index.astro` (blog index, replaces old root list)
+- ✅ `src/pages/blog/[...slug].astro` (dynamic post routing)
+- ✅ `src/components/widgets/PostList.astro` (links updated to `/blog/`)
+- ✅ `netlify.toml` (301 redirects from `/:slug` to `/blog/:slug`)
+
+**Verification:**
+
+```bash
+/blog/week-07/  → 200 ✅ (routing works)
+/week-07/       → 301 ✅ (permanent redirect)
+bun run build   → ✅ (clean build, all pages generated)
+```
+
+**Key Implementation Details:**
+
+- **Routing architecture:** `src/pages/blog/[...slug].astro` catches `/blog/*` via `getStaticPaths()`
+- **Link generation:** `PostList.astro` generates `href={`/blog/${post.id}/`}` links
+- **Backward compatibility:** Netlify redirects old `/week-07` URLs to `/blog/week-07` (301 permanent)
+- **No breaking changes:** Blog functionality identical, just under new URL namespace
+
+**See also:** `docs/FOR_ETHAN.md` "Phase 3 Complete: Blog URL Migration" for detailed architectural walkthrough.
 
 ### 🟢 Phase 4: Polish & Production
 
@@ -813,55 +833,6 @@ layout needs. Easier to maintain and reason about when separate.
 
 **A:** Data attributes are semantic and don't pollute the class namespace.
 They're perfect for state/type indicators that CSS selectors can target.
-
----
-
-## TODO: Tomorrow's Tasks
-
-### 🔤 Font Size Standardization
-
-**Issue:** Card titles in `portfolio-design-system.html` use `30px`, but `portfolio.css` uses
-`1.5rem` (≈24px).
-
-**Why:** Design system HTML uses absolute pixel values for reference, while production CSS uses
-relative units for responsiveness. The Guisol font subset is working correctly—this is purely
-a CSS mismatch.
-
-**Options:**
-
-1. Update `portfolio.css` card titles to `30px` (match design system reference)
-2. Update design system HTML to `24px` (match current production)
-
-**Decision:** Determine which size looks better in the live site, then standardize both files.
-
-**Files to update:**
-
-- `src/styles/portfolio.css` (lines 162-169: `.project-title` and `.blog-title`)
-- `docs/portfolio-design-system.html` (line 289: `.sample-card-title`)
-
----
-
-### 📍 Public File Structure for Resume & Design System
-
-**Requirement:** Serve `resume.pdf` and `portfolio-design-system.html` as downloadable links from
-the portfolio site.
-
-**Plan:**
-
-1. Move `docs/portfolio-design-system.html` → `public/portfolio-design-system.html`
-2. Add `resume.pdf` → `public/resume.pdf`
-3. Update project card link to point to `/portfolio-design-system.html`
-4. Add resume download link (determine placement in design)
-
-**Note:** Files in `public/` are served as static assets with no special configuration needed.
-Netlify will cache them automatically based on `netlify.toml` headers.
-
-**Files to create/update:**
-
-- `public/resume.pdf` (create, upload file)
-- `public/portfolio-design-system.html` (move from docs)
-- `src/pages/index.astro` (update link references)
-- Update any links in `src/data/projects.ts` if using static links
 
 ---
 

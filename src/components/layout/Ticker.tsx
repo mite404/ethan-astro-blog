@@ -43,6 +43,7 @@ export default function Ticker({
   const fullText = items.join(separator)
   const repeatedText = `${fullText}${separator}`.repeat(4)
   const [textWidth, setTextWidth] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const textRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -64,6 +65,8 @@ export default function Ticker({
         borderTop: '1.98px solid #ffffff',
         borderBottom: '1.98px solid #ffffff'
       }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Animated text layer */}
       <div className="absolute inset-0 h-full flex items-center">
@@ -83,7 +86,8 @@ export default function Ticker({
             duration: speed,
             repeat: Infinity,
             ease: 'linear',
-            repeatType: 'loop'
+            repeatType: 'loop',
+            paused: isPaused
           }}
         >
           {repeatedText}

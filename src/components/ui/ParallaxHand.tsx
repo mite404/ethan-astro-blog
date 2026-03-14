@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, useSpring } from 'motion/react'
 import { useEffect, useState } from 'react'
+import handImg from '@/images/HAND.svg?url'
 
 export default function ParallaxHand() {
   // State for globe position and mount status
@@ -35,12 +36,14 @@ export default function ParallaxHand() {
         // Calculate globe position relative to .portfolio-layout
         const globeOffsetFromLayout = globeBottomFromPageTop - layoutOffsetTop
 
-        console.warn('🖐️ Calculated position:', {
-          globeOffsetFromLayout,
-          globeBottomFromPageTop,
-          layoutOffsetTop,
-          viewportHeight: window.innerHeight
-        })
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('🖐️ Calculated position:', {
+            globeOffsetFromLayout,
+            globeBottomFromPageTop,
+            layoutOffsetTop,
+            viewportHeight: window.innerHeight
+          })
+        }
         setGlobeOffsetTop(globeOffsetFromLayout)
 
         // Update scroll range
@@ -52,7 +55,9 @@ export default function ParallaxHand() {
           end: pageHeight // End at bottom of scrollable area
         })
       } else {
-        console.error('❌ Globe container [data-globe-container] not found!')
+        if (process.env.NODE_ENV === 'development') {
+          console.error('❌ Globe container [data-globe-container] not found!')
+        }
       }
     }
 
@@ -74,6 +79,7 @@ export default function ParallaxHand() {
 
   return (
     <div
+      aria-hidden="true"
       style={{
         position: 'absolute',
         top: 0,
@@ -96,7 +102,7 @@ export default function ParallaxHand() {
         }}
       >
         <img
-          src="/assets/portfolio/HAND.svg"
+          src={handImg}
           alt=""
           style={{
             display: 'block',
