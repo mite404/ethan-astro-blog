@@ -370,7 +370,15 @@ body[data-layout-type='portfolio'] section.bordered {
    RESPONSIVE ADJUSTMENTS
    =========================== */
 
-@media (max-width: 1024px) {
+/* iPhone SE: 375px viewport */
+@media (max-width: 480px) {
+  body[data-layout-type='portfolio'] .portfolio-name {
+    font-size: 8.75rem; /* 140px — spans name across most of width */
+  }
+}
+
+/* Desktop */
+@media (max-width: 950px) {
   body[data-layout-type='portfolio'] .portfolio-name {
     font-size: 60px;
   }
