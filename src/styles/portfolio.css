@@ -50,12 +50,12 @@ body[data-layout-type='portfolio'] .bat-zone-1-img {
 body[data-layout-type='portfolio'] .bat-zone-2-wrapper {
   position: relative;
   overflow: hidden;
-  min-height: 543px; /* Matches BAT_BOTTOM_CROPPED.png dimensions */
+  min-height: 33.9375rem; /* 543px — Matches BAT_BOTTOM_CROPPED.png dimensions */
 }
 
 /* Inner content: bio text at local y=191 within zone (Figma 195:5468: y=1587, zone y=1396) */
 body[data-layout-type='portfolio'] .bat-zone-2-content {
-  padding-top: 191px;
+  padding-top: 11.9375rem; /* 191px */
 }
 
 body[data-layout-type='portfolio'] .bat-zone-2 {
@@ -94,18 +94,21 @@ body[data-layout-type='portfolio'] .portfolio-name {
   font-weight: 400;
   color: #7fee40;
   line-height: 0.756; /* 239px cap-height ÷ 316px = collapses box to visual height */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body[data-layout-type='portfolio'] .btn-nav-gh,
-.btn-nav-blog,
-.btn-nav-resume {
+body[data-layout-type='portfolio'] .btn-nav-blog,
+body[data-layout-type='portfolio'] .btn-nav-resume {
   /* Button styling */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 50px;
-  border-radius: 40px;
+  width: 6.25rem; /* 100px */
+  height: 3.125rem; /* 50px */
+  border-radius: 2.5rem; /* 40px */
 
   /* Text styling — Figma 195:6363: Aptos Narrow Regular 20px */
   font-family: 'Aptos Narrow', sans-serif;
@@ -150,9 +153,9 @@ body[data-layout-type='portfolio'] .btn-touch {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1280px;
-  height: 158px;
-  border-radius: 77px;
+  width: 80rem; /* 1280px */
+  height: 9.875rem; /* 158px */
+  border-radius: 4.8125rem; /* 77px */
   background-color: #7fee40;
 
   /* Text styling */
@@ -196,7 +199,7 @@ body[data-layout-type='portfolio'] .bio-top {
   font-style: italic;
   font-weight: 400;
   color: white;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem; /* 30px */
   line-height: 105%;
   position: relative;
   z-index: 10;
@@ -206,9 +209,16 @@ body[data-layout-type='portfolio'] .bio-top p {
   margin: 0 !important;
 }
 
+body[data-layout-type='portfolio'] .bio-stars-divider-top {
+  margin-bottom: 6.0625rem; /* 97px */
+  margin-top: 3.125rem; /* 50px */
+  position: relative;
+  z-index: 10;
+}
+
 body[data-layout-type='portfolio'] .bio-stars-divider {
-  margin-bottom: 115px;
-  margin-top: 50px;
+  margin-bottom: 7.1875rem; /* 115px */
+  margin-top: 3.125rem; /* 50px */
   position: relative;
   z-index: 10;
 }
@@ -219,7 +229,7 @@ body[data-layout-type='portfolio'] .bio-btm {
   font-style: italic;
   font-weight: 400;
   color: white;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem; /* 30px */
   line-height: 105%;
   position: relative;
   z-index: 10;
@@ -265,7 +275,7 @@ body[data-layout-type='portfolio'] .project-image {
   object-fit: cover;
   margin-top: 0.9375rem; /* 15px */
   margin-bottom: 1.5625rem; /* 25px */
-  border-radius: 4px;
+  border-radius: 0.25rem; /* 4px */
 }
 
 /* Shared card title styles */
@@ -360,7 +370,8 @@ body[data-layout-type='portfolio'] section.bordered {
    RESPONSIVE ADJUSTMENTS
    =========================== */
 
-@media (max-width: 1024px) {
+/* Tablet & smaller desktops */
+@media (max-width: 950px) {
   body[data-layout-type='portfolio'] .portfolio-name {
     font-size: 60px;
   }
@@ -370,6 +381,7 @@ body[data-layout-type='portfolio'] section.bordered {
   }
 }
 
+/* Tablet portrait & small devices */
 @media (max-width: 640px) {
   body[data-layout-type='portfolio'] .portfolio-name {
     font-size: 40px;
@@ -385,5 +397,12 @@ body[data-layout-type='portfolio'] section.bordered {
 
   body[data-layout-type='portfolio'] .bio-btm {
     font-size: 24px;
+  }
+}
+
+/* iPhone SE: 375px viewport */
+@media (max-width: 480px) {
+  body[data-layout-type='portfolio'] .portfolio-name {
+    font-size: 8.75rem; /* 140px — spans name across most of width */
   }
 }
