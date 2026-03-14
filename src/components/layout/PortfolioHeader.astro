@@ -1,12 +1,13 @@
 ---
-
+import { Image } from 'astro:assets'
+import asterixIcon from '@/images/asterix.svg'
 ---
 
 <header class="relative w-full">
   <!-- 195:6363 — nav row: asterix left, buttons right -->
   <nav class="flex items-start justify-between">
     <div class="w-5 h-5">
-      <img src="/assets/portfolio/asterix.svg" alt="Asterix icon" width="20" height="20" />
+      <Image src={asterixIcon} alt="Asterix icon" width="20" height="20" />
     </div>
     <div class="flex gap-0">
       <a href="/blog" class="btn-nav-blog"><span>BLOG</span></a>

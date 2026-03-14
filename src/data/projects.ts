@@ -15,7 +15,7 @@ export const projects: Project[] = [
       "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",
     ghLink: 'https://github.com/mite404/claude-agent-dashboard',
     details: 'TypeScript | React | SQLite | Tailwind',
-    image: '/assets/portfolio/claude-dashboard.png'
+    image: 'claude-dashboard'
   },
   {
     title: 'TR-08 Web Sequencer',
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     ghLink: 'https://github.com/mite404/tr-08-agentic',
     liveLink: 'https://tr-08.vercel.app/',
     details: 'TypeScript | React | Tailwind | Supabase | Figma',
-    image: '/assets/portfolio/tr-08.png'
+    image: 'tr-08'
   },
   {
     title: 'Open Source Raycast Extension',
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     ghLink: 'https://github.com/raycast/extensions/pull/24594',
     liveLink: 'https://www.raycast.com/pernielsentikaer/beat-per-minute',
     details: 'TypeScript | React | Raycast API',
-    image: '/assets/portfolio/beat-per-minute-1.png'
+    image: 'beat-per-minute'
   },
   {
     title: 'Phillips Corp. LMS',
@@ -42,6 +42,6 @@ export const projects: Project[] = [
     ghLink: 'https://github.com/mite404/phillips-poc-public',
     liveLink: 'https://phillips-poc-public.vercel.app/',
     details: 'TypeScript | React | Tailwind | shadcn/ui',
-    image: '/assets/portfolio/phillips-poc.png'
+    image: 'phillips'
   }
 ]

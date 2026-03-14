@@ -8,8 +8,25 @@ import ParallaxHand from '@/components/ui/ParallaxHand'
 import { getSortedFilteredPosts } from '@/utils/draft'
 import { getExcerpt } from '@/utils/excerpt'
 import type { Project } from '@/data/projects'
+import { Image, getImage } from 'astro:assets'
+import batTopImg from '@/images/BAT_TOP_CROPPED.png'
+import batBottomImg from '@/images/BAT_BOTTOM_CROPPED.png'
+import starsImg from '@/images/STARS.png'
+import globeImg from '@/images/MOVIE_GLOBE.svg'
+import claudeDashboardImg from '@/images/claude-dashboard.png'
+import tr08Img from '@/images/tr-08.png'
+import beatPerMinuteImg from '@/images/beat-per-minute-1-small.png'
+import phillipsImg from '@/images/phillips-poc.png'
 
 const posts = await getSortedFilteredPosts()
+
+// Optimize project images
+const optimizedProjectImages = {
+  claudeDashboard: await getImage({ src: claudeDashboardImg }),
+  tr08: await getImage({ src: tr08Img }),
+  beatPerMinute: await getImage({ src: beatPerMinuteImg }),
+  phillips: await getImage({ src: phillipsImg }),
+}
 const mostRecentPosts = posts.slice(0, 4)
 ---
 
@@ -18,8 +35,8 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- Rendered via bg-layer slot so it sits behind PortfolioHeader in the DOM -->
   <Fragment slot="bg-layer">
     <div class="bat-zone-1" aria-hidden="true">
-      <img
-        src="/assets/BAT_TOP_CROPPED.png"
+      <Image
+        src={batTopImg}
         alt=""
         width="1280"
         height="819"
@@ -46,7 +63,7 @@ const mostRecentPosts = posts.slice(0, 4)
     </div>
 
     <div class="bio-stars-divider-top flex justify-center w-full">
-      <img src="/assets/portfolio/STARS.png" alt="stars" width="120" height="20" />
+      <Image src={starsImg} alt="" width="120" height="20" />
     </div>
   </div>
 
@@ -55,50 +72,64 @@ const mostRecentPosts = posts.slice(0, 4)
     <h2 class="section-title pt-4">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
-        projects.map((project: Project) => (
-          <div class="project-card">
-            {project.image && (
-              <img src={project.image} alt={`${project.title} preview`} class="project-image" />
-            )}
-            <h3 class="project-title">{project.title}</h3>
-            <p class="project-description">{project.description}</p>
-            <div class="project-footer">
-              <div class="project-links">
-                <a
-                  href={project.ghLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  GitHub
-                </a>{' '}
-                |{' '}
-                {project.liveLink ? (
+        projects.map((project: Project) => {
+          // Map project image to optimized version
+          let optimizedImg: any = null
+          if (project.image.includes('claude-dashboard')) {
+            optimizedImg = optimizedProjectImages.claudeDashboard
+          } else if (project.image.includes('tr-08')) {
+            optimizedImg = optimizedProjectImages.tr08
+          } else if (project.image.includes('beat-per-minute')) {
+            optimizedImg = optimizedProjectImages.beatPerMinute
+          } else if (project.image.includes('phillips')) {
+            optimizedImg = optimizedProjectImages.phillips
+          }
+
+          return (
+            <div class="project-card">
+              {optimizedImg && (
+                <img src={optimizedImg.src} alt={`${project.title} preview`} class="project-image" />
+              )}
+              <h3 class="project-title">{project.title}</h3>
+              <p class="project-description">{project.description}</p>
+              <div class="project-footer">
+                <div class="project-links">
                   <a
-                    href={project.liveLink}
+                    href={project.ghLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="project-link"
                   >
-                    Live
-                  </a>
-                ) : (
-                  ' '
-                )}
-                {project.blogLink && (
-                  <>
-                    {' '}
-                    |{' '}
-                    <a href={project.blogLink} class="project-link">
-                      Post
+                    GitHub
+                  </a>{' '}
+                  |{' '}
+                  {project.liveLink ? (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="project-link"
+                    >
+                      Live
                     </a>
-                  </>
-                )}
+                  ) : (
+                    ' '
+                  )}
+                  {project.blogLink && (
+                    <>
+                      {' '}
+                      |{' '}
+                      <a href={project.blogLink} class="project-link">
+                        Post
+                      </a>
+                    </>
+                  )}
+                </div>
+                <p class="project-details">{project.details}</p>
               </div>
-              <p class="project-details">{project.details}</p>
             </div>
-          </div>
-        ))
+          )
+        })
       }
     </div>
   </section>
@@ -107,8 +138,8 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
   <div class="bat-zone-2-wrapper">
     <div class="bat-zone-2" aria-hidden="true">
-      <img
-        src="/assets/BAT_BOTTOM_CROPPED.png"
+      <Image
+        src={batBottomImg}
         alt=""
         width="1280"
         height="543"
@@ -126,7 +157,7 @@ const mostRecentPosts = posts.slice(0, 4)
       </div>
 
       <div class="bio-stars-divider flex justify-center w-full">
-        <img src="/assets/portfolio/STARS.png" alt="stars" width="120" height="20" />
+        <Image src={starsImg} alt="" width="120" height="20" />
       </div>
     </div>
   </div>
@@ -139,7 +170,7 @@ const mostRecentPosts = posts.slice(0, 4)
         mostRecentPosts.map((post) => (
           <div class="blog-card">
             <h3 class="blog-title">
-              <a href={`/${post.id}`} style="text-decoration: none; color: inherit;">
+              <a href={`/blog/${post.id}`} class="blog-card-link">
                 {post.data.title.length > 18 ? post.data.title.slice(0, 18) + '…' : post.data.title}
               </a>
             </h3>
@@ -157,7 +188,7 @@ const mostRecentPosts = posts.slice(0, 4)
 
   <!-- GLOBE Asset -->
   <div class="flex justify-center w-full pt-3" data-globe-container>
-    <img src="/assets/portfolio/MOVIE_GLOBE.svg" alt="" width="322" height="164" />
+    <Image src={globeImg} alt="" width="322" height="164" />
   </div>
 
   <!-- CONTACT BUTTON -->
