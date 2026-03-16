@@ -7,7 +7,7 @@ architectural decisions for this project.
 
 ---
 
-## The Story So Far
+## The Storexy So Far
 
 This is a hybrid Astro 5 site combining:
 
