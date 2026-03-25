@@ -88,7 +88,22 @@ const mostRecentPosts = posts.slice(0, 4)
           return (
             <div class="project-card">
               {optimizedImg && (
-                <img src={optimizedImg.src} alt={`${project.title} preview`} class="project-image" />
+                (() => {
+                  const imageSrc = optimizedImg.src;
+                  const imageAlt = `${project.title} preview`;
+                  const imgElement = <img src={imageSrc} alt={imageAlt} class="project-image" />;
+
+                  // Agent Dashboard links to GitHub, others link to live site
+                  const href = project.title === 'Agent Dashboard' ? project.ghLink : project.liveLink;
+
+                  return href ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" class="project-image-link">
+                      {imgElement}
+                    </a>
+                  ) : (
+                    imgElement
+                  );
+                })()
               )}
               <h3 class="project-title">{project.title}</h3>
               <p class="project-description">{project.description}</p>
