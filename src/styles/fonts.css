@@ -41,7 +41,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/aptos-narrow.woff2') format('woff2');
+  src: url('/fonts/aptos-narrow.woff2') format('woff2'),
+    url('/fonts/aptos-narrow.ttf') format('truetype');
 }
 
 @font-face {
