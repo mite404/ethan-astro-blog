@@ -29,10 +29,8 @@ body[data-layout-type='portfolio'] .bat-zone-1 {
   top: 66px;
   left: 0;
   width: 100%;
-  /* Figma: 51.1875rem — increased to 58rem so the bat always reaches the projects
-     border regardless of font-rendering variance. section.bordered has bg-color
-     so any overshoot is covered. */
-  height: 58rem;
+  /* Locked to match bat-zone-1-img height (819px) for flush alignment with projects border */
+  height: 51.1875rem;
   overflow: hidden;
   pointer-events: none;
 }
@@ -41,8 +39,10 @@ body[data-layout-type='portfolio'] .bat-zone-1-img {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* pre-cropped to zone dimensions — fills naturally */
-  height: auto;
+  width: 100%;
+  height: 51.1875rem; /* 819px — lock height, crop sides as viewport shrinks */
+  object-fit: cover;
+  object-position: center top;
   max-width: none;
 }
 
@@ -256,7 +256,7 @@ body[data-layout-type='portfolio'] .bio-btm p {
 
 body[data-layout-type='portfolio'] .bio-btm .highlight {
   font-family: 'Iosevka Fixed', monospace;
-  font-size: 40px;
+  /*font-size: 40px;*/
   font-style: italic;
   color: #e071e3;
 }
@@ -493,8 +493,8 @@ body[data-layout-type='portfolio'] section.bordered {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80rem; /* 1280px */
-    height: 9.875rem; /* 158px */
+    width: 80rem;
+    height: 9rem;
     border-radius: 4.8125rem; /* 77px */
     background-color: #7fee40;
 
@@ -522,8 +522,8 @@ body[data-layout-type='portfolio'] section.bordered {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80rem; /* 1280px */
-    height: 9.875rem; /* 158px */
+    width: 80rem;
+    height: 7rem;
     border-radius: 4.8125rem; /* 77px */
     background-color: #7fee40;
 
