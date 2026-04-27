@@ -7,6 +7,7 @@ export default function ParallaxHand() {
   const [globeOffsetTop, setGlobeOffsetTop] = useState(0)
   const [scrollRange, setScrollRange] = useState({ start: 0, end: 0 })
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Track page scroll
   const { scrollY } = useScroll()
@@ -19,6 +20,16 @@ export default function ParallaxHand() {
 
   // Apply spring physics for smooth easing
   const y = useSpring(yRaw, { stiffness: 100, damping: 30, mass: 1 })
+
+  // Detect mobile breakpoint (< 768px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Measure globe position on mount and resize
   useEffect(() => {
@@ -77,6 +88,11 @@ export default function ParallaxHand() {
   // Don't render until mounted (SSR safety)
   if (!mounted) return null
 
+  // Calculate responsive dimensions: 75% on mobile (< 768px), 100% on desktop
+  const scale = isMobile ? 0.75 : 1
+  const handWidth = 2875 * scale
+  const leftOffset = isMobile ? 100 : 150 // Slightly closer on mobile
+
   return (
     <div
       aria-hidden="true"
@@ -84,8 +100,8 @@ export default function ParallaxHand() {
         position: 'absolute',
         top: 0,
         left: '50%',
-        transform: 'translateX(calc(-50% - 150px))', // Center, then shift 150px left
-        width: '2875px', // Hand scaled 1.7x (1513 * 1.7) to match Figma composition
+        transform: `translateX(calc(-50% - ${leftOffset}px))`,
+        width: `${handWidth}px`,
         pointerEvents: 'none',
         zIndex: 20
       }}
@@ -106,7 +122,7 @@ export default function ParallaxHand() {
           alt=""
           style={{
             display: 'block',
-            width: '2875px', // 1.4x scale (1513 * 1.4) to match Figma composition
+            width: `${handWidth}px`,
             height: 'auto',
             flexShrink: 0 // Prevent flex container from shrinking the image
           }}

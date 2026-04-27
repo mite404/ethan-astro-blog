@@ -428,7 +428,7 @@ body[data-layout-type='portfolio'] section.bordered {
 /* Tablet & smaller desktops */
 @media (max-width: 950px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 60px;
+    font-size: 8rem;
   }
 
   body[data-layout-type='portfolio'] .section-title {
@@ -439,7 +439,7 @@ body[data-layout-type='portfolio'] section.bordered {
 /* Tablet portrait & small devices */
 @media (max-width: 640px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 40px;
+    font-size: 8;
   }
 
   body[data-layout-type='portfolio'] .section-title {
@@ -462,11 +462,80 @@ body[data-layout-type='portfolio'] section.bordered {
     height: 2.75rem; /* 44px — WCAG minimum touch target */
     font-size: 16px;
   }
+
+  body[data-layout-type='portfolio'] .btn-touch {
+    /* Button styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80rem; /* 1280px */
+    height: 9.875rem; /* 158px */
+    border-radius: 4.8125rem; /* 77px */
+    background-color: #7fee40;
+
+    /* Text styling */
+    font-family: 'Guisol', sans-serif;
+    font-size: 85px;
+    font-weight: 400;
+    color: #1c1c1c;
+    letter-spacing: 0.02em;
+
+    /* Interaction */
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
+}
+
+/* 570px viewport */
+@media (max-width: 570px) {
+  body[data-layout-type='portfolio'] .btn-touch {
+    /* Button styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80rem; /* 1280px */
+    height: 9.875rem; /* 158px */
+    border-radius: 4.8125rem; /* 77px */
+    background-color: #7fee40;
+
+    /* Text styling */
+    font-family: 'Guisol', sans-serif;
+    font-size: 65px;
+    font-weight: 400;
+    color: #1c1c1c;
+    letter-spacing: 0.02em;
+
+    /* Interaction */
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
 }
 
 /* iPhone SE: 375px viewport */
 @media (max-width: 480px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 8.75rem; /* 140px — spans name across most of width */
+    font-size: 8rem; /* 140px — spans name across most of width */
+  }
+
+  body[data-layout-type='portfolio'] .btn-touch {
+    /* Button styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80rem; /* 1280px */
+    height: 9.875rem; /* 158px */
+    border-radius: 4.8125rem; /* 77px */
+    background-color: #7fee40;
+
+    /* Text styling */
+    font-family: 'Guisol', sans-serif;
+    font-size: 50px;
+    font-weight: 400;
+    color: #1c1c1c;
+    letter-spacing: 0.02em;
+
+    /* Interaction */
+    transition: background-color 0.2s ease;
+    text-decoration: none;
   }
 }

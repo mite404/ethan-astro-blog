@@ -46,13 +46,13 @@ const mostRecentPosts = posts.slice(0, 4)
   </Fragment>
 
   <!-- TICKER Component -->
-  <div class="pt-4 pb-2.5">
+  <div class="pt-4 pb-2.5 md:pt-4 sm:pt-2">
     <Ticker client:load />
   </div>
 
   <!-- BIO TOP Section (above Projects) -->
-  <!-- pt-[174px]: Figma y=514 − (50nav + 239h1 + 0main-pt + 51ticker) = 174px -->
-  <div class="relative pl-8 pt-[174px]">
+  <!-- pt-[174px] desktop, pt-[100px] mobile: Adjusted for mobile screen height -->
+  <div class="relative pl-8 pt-[100px] md:pt-[174px]">
     <div class="bio-top">
       <p>
         An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
@@ -68,7 +68,7 @@ const mostRecentPosts = posts.slice(0, 4)
   </div>
 
   <!-- PROJECTS Section -->
-  <section class="bordered pl-8 pb-4">
+  <section class="bordered pl-8 pr-8 pb-4">
     <h2 class="section-title pt-4">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
