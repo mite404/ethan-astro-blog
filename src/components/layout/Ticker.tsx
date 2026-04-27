@@ -58,7 +58,7 @@ export default function Ticker({
 
   return (
     <div
-      className={`relative w-full overflow-hidden h-[25px] ${className}`}
+      className={`relative w-full overflow-hidden h-6.25 ${className}`}
       style={{
         borderLeft: '5.63px solid #ffffff',
         borderRight: '5.63px solid #ffffff',
@@ -74,7 +74,8 @@ export default function Ticker({
           ref={textRef}
           className="whitespace-nowrap"
           style={{
-            fontFamily: 'Aptos Narrow, sans-serif',
+            fontFamily: 'Barlow Condensed, sans-serif',
+            fontWeight: '200',
             fontStyle: 'italic',
             fontSize: '.875rem',
             color: '#FFFFFF'

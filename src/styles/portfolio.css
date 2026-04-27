@@ -110,10 +110,10 @@ body[data-layout-type='portfolio'] .btn-nav-resume {
   height: 3.125rem; /* 50px */
   border-radius: 2.5rem; /* 40px */
 
-  /* Text styling — Figma 195:6363: Aptos Narrow Regular 20px */
-  font-family: 'Aptos Narrow', sans-serif;
+  /* Text styling — Figma 195:6363: Barlow Condensed Regular 20px */
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1;
   color: #1c1c1c;
 
@@ -313,7 +313,7 @@ body[data-layout-type='portfolio'] .project-image {
 
 /* Shared card title styles */
 body[data-layout-type='portfolio'] .project-title {
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 1.875rem;
   font-style: normal;
   font-weight: 400;
@@ -324,10 +324,10 @@ body[data-layout-type='portfolio'] .project-title {
 }
 
 body[data-layout-type='portfolio'] .blog-title {
-  font-family: 'Aptos Narrow';
+  font-family: 'Barlow Condensed';
   font-size: 1.875rem;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   color: #ffffff;
   line-height: normal;
   /*letter-spacing: 0.02em;*/
@@ -337,12 +337,12 @@ body[data-layout-type='portfolio'] .blog-title {
 /* Shared card description styles */
 body[data-layout-type='portfolio'] .project-description,
 body[data-layout-type='portfolio'] .blog-description {
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
@@ -350,7 +350,7 @@ body[data-layout-type='portfolio'] .blog-description {
 /* Shared card link styles */
 body[data-layout-type='portfolio'] .project-link {
   display: inline-block;
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.938rem;
   color: #fefefe;
   text-decoration: none;
@@ -360,7 +360,7 @@ body[data-layout-type='portfolio'] .project-link {
 
 body[data-layout-type='portfolio'] .blog-link {
   display: inline-block;
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.938rem;
   color: #fefefe;
   text-decoration: none;
@@ -375,6 +375,8 @@ body[data-layout-type='portfolio'] .blog-link:hover {
 
 /* Blog card title link styling */
 body[data-layout-type='portfolio'] .blog-card-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
   color: inherit;
   text-decoration: none;
   transition:
@@ -392,20 +394,22 @@ body[data-layout-type='portfolio'] .blog-card-link:focus-visible {
 }
 
 body[data-layout-type='portfolio'] .project-details {
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: 300;
 }
 
 body[data-layout-type='portfolio'] .blog-subheading {
-  font-family: 'Aptos Narrow', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.625rem;
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.75rem;
+  font-weight: 300;
 }
 
 /* ===========================
