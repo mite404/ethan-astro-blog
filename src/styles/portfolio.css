@@ -29,10 +29,8 @@ body[data-layout-type='portfolio'] .bat-zone-1 {
   top: 66px;
   left: 0;
   width: 100%;
-  /* Figma: 51.1875rem — increased to 58rem so the bat always reaches the projects
-     border regardless of font-rendering variance. section.bordered has bg-color
-     so any overshoot is covered. */
-  height: 58rem;
+  /* Locked to match bat-zone-1-img height (819px) for flush alignment with projects border */
+  height: 51.1875rem;
   overflow: hidden;
   pointer-events: none;
 }
@@ -41,8 +39,10 @@ body[data-layout-type='portfolio'] .bat-zone-1-img {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* pre-cropped to zone dimensions — fills naturally */
-  height: auto;
+  width: 100%;
+  height: 51.1875rem; /* 819px — lock height, crop sides as viewport shrinks */
+  object-fit: cover;
+  object-position: center top;
   max-width: none;
 }
 
@@ -256,7 +256,7 @@ body[data-layout-type='portfolio'] .bio-btm p {
 
 body[data-layout-type='portfolio'] .bio-btm .highlight {
   font-family: 'Iosevka Fixed', monospace;
-  font-size: 40px;
+  /*font-size: 40px;*/
   font-style: italic;
   color: #e071e3;
 }
@@ -428,7 +428,7 @@ body[data-layout-type='portfolio'] section.bordered {
 /* Tablet & smaller desktops */
 @media (max-width: 950px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 60px;
+    font-size: 8rem;
   }
 
   body[data-layout-type='portfolio'] .section-title {
@@ -439,7 +439,7 @@ body[data-layout-type='portfolio'] section.bordered {
 /* Tablet portrait & small devices */
 @media (max-width: 640px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 40px;
+    font-size: 8;
   }
 
   body[data-layout-type='portfolio'] .section-title {
@@ -462,11 +462,46 @@ body[data-layout-type='portfolio'] section.bordered {
     height: 2.75rem; /* 44px — WCAG minimum touch target */
     font-size: 16px;
   }
+
+  body[data-layout-type='portfolio'] .btn-touch {
+    /* Button styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80rem; /* 1280px */
+    height: 9.875rem; /* 158px */
+    border-radius: 4.8125rem; /* 77px */
+    background-color: #7fee40;
+
+    /* Text styling */
+    font-family: Guisol, sans-serif;
+    font-size: 85px;
+    font-weight: 400;
+    color: #1c1c1c;
+    letter-spacing: 0.02em;
+
+    /* Interaction */
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
+}
+
+/* 570px viewport */
+@media (max-width: 570px) {
+  body[data-layout-type='portfolio'] .btn-touch {
+    height: 9rem;
+    font-size: 65px;
+  }
 }
 
 /* iPhone SE: 375px viewport */
 @media (max-width: 480px) {
   body[data-layout-type='portfolio'] .portfolio-name {
-    font-size: 8.75rem; /* 140px — spans name across most of width */
+    font-size: 8rem; /* 140px — spans name across most of width */
+  }
+
+  body[data-layout-type='portfolio'] .btn-touch {
+    height: 7rem;
+    font-size: 50px;
   }
 }

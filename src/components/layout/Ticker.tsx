@@ -44,7 +44,18 @@ export default function Ticker({
   const repeatedText = `${fullText}${separator}`.repeat(4)
   const [textWidth, setTextWidth] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const textRef = useRef<HTMLDivElement>(null)
+
+  // Detect mobile breakpoint (< 768px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     if (textRef.current) {
@@ -56,14 +67,20 @@ export default function Ticker({
   // Estimate distance (can be refined with useRef + getBoundingClientRect)
   // const estimatedWidth = fullText.length * 8 // ~8px per character
 
+  // Responsive values: mobile vs desktop
+  const height = isMobile ? 'h-5' : 'h-6.25'
+  const fontSize = isMobile ? '.75rem' : '.875rem'
+  const borderWidthH = isMobile ? '3.5px' : '5.63px'
+  const borderWidthV = isMobile ? '1.2px' : '1.98px'
+
   return (
     <div
-      className={`relative w-full overflow-hidden h-6.25 ${className}`}
+      className={`relative w-full overflow-hidden ${height} ${className}`}
       style={{
-        borderLeft: '5.63px solid #ffffff',
-        borderRight: '5.63px solid #ffffff',
-        borderTop: '1.98px solid #ffffff',
-        borderBottom: '1.98px solid #ffffff'
+        borderLeft: `${borderWidthH} solid #ffffff`,
+        borderRight: `${borderWidthH} solid #ffffff`,
+        borderTop: `${borderWidthV} solid #ffffff`,
+        borderBottom: `${borderWidthV} solid #ffffff`
       }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -77,7 +94,7 @@ export default function Ticker({
             fontFamily: 'Barlow Condensed, sans-serif',
             fontWeight: '200',
             fontStyle: 'italic',
-            fontSize: '.875rem',
+            fontSize: fontSize,
             color: '#FFFFFF'
           }}
           animate={{
