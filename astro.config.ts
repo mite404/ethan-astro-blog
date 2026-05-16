@@ -19,7 +19,8 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@astrojs/react'
 
 export default defineConfig({
-  adapter: netlify(), // Set adapter for deployment, or set `linkCard` to `false` in `src/config.ts`
+  adapter: netlify(),
+  redirects: process.env.NODE_ENV === 'production' ? { '/[slug]': '/blog/[slug]' } : {}, // Set adapter for deployment, or set `linkCard` to `false` in `src/config.ts`
   site: themeConfig.site.website,
   image: {
     service: {
@@ -52,6 +53,6 @@ export default defineConfig({
     }
   },
   devToolbar: {
-    enabled: true
+    enabled: false
   }
 })
