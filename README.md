@@ -1,73 +1,60 @@
-# Chiri 🌸
+# ethan-astro-blog
 
-![screenshot-light](public/screenshots/screenshot-light.png)
-![screenshot-dark](public/screenshots/screenshot-dark.png)
+Personal portfolio and blog.
 
-Chiri is a minimal blog theme built with [Astro](https://astro.build), with
-customization options and clean aesthetic.
+![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Bun](https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
 
-Check the [demo](https://astro-chiri.netlify.app/) for more details.
+### Media directive system with custom Apple Music embeds (reverse-engineered)
 
-## Features
+A single remark plugin (`remark-embedded-media.mjs`) handles all rich embeds
+via markdown directives — Spotify, YouTube, Bilibili, X posts,
+GitHub cards, link cards, and NeoDB cards.
 
-- [x] Build with Astro
-- [x] Responsive
-- [x] Light / Dark mode
-- [x] MDX
-- [x] KaTeX
-- [x] Sitemap
-- [x] OpenGraph
-- [x] RSS
-- [ ] Pagination
+However, Apple doesn't publish an official embed API. This site reverse-engineers the
+`embed.music.apple.com` URL pattern to render native Apple Music players inline
+in blog posts using a **custom remark directive**:
 
-## Getting Started
+```md
+:::applemusic{url="https://music.apple.com/us/album/some-album/1234?i=5678"}
+```
 
-1. [Fork](https://github.com/the3ash/astro-chiri/fork) this repository, or
-   use this template to [create a new
-   repository](https://github.com/new?template_name=astro-chiri&template_owner=the3ash).
+The `?i=` parameter signals a single track (175px height) vs. an album or
+playlist (450px). Implemented in `src/plugins/remark-embedded-media.mjs`.
 
-2. Run the following commands:
+### Dual layout system
 
-   ```bash
-   git clone <your-repo-url>
+The portfolio (`/`) and blog (`/blog/*`) coexist in one codebase with fully
+isolated styling. The `data-layout-type` attribute on `<body>` gates styles:
 
-   cd <your-repo-name>
+```css
+body:not([data-layout-type='portfolio']) {
+  padding: 6rem 1.5rem 1.5rem 1.5rem;
+}
+```
 
-   pnpm install
+Portfolio is a fixed 792px poster composition. Blog is the responsive Chiri
+theme. Neither leaks into the other.
 
-   pnpm dev
-   ```
+### Parallax hand animation
 
-3. Edit `src/config.ts` and `src/content/about/about.md` to your liking.
-
-4. Use `pnpm new <title>` to create new posts, or add posts to
-   `src/content/posts`.
-
-5. Before deploying to Netlify, Vercel, or other platforms, set the
-   adapter. Or set `linkCard: false` in `src/config.ts` to skip this
-   step:
-   - **Netlify**: `pnpm add @astrojs/netlify` and add `adapter: netlify()` in `astro.config.ts`.
-   - **Vercel**: `pnpm add @astrojs/vercel` and add `adapter: vercel()` in `astro.config.ts`.
-   - **Cloudflare Pages**: `pnpm add @astrojs/cloudflare` and add `adapter: cloudflare()` in `astro.config.ts`.
-   - **Static (e.g. GitHub Pages)**: `pnpm add @astrojs/static` and add `adapter: static()` in `astro.config.ts`.
-   - Refer to [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) for more details.
-
-&emsp;[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
-&emsp;[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new)
-&emsp;[![Deploy to Cloudflare Pages](https://deploy.workers.cloudflare.com/button)](https://pages.cloudflare.com/start)
+`ParallaxHand.tsx` — a 1.7x scaled SVG hand (2875px wide, intentionally
+overflowing) animates on scroll using Motion spring physics. Scroll range is
+calculated dynamically from the globe DOM element's position.
 
 ## Commands
 
-- `pnpm new <title>` - Create a new post (use `_title` for drafts)
-- `pnpm update-theme` - Update the theme to the latest version
+```bash
+bun dev           # dev server
+bun build         # production build
+bun new "Title"   # create a new post
+bun new "_Draft"  # create a draft post (underscore prefix)
+```
 
-## References
+## Based on
 
-- <https://paco.me/>
-- <https://benji.org/>
-- <https://shud.in/>
-- <https://retypeset.radishzz.cc/>
-
-## License
-
-MIT
+Blog theme forked from [Chiri](https://github.com/the3ash/astro-chiri) by the3ash — a minimal Astro blog with MDX, KaTeX, dark mode, and RSS.
