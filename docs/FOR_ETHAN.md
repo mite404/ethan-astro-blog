@@ -870,6 +870,55 @@ structured mapping.
 
 ---
 
+### 🐛 Bug #10: Design-System Fonts 404 in Production, Not Locally (July 16, 2026)
+
+**The Symptom:**
+
+The standalone design-system doc (`public/portfolio-design-system.html`) rendered its
+self-hosted fonts (Guisol, Fit, Iosevka) perfectly on `localhost:4321` — but on the deployed
+site (`ethananderson.io`) those same fonts silently fell back to the system sans. It _looked_
+like a per-browser bug ("renders in one, breaks in the other"), and at first even smelled like a
+caching issue. It was neither.
+
+**Root Cause Analysis:**
+
+The doc's `@font-face` rules pointed at `../public/fonts/guisol.woff2` — a path relative to the
+_source repo_, where `public/` is a real folder. But `public/` is a build convention, not a
+runtime location. At deploy time its **contents** move to the site root and the folder name
+disappears:
+
+| URL requested at runtime      | Dev server | Production (Netlify) |
+| ----------------------------- | ---------- | -------------------- |
+| `/fonts/guisol.woff2`         | 200        | 200                  |
+| `/public/fonts/guisol.woff2`  | **200**    | **404**              |
+
+The Astro dev server generously serves `public/` at _both_ `/` and `/public/`, so the broken
+`../public/fonts/` path resolved locally and hid the bug. Netlify only serves the flattened
+root, so the font 404'd and the browser quietly used its fallback.
+
+**The Fix:**
+
+Change the three `@font-face` `src` URLs from `../public/fonts/…` to the served path `/fonts/…`,
+which returns 200 on dev _and_ production. The main site never had this bug —
+`src/styles/fonts.css` already used `/fonts/…` correctly. Only this hand-authored standalone doc
+drifted. (See also Bug #4 — the original fonts-404 saga.)
+
+**Director's Commentary — Relative asset paths are a lie the dev server tells you:**
+
+Think of `public/` like the prop room on a set. In the _shooting script_ (your repo) the props
+live in a labeled room called "public." But in the _final cut_ (the deployed site) the props are
+already placed on the stage — there is no "public" room anymore; everything is just _there_, at
+the root. A path like `../public/fonts/x.woff2` is a stage direction that only makes sense
+backstage. The dev server is an indulgent stage manager who'll walk you to the old prop room if
+you ask by its former name; production is the live audience, who only sees what's actually on
+stage.
+
+**The rule:** reference anything in `public/` by its **served URL** (`/fonts/x.woff2`), never by
+a repo-relative path. If it only works on `localhost`, you haven't tested the path — you've
+tested the dev server's generosity.
+
+---
+
 ## Behind the Scenes: March 13 Session Insights
 
 ### CSS Cascade Subtleties
