@@ -74,6 +74,8 @@
 
         /* Transitions */
         --transition-fast: 200ms ease;
+        --dur-blur-fade: 0.8s;
+        --ease-blur-fade: cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       /* =========================================
@@ -717,6 +719,37 @@
     </style>
   </head>
   <body>
+    <!-- Back to homepage (mirrors the portfolio nav pills) -->
+    <a href="/" class="ds-back" aria-label="Back to homepage">← BACK</a>
+    <style>
+      .ds-back {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        z-index: 1000;
+        display: inline-flex;
+        align-items: center;
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 40px;
+        background: #7fee40;
+        color: #1c1c1c;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        transition: background 0.2s ease;
+      }
+      .ds-back:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .ds-back:focus-visible {
+        outline: 2px solid #fefefe;
+        outline-offset: 3px;
+      }
+    </style>
+
     <!-- Side Navigation -->
     <aside class="side-nav">
       <div class="side-nav-title">Design System</div>
@@ -727,6 +760,8 @@
           <li><a href="#color" class="active">Color Palette</a></li>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#spacing">Spacing System</a></li>
+          <li><a href="#motion">Motion</a></li>
+          <li><a href="#tchotchkes">Tchotchkes</a></li>
         </ul>
       </div>
 
@@ -750,7 +785,7 @@
       <!-- Header -->
       <div class="header">
         <h1 style="font-size: 100px">Portfolio Design System</h1>
-        <p>Ethan Anderson — Design tokens, typography, components, and UI patterns</p>
+        <p>The visual language of Ethan Anderson's SWE Portfolio.</p>
       </div>
 
       <!-- Color Palette Section -->
@@ -945,6 +980,222 @@
             <div class="spacing-swatch" style="height: 48px"></div>
             <div class="spacing-label">2XL</div>
             <div class="spacing-value">48px</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Motion Section -->
+      <div class="section" id="motion">
+        <h2 class="section-title">Motion</h2>
+
+        <style>
+          .motion-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+          }
+          .motion-cell {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          }
+          .motion-stage {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            overflow: hidden;
+          }
+          .motion-chip {
+            font-family: var(--font-guisol);
+            text-transform: uppercase;
+            font-size: 44px;
+            letter-spacing: 0.02em;
+            color: var(--color-accent);
+            /* Loops the blur-fade continuously so the motion is always visible.
+               The real transition is one-shot at --dur-blur-fade (see spec below). */
+            animation: ds-blur-fade 3s var(--ease-blur-fade) infinite;
+          }
+          @keyframes ds-blur-fade {
+            0% {
+              opacity: 0;
+              filter: blur(8px);
+            }
+            18% {
+              opacity: 1;
+              filter: blur(0);
+            }
+            82% {
+              opacity: 1;
+              filter: blur(0);
+            }
+            100% {
+              opacity: 0;
+              filter: blur(8px);
+            }
+          }
+          .motion-meta {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+          }
+          .motion-meta h4 {
+            font-family: var(--font-guisol);
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+          }
+          .motion-meta p {
+            font-family: var(--font-system);
+            font-size: 13px;
+            color: var(--color-subtle);
+            margin: 0;
+          }
+          .motion-meta code {
+            font-family: var(--font-iosevka);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--color-accent-secondary);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .motion-chip {
+              animation: none;
+              opacity: 1;
+              filter: none;
+            }
+          }
+        </style>
+
+        <div class="motion-grid">
+          <div class="motion-cell">
+            <div class="motion-stage">
+              <span class="motion-chip">Guisol</span>
+            </div>
+            <div class="motion-meta">
+              <h4>Blur-fade</h4>
+              <p>
+                The site's signature transition — content resolves out of an 8px blur as it fades
+                in. Drives both the design-systems carousel and blog page navigation.
+              </p>
+              <p><code>opacity: 0 → 1 · filter: blur(8px) → blur(0)</code></p>
+              <p><code>0.8s carousel / 0.4s page · cubic-bezier(0.4, 0, 0.2, 1)</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tchotchkes Section -->
+      <div class="section" id="tchotchkes">
+        <h2 class="section-title">Tchotchkes</h2>
+
+        <style>
+          .tch-intro {
+            font-family: var(--font-system);
+            font-size: 13px;
+            color: var(--color-subtle);
+            margin-bottom: var(--space-lg);
+            max-width: 60ch;
+          }
+          .tch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-lg);
+          }
+          .tch-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          }
+          .tch-card.wide {
+            grid-column: 1 / -1;
+          }
+          .tch-stage {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+            background: rgba(255, 255, 255, 0.02);
+          }
+          .tch-stage img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+          /* scale the tiny marks up so they read at a glance */
+          .tch-card:not(.wide) .tch-stage img {
+            height: 48px;
+            width: auto;
+          }
+          .tch-meta {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+          }
+          .tch-name {
+            font-family: var(--font-guisol);
+            font-size: 14px;
+            text-transform: uppercase;
+          }
+          .tch-dim {
+            font-family: var(--font-iosevka);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--color-accent-secondary);
+            margin-top: 4px;
+          }
+        </style>
+
+        <p class="tch-intro">
+          Decorative marks scattered through the portfolio (via
+          <code style="font-family: var(--font-iosevka); font-style: italic"
+            >DecorativeElements</code
+          >). Light-filled for dark backgrounds.
+        </p>
+
+        <div class="tch-grid">
+          <div class="tch-card wide">
+            <div class="tch-stage">
+              <img
+                src="/ds-assets/TCHOTCHKES.svg"
+                alt="Tchotchkes strip — row of decorative marks"
+              />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Tchotchkes Strip</div>
+              <div class="tch-dim">340 × 29</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/WAVE.svg" alt="Wave mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Wave</div>
+              <div class="tch-dim">35 × 30</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/LIQUID.svg" alt="Liquid mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Liquid</div>
+              <div class="tch-dim">34 × 32</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/asterix.svg" alt="Asterix mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Asterix</div>
+              <div class="tch-dim">20 × 20</div>
+            </div>
           </div>
         </div>
       </div>

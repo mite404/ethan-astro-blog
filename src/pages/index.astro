@@ -177,6 +177,75 @@ const mostRecentPosts = posts.slice(0, 4)
     </div>
   </div>
 
+  <!-- DESIGN SYSTEMS Carousel — featured, auto-advances every 6s -->
+  <!-- No padding classes: each slide's bg must reach the border flush; content
+       is inset via .ds-slide-inner instead -->
+  <section class="bordered" data-ds-carousel>
+    <div class="ds-carousel">
+      <a
+        class="ds-slide ds-portfolio is-active"
+        href="/portfolio-design-system.html"
+        data-astro-reload
+      >
+        <div class="ds-slide-inner">
+          <div class="ds-mast">
+            <span class="ds-kicker">Design System</span>
+            <div class="ds-title">Portfolio<br />Site</div>
+            <p class="ds-lead">Neon <b>green &amp; magenta</b> on near-black.</p>
+            <span class="ds-view">View system →</span>
+          </div>
+          <div class="ds-glance">
+            <div class="ds-rung ds-r1">
+              <span class="ds-role">Display</span><span class="ds-face ds-face-display">Guisol</span>
+            </div>
+            <div class="ds-rung ds-r2">
+              <span class="ds-role">Text</span><span class="ds-face ds-face-text">Barlow</span>
+            </div>
+            <div class="ds-rung ds-r3">
+              <span class="ds-role">Voice</span><span class="ds-face ds-face-voice">Iosevka</span>
+            </div>
+            <div class="ds-swatch-bar">
+              <i style="background:#1c1c1c"></i>
+              <i style="background:#7fee40"></i>
+              <i style="background:#e071e3"></i>
+              <i style="background:#fefefe"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a class="ds-slide ds-hjbl" href="/hjbl-design-system.html" data-astro-reload>
+        <div class="ds-slide-inner">
+          <div class="ds-mast">
+            <span class="ds-kicker">Design System</span>
+            <div class="ds-title">HJBL<br />Rebrand</div>
+            <p class="ds-lead">Editorial <b>maroon</b> on cream &amp; brown.</p>
+            <span class="ds-view">View system →</span>
+          </div>
+          <div class="ds-glance">
+            <div class="ds-rung ds-r1">
+              <span class="ds-role">Display</span
+              ><span class="ds-face ds-face-display">Cormorant</span>
+            </div>
+            <div class="ds-rung ds-r2">
+              <span class="ds-role">Text</span><span class="ds-face ds-face-text">Baskerville</span>
+            </div>
+            <div class="ds-rung ds-r3">
+              <span class="ds-role">Data</span><span class="ds-face ds-face-voice">DM Mono</span>
+            </div>
+            <div class="ds-swatch-bar">
+              <i style="background:#1b1717"></i>
+              <i style="background:#8c1a11"></i>
+              <i style="background:#a8231a"></i>
+              <i style="background:#eeebdd"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="ds-dots"></div>
+    </div>
+  </section>
+
   <!-- BLOG Section -->
   <section class="bordered pl-8">
     <h2 class="section-title pt-4">BLOG:</h2>
@@ -219,6 +288,52 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- PARALLAX HAND -->
   <ParallaxHand client:only="react" />
 </PortfolioLayout>
+
+<script>
+  // Design-systems carousel: 4s crossfade + clickable dots.
+  // Idempotent + boots on astro:page-load so it survives view-transition nav.
+  // ponytail: detached timers from a prior swap are left to GC — fine for one index page.
+  function initDsCarousel() {
+    const root = document.querySelector<HTMLElement>('[data-ds-carousel]:not([data-ready])')
+    if (!root) return
+    root.setAttribute('data-ready', '')
+
+    const slides = [...root.querySelectorAll<HTMLElement>('.ds-slide')]
+    const dotsBox = root.querySelector<HTMLElement>('.ds-dots')
+    if (slides.length < 2 || !dotsBox) return
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    let i = 0
+    let timer: ReturnType<typeof setInterval>
+
+    const show = (n: number) => {
+      i = n
+      slides.forEach((s, k) => s.classList.toggle('is-active', k === n))
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === n))
+    }
+    const start = () => {
+      clearInterval(timer)
+      if (reduce) return
+      timer = setInterval(() => show((i + 1) % slides.length), 6000)
+    }
+
+    const dots = slides.map((_, n) => {
+      const b = document.createElement('button')
+      b.className = 'ds-dot' + (n === 0 ? ' is-active' : '')
+      b.setAttribute('aria-label', 'Show slide ' + (n + 1))
+      b.addEventListener('click', () => {
+        show(n)
+        start()
+      })
+      dotsBox.append(b)
+      return b
+    })
+    start()
+  }
+
+  document.addEventListener('astro:page-load', initDsCarousel)
+  initDsCarousel()
+</script>
 
 <style>
   /* portfolio styles:  src/styles/portfolio.css */

@@ -505,3 +505,317 @@ body[data-layout-type='portfolio'] section.bordered {
     font-size: 50px;
   }
 }
+
+/* ===========================
+   DESIGN SYSTEMS CAROUSEL
+   Featured, auto-advancing. Each slide is its own visual world:
+   project name set in that system's display face, at-a-glance type
+   ladder + palette in the right-hand negative space.
+   =========================== */
+
+/* Outer frame comes from .bordered (matches Projects/Blog); these are just
+   outer margins so the section doesn't collide with the bio above or Blog below. */
+body[data-layout-type='portfolio'] [data-ds-carousel] {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+body[data-layout-type='portfolio'] .ds-carousel {
+  position: relative;
+  height: 320px;
+  overflow: hidden; /* clip the blur bleed so it never spills past the border */
+}
+
+/* Blur-fade crossfade — mirrors the blog route's view-transition recipe
+   (opacity + filter: blur(8px)→0) so it reads as the same motion language. */
+body[data-layout-type='portfolio'] .ds-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  opacity: 0;
+  filter: blur(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.8s ease,
+    filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body[data-layout-type='portfolio'] .ds-slide.is-active {
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+body[data-layout-type='portfolio'] .ds-slide:focus-visible {
+  outline: 2px solid #7fee40;
+  outline-offset: 3px;
+}
+
+body[data-layout-type='portfolio'] .ds-slide-inner {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 40px;
+  /* section is flush to the border; content is inset here instead.
+     32px sides matches pl-8/pr-8; extra bottom clears the floating dots. */
+  padding: 28px 32px 46px;
+}
+
+/* left masthead */
+body[data-layout-type='portfolio'] .ds-mast {
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-layout-type='portfolio'] .ds-kicker {
+  font-family: 'Iosevka Fixed', monospace;
+  font-style: italic;
+  font-size: 0.875rem; /* 14px — matches .blog-description */
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+body[data-layout-type='portfolio'] .ds-title {
+  font-size: clamp(46px, 5.6vw, 82px);
+  line-height: 0.88;
+  margin-top: 8px;
+}
+
+body[data-layout-type='portfolio'] .ds-lead {
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 34ch;
+  margin-top: 16px;
+}
+
+body[data-layout-type='portfolio'] .ds-lead b {
+  font-weight: 400;
+}
+
+body[data-layout-type='portfolio'] .ds-view {
+  margin-top: auto;
+  /* ponytail: repo's only Iosevka cut is italic, so upright Iosevka needs a new
+     woff2. Using the system monospace for an upright, all-caps label that matches
+     HJBL's DM Mono rhythm. Swap in an Iosevka-upright file for true brand parity. */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-style: normal;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em; /* matches HJBL's DM Mono tracking */
+  transition: transform 0.2s ease;
+}
+
+body[data-layout-type='portfolio'] .ds-slide:hover .ds-view {
+  transform: translateX(4px);
+}
+
+/* right: type ladder + swatch bar */
+body[data-layout-type='portfolio'] .ds-glance {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  padding-left: 28px;
+}
+
+body[data-layout-type='portfolio'] .ds-glance::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+body[data-layout-type='portfolio'] .ds-rung {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+body[data-layout-type='portfolio'] .ds-role {
+  font-family: 'Iosevka Fixed', monospace;
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  min-width: 56px;
+}
+
+body[data-layout-type='portfolio'] .ds-face {
+  line-height: 0.95;
+}
+
+body[data-layout-type='portfolio'] .ds-r1 .ds-face {
+  font-size: 34px;
+}
+body[data-layout-type='portfolio'] .ds-r2 .ds-face {
+  font-size: 27px;
+}
+body[data-layout-type='portfolio'] .ds-r3 .ds-face {
+  font-size: 22px;
+}
+
+body[data-layout-type='portfolio'] .ds-swatch-bar {
+  display: flex;
+  margin-top: 18px;
+  height: 22px;
+  width: fit-content;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+body[data-layout-type='portfolio'] .ds-swatch-bar i {
+  width: 46px;
+  height: 100%;
+  display: block;
+}
+
+/* ---- Portfolio world ---- */
+body[data-layout-type='portfolio'] .ds-portfolio {
+  background: #1c1c1c;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-kicker,
+body[data-layout-type='portfolio'] .ds-portfolio .ds-view {
+  color: #7fee40;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-title {
+  font-family: 'Guisol', sans-serif;
+  text-transform: uppercase;
+  color: #fefefe;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-lead {
+  font-family: 'Iosevka Fixed', monospace;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.72);
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-lead b {
+  color: #e071e3;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-face-display {
+  font-family: 'Guisol', sans-serif;
+  text-transform: uppercase;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-face-text {
+  font-family: 'Barlow Condensed', sans-serif;
+}
+body[data-layout-type='portfolio'] .ds-portfolio .ds-face-voice {
+  font-family: 'Iosevka Fixed', monospace;
+  font-style: italic;
+}
+
+/* ---- HJBL world ---- */
+body[data-layout-type='portfolio'] .ds-hjbl {
+  background: #1b1717;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-kicker {
+  color: #a8231a;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-view {
+  color: #a8231a;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  color: #eeebdd;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-lead {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: #d4d0bf;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-lead b {
+  color: #a8231a;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-face-display {
+  font-family: 'Cormorant Garamond', serif;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-face-text {
+  font-family: 'Libre Baskerville', serif;
+}
+body[data-layout-type='portfolio'] .ds-hjbl .ds-face-voice {
+  font-family: 'DM Mono', monospace;
+}
+
+/* dots */
+body[data-layout-type='portfolio'] .ds-dots {
+  position: absolute;
+  left: 32px;
+  bottom: 22px;
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+}
+body[data-layout-type='portfolio'] .ds-dot {
+  position: relative; /* anchors the enlarged hit area below */
+  width: 34px;
+  height: 4px;
+  border: 0;
+  padding: 0;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+/* invisible hit target — keeps the pill skinny but easy to click over the slide link */
+body[data-layout-type='portfolio'] .ds-dot::after {
+  content: '';
+  position: absolute;
+  inset: -14px -3px;
+}
+body[data-layout-type='portfolio'] .ds-dot:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+body[data-layout-type='portfolio'] .ds-dot.is-active {
+  background: #7fee40;
+}
+body[data-layout-type='portfolio'] .ds-dot:focus-visible {
+  outline: 2px solid #fefefe;
+  outline-offset: 3px;
+}
+
+/* stack on narrow viewports */
+@media (max-width: 760px) {
+  body[data-layout-type='portfolio'] .ds-carousel {
+    height: auto;
+  }
+  body[data-layout-type='portfolio'] .ds-slide {
+    position: relative;
+    display: none;
+  }
+  body[data-layout-type='portfolio'] .ds-slide.is-active {
+    display: block;
+  }
+  body[data-layout-type='portfolio'] .ds-slide-inner {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 22px 24px 44px;
+  }
+  body[data-layout-type='portfolio'] .ds-glance {
+    padding-left: 0;
+  }
+  body[data-layout-type='portfolio'] .ds-glance::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-layout-type='portfolio'] .ds-slide,
+  body[data-layout-type='portfolio'] .ds-view,
+  body[data-layout-type='portfolio'] .ds-dot {
+    transition: none;
+  }
+}
