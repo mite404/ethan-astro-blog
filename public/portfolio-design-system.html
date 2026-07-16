@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ethan Anderson Portfolio — Design System</title>
     <style>
+      /* Barlow Condensed — loaded via Google Fonts, no local file (matches global.css) */
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
       /* =========================================
        @FONT-FACE DECLARATIONS (From Repo)
        ========================================= */
@@ -33,14 +36,6 @@
         src: url('../public/fonts/iosevka-fixed-light-italic.woff2') format('woff2');
       }
 
-      @font-face {
-        font-family: 'Aptos Narrow';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url('../public/fonts/aptos-narrow.woff2') format('woff2');
-      }
-
       /* =========================================
        DESIGN TOKENS
        ========================================= */
@@ -59,8 +54,8 @@
         /* Typography - Font Families */
         --font-fit: 'Fit', sans-serif;
         --font-guisol: 'Guisol', sans-serif;
-        --font-iosevka: 'Iosevka Fixed Light', monospace;
-        --font-aptos: 'Aptos Narrow', sans-serif;
+        --font-iosevka: 'Iosevka Fixed', monospace;
+        --font-barlow: 'Barlow Condensed', sans-serif;
         --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
         /* Spacing */
@@ -79,6 +74,8 @@
 
         /* Transitions */
         --transition-fast: 200ms ease;
+        --dur-blur-fade: 0.8s;
+        --ease-blur-fade: cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       /* =========================================
@@ -110,10 +107,72 @@
        LAYOUT
        ========================================= */
 
+      .side-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100vh;
+        overflow-y: auto;
+        background-color: var(--color-bg);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        padding: var(--space-2xl) 0;
+        z-index: 50;
+      }
+
+      .side-nav-title {
+        font-family: var(--font-iosevka);
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        color: var(--color-accent);
+        padding: 0 var(--space-lg) var(--space-md);
+      }
+
+      .side-nav-group {
+        padding-top: var(--space-lg);
+      }
+
+      .side-nav-group-label {
+        font-family: var(--font-system);
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        padding: 0 var(--space-lg) var(--space-sm);
+      }
+
+      .side-nav ul {
+        list-style: none;
+      }
+
+      .side-nav ul li a {
+        display: block;
+        font-family: var(--font-system);
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--color-subtle);
+        text-decoration: none;
+        padding: 8px var(--space-lg);
+        border-left: 2px solid transparent;
+        transition:
+          color var(--transition-fast),
+          border-color var(--transition-fast);
+      }
+
+      .side-nav ul li a:hover {
+        color: var(--color-text);
+      }
+
+      .side-nav ul li a.active {
+        color: var(--color-accent);
+        border-left-color: var(--color-accent);
+      }
+
       .page {
         min-height: 100vh;
         max-width: 1400px;
-        margin: 0 auto;
+        margin-left: 200px;
       }
 
       .header {
@@ -146,7 +205,7 @@
       }
 
       .section-title {
-        font-family: var(--font-guisol);
+        font-family: var(--font-iosevka);
         font-size: 28px;
         font-weight: 400;
         text-transform: uppercase;
@@ -263,7 +322,7 @@
       }
 
       .sample-section-title {
-        font-family: var(--font-guisol);
+        font-family: var(--font-iosevka);
         font-size: 6.25rem;
         font-weight: 400;
         color: white;
@@ -289,7 +348,7 @@
       }
 
       .sample-card-title {
-        font-family: var(--font-guisol);
+        font-family: var(--font-barlow);
         font-size: 30px;
         font-weight: 400;
         color: #ffffff;
@@ -297,7 +356,7 @@
       }
 
       .sample-card-description {
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.938rem;
         color: rgba(255, 255, 255, 0.7);
         line-height: 1.6;
@@ -309,7 +368,7 @@
 
       .sample-card-link {
         display: inline-block;
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.938rem;
         color: #fefefe;
         text-decoration: none;
@@ -318,7 +377,7 @@
       }
 
       .sample-card-details {
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.813rem;
         color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
@@ -374,9 +433,9 @@
         width: 100px;
         height: 50px;
         border-radius: var(--radius-lg);
-        font-family: var(--font-guisol);
+        font-family: var(--font-barlow);
+        font-weight: 800;
         font-size: 22px;
-        font-weight: 400;
         line-height: 0.91em;
         border: none;
         cursor: pointer;
@@ -391,7 +450,7 @@
       }
 
       .btn-nav-gh:hover {
-        color: var(--color-accent-secondary);
+        background-color: var(--color-muted);
       }
 
       .btn-nav-blog {
@@ -400,7 +459,16 @@
       }
 
       .btn-nav-blog:hover {
-        color: var(--color-accent-secondary);
+        background-color: var(--color-muted);
+      }
+
+      .btn-nav-resume {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-button-text);
+      }
+
+      .btn-nav-resume:hover {
+        background-color: var(--color-muted);
       }
 
       .btn-touch {
@@ -414,7 +482,7 @@
         font-family: var(--font-guisol);
         font-size: 85px;
         font-weight: 400;
-        color: var(--color-text);
+        color: var(--color-button-text);
         border: none;
         cursor: pointer;
         transition: all var(--transition-fast);
@@ -423,7 +491,8 @@
       }
 
       .btn-touch:hover {
-        color: var(--color-accent-secondary);
+        background-color: var(--color-accent-secondary);
+        color: var(--color-text);
       }
 
       .button-row {
@@ -454,7 +523,7 @@
       }
 
       .card-title {
-        font-family: var(--font-guisol);
+        font-family: var(--font-barlow);
         font-size: 30px;
         font-weight: 400;
         color: #ffffff;
@@ -462,7 +531,7 @@
       }
 
       .card-description {
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.938rem;
         color: rgba(255, 255, 255, 0.7);
         line-height: 1.6;
@@ -474,7 +543,7 @@
 
       .card-link {
         display: inline-block;
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.938rem;
         color: #fefefe;
         text-decoration: none;
@@ -487,7 +556,7 @@
       }
 
       .card-details {
-        font-family: var(--font-aptos);
+        font-family: var(--font-barlow);
         font-size: 0.813rem;
         color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
@@ -536,10 +605,75 @@
       }
 
       /* =========================================
+       TOKENS TABLE
+       ========================================= */
+
+      .token-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .token-table th {
+        font-family: var(--font-system);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        text-align: left;
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .token-table td {
+        font-family: monospace;
+        font-size: 12px;
+        color: var(--color-subtle);
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        vertical-align: middle;
+      }
+
+      .token-table td:first-child {
+        color: var(--color-accent);
+      }
+
+      .token-table tr:hover td {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .token-table td.token-group {
+        font-family: var(--font-system);
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        padding-top: var(--space-lg);
+        border-bottom: none;
+      }
+
+      .tswatch {
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        vertical-align: middle;
+        margin-right: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+      }
+
+      /* =========================================
        RESPONSIVE
        ========================================= */
 
       @media (max-width: 768px) {
+        .side-nav {
+          display: none;
+        }
+
+        .page {
+          margin-left: 0;
+        }
+
         body {
           padding: var(--space-lg);
         }
@@ -585,15 +719,77 @@
     </style>
   </head>
   <body>
+    <!-- Back to homepage (mirrors the portfolio nav pills) -->
+    <a href="/" class="ds-back" aria-label="Back to homepage">← BACK</a>
+    <style>
+      .ds-back {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        z-index: 1000;
+        display: inline-flex;
+        align-items: center;
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 40px;
+        background: #7fee40;
+        color: #1c1c1c;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        transition: background 0.2s ease;
+      }
+      .ds-back:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .ds-back:focus-visible {
+        outline: 2px solid #fefefe;
+        outline-offset: 3px;
+      }
+    </style>
+
+    <!-- Side Navigation -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Design System</div>
+
+      <div class="side-nav-group">
+        <div class="side-nav-group-label">Foundation</div>
+        <ul>
+          <li><a href="#color" class="active">Color Palette</a></li>
+          <li><a href="#typography">Typography</a></li>
+          <li><a href="#spacing">Spacing System</a></li>
+          <li><a href="#motion">Motion</a></li>
+          <li><a href="#tchotchkes">Tchotchkes</a></li>
+        </ul>
+      </div>
+
+      <div class="side-nav-group">
+        <div class="side-nav-group-label">Components</div>
+        <ul>
+          <li><a href="#buttons">Buttons & CTAs</a></li>
+          <li><a href="#cards">Card Components</a></li>
+        </ul>
+      </div>
+
+      <div class="side-nav-group">
+        <div class="side-nav-group-label">Reference</div>
+        <ul>
+          <li><a href="#tokens">Design Tokens Summary</a></li>
+        </ul>
+      </div>
+    </aside>
+
     <div class="page">
       <!-- Header -->
       <div class="header">
         <h1 style="font-size: 100px">Portfolio Design System</h1>
-        <p>Ethan Anderson — Design tokens, typography, components, and UI patterns</p>
+        <p>The visual language of Ethan Anderson's SWE Portfolio.</p>
       </div>
 
       <!-- Color Palette Section -->
-      <div class="section">
+      <div class="section" id="color">
         <h2 class="section-title">Color Palette</h2>
         <div class="color-grid">
           <div class="color-card">
@@ -607,7 +803,9 @@
           </div>
 
           <div class="color-card">
-            <div class="color-swatch" style="background-color: #fefefe">Text</div>
+            <div class="color-swatch" style="background-color: #fefefe; color: var(--color-bg)">
+              Text
+            </div>
             <div class="color-info">
               <div class="color-name">Primary Text</div>
               <div class="color-value">#fefefe</div>
@@ -615,7 +813,9 @@
           </div>
 
           <div class="color-card">
-            <div class="color-swatch" style="background-color: #7fee40">Accent</div>
+            <div class="color-swatch" style="background-color: #7fee40; color: var(--color-bg)">
+              Accent
+            </div>
             <div class="color-info">
               <div class="color-name">Accent Color</div>
               <div class="color-value">#7fee40</div>
@@ -623,7 +823,9 @@
           </div>
 
           <div class="color-card">
-            <div class="color-swatch" style="background-color: #e071e3">Secondary Accent</div>
+            <div class="color-swatch" style="background-color: #e071e3; color: var(--color-bg)">
+              Secondary Accent
+            </div>
             <div class="color-info">
               <div class="color-name">Secondary Accent (Hover)</div>
               <div class="color-value">#e071e3</div>
@@ -631,7 +833,10 @@
           </div>
 
           <div class="color-card">
-            <div class="color-swatch" style="background-color: rgba(255, 255, 255, 0.7)">
+            <div
+              class="color-swatch"
+              style="background-color: rgba(255, 255, 255, 0.7); color: var(--color-bg)"
+            >
               Subtle
             </div>
             <div class="color-info">
@@ -641,7 +846,12 @@
           </div>
 
           <div class="color-card">
-            <div class="color-swatch" style="background-color: rgba(255, 255, 255, 0.5)">Muted</div>
+            <div
+              class="color-swatch"
+              style="background-color: rgba(255, 255, 255, 0.5); color: var(--color-bg)"
+            >
+              Muted
+            </div>
             <div class="color-info">
               <div class="color-name">Muted Text (50%)</div>
               <div class="color-value">rgba(255, 255, 255, 0.5)</div>
@@ -651,7 +861,7 @@
       </div>
 
       <!-- Typography Section -->
-      <div class="section">
+      <div class="section" id="typography">
         <h2 class="section-title">Typography</h2>
         <div class="typography-grid">
           <div class="typography-item">
@@ -669,28 +879,18 @@
             <div class="typography-item-sample">
               <div class="sample-section-title">PROJECTS:</div>
               <div class="typography-item-spec">
-                Font: Guisol | Size: 100px | Weight: 400 | Letter-spacing: 0.05em | Text-transform:
-                uppercase
+                Font: Iosevka Fixed | Size: 100px | Weight: 400 | Letter-spacing: 0.05em |
+                Text-transform: uppercase
               </div>
             </div>
           </div>
 
           <div class="typography-item">
-            <div class="typography-item-title">Bio Heading (Top)</div>
+            <div class="typography-item-title">Bio Heading</div>
             <div class="typography-item-sample">
               <div class="sample-bio-top">Creative tools & <span class="highlight">DX</span></div>
               <div class="typography-item-spec">
-                Font: Iosevka Fixed Light | Size: 45px | Style: Italic | Line-height: 1
-              </div>
-            </div>
-          </div>
-
-          <div class="typography-item">
-            <div class="typography-item-title">Bio Heading (Bottom)</div>
-            <div class="typography-item-sample">
-              <div class="sample-bio-btm">19 years of systems thinking</div>
-              <div class="typography-item-spec">
-                Font: Guisol | Size: 40px | Weight: 400 | Line-height: 1
+                Font: Iosevka Fixed | Size: 45px | Style: Italic | Line-height: 1
               </div>
             </div>
           </div>
@@ -700,7 +900,7 @@
             <div class="typography-item-sample">
               <div class="sample-card-title">Project Title</div>
               <div class="typography-item-spec">
-                Font: Guisol | Size: 30px | Weight: 400 | Text-transform: uppercase
+                Font: Barlow Condensed | Size: 30px | Weight: 400 | Text-transform: uppercase
               </div>
             </div>
           </div>
@@ -713,7 +913,8 @@
                 line height and spacing.
               </div>
               <div class="typography-item-spec">
-                Font: Aptos Narrow | Size: 15px | Line-height: 1.6 | Color: rgba(255, 255, 255, 0.7)
+                Font: Barlow Condensed | Size: 15px | Line-height: 1.6 | Color: rgba(255, 255, 255,
+                0.7)
               </div>
             </div>
           </div>
@@ -723,7 +924,7 @@
             <div class="typography-item-sample">
               <div class="sample-card-link">GitHub | Live</div>
               <div class="typography-item-spec">
-                Font: Aptos Narrow | Size: 15px | Transition: 200ms ease
+                Font: Barlow Condensed | Size: 15px | Transition: 200ms ease
               </div>
             </div>
           </div>
@@ -733,86 +934,16 @@
             <div class="typography-item-sample">
               <div class="sample-card-details">REACT | TYPESCRIPT | TAILWIND</div>
               <div class="typography-item-spec">
-                Font: Aptos Narrow | Size: 13px | Letter-spacing: 0.05em | Text-transform: uppercase
-                | Color: rgba(255, 255, 255, 0.5)
+                Font: Barlow Condensed | Size: 13px | Letter-spacing: 0.05em | Text-transform:
+                uppercase | Color: rgba(255, 255, 255, 0.5)
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Buttons Section -->
-      <div class="section">
-        <h2 class="section-title">Buttons & CTAs</h2>
-        <div class="buttons-grid">
-          <div class="button-showcase">
-            <div class="button-spec">
-              <div class="button-spec-title">Navigation Buttons</div>
-              <div class="button-spec-details">
-                GitHub Button: 100px × 50px, #fefefe bg, 40px radius<br />
-                Blog Button: 100px × 50px, #7fee40 bg, 40px radius<br />
-                Font: Guisol, 22px, 0.91em line-height, UPPERCASE<br />
-                Hover state: text color #e071e3
-              </div>
-            </div>
-            <div class="button-row">
-              <button class="btn-nav btn-nav-gh">GITHUB</button>
-              <button class="btn-nav btn-nav-blog">BLOG</button>
-            </div>
-          </div>
-
-          <div class="button-showcase">
-            <div class="button-spec">
-              <div class="button-spec-title">Primary CTA Button — "GET IN TOUCH"</div>
-              <div class="button-spec-details">
-                800px × 158px (full portfolio width)<br />
-                #7fee40 bg, 77px radius<br />
-                Font: Guisol, 85px, #fefefe text, UPPERCASE<br />
-                Hover state: text color #e071e3<br />
-                <strong>Note:</strong> Height 158px provides intentional padding around text
-              </div>
-            </div>
-            <button class="btn-touch">GET IN TOUCH</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cards Section -->
-      <div class="section">
-        <h2 class="section-title">Card Components</h2>
-        <div class="cards-grid">
-          <div class="card">
-            <div class="card-title">Project Title</div>
-            <p class="card-description">
-              A brief description of the project content goes here showcasing multiple lines.
-            </p>
-            <a href="#" class="card-link">GitHub | Live</a>
-            <p class="card-details">REACT | TYPESCRIPT | TAILWIND</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Another Project</div>
-            <p class="card-description">
-              A brief description of the project content goes here showcasing multiple lines.
-            </p>
-            <a href="#" class="card-link">GitHub | Live</a>
-            <p class="card-details">NEXT.JS | SUPABASE | FIGMA</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Blog Post</div>
-            <p class="card-description">
-              A brief description of the blog post content goes here with insights about
-              development.
-            </p>
-            <a href="#" class="card-link">Read More...</a>
-            <p class="card-details">ASTRO | WEB DEV | DESIGN</p>
           </div>
         </div>
       </div>
 
       <!-- Spacing Reference Section -->
-      <div class="section">
+      <div class="section" id="spacing">
         <h2 class="section-title">Spacing System</h2>
         <div class="spacing-grid">
           <div class="spacing-item">
@@ -853,51 +984,466 @@
         </div>
       </div>
 
+      <!-- Motion Section -->
+      <div class="section" id="motion">
+        <h2 class="section-title">Motion</h2>
+
+        <style>
+          .motion-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+          }
+          .motion-cell {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          }
+          .motion-stage {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            overflow: hidden;
+          }
+          .motion-chip {
+            font-family: var(--font-guisol);
+            text-transform: uppercase;
+            font-size: 44px;
+            letter-spacing: 0.02em;
+            color: var(--color-accent);
+            /* Loops the blur-fade continuously so the motion is always visible.
+               The real transition is one-shot at --dur-blur-fade (see spec below). */
+            animation: ds-blur-fade 3s var(--ease-blur-fade) infinite;
+          }
+          @keyframes ds-blur-fade {
+            0% {
+              opacity: 0;
+              filter: blur(8px);
+            }
+            18% {
+              opacity: 1;
+              filter: blur(0);
+            }
+            82% {
+              opacity: 1;
+              filter: blur(0);
+            }
+            100% {
+              opacity: 0;
+              filter: blur(8px);
+            }
+          }
+          .motion-meta {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+          }
+          .motion-meta h4 {
+            font-family: var(--font-guisol);
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+          }
+          .motion-meta p {
+            font-family: var(--font-system);
+            font-size: 13px;
+            color: var(--color-subtle);
+            margin: 0;
+          }
+          .motion-meta code {
+            font-family: var(--font-iosevka);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--color-accent-secondary);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .motion-chip {
+              animation: none;
+              opacity: 1;
+              filter: none;
+            }
+          }
+        </style>
+
+        <div class="motion-grid">
+          <div class="motion-cell">
+            <div class="motion-stage">
+              <span class="motion-chip">Guisol</span>
+            </div>
+            <div class="motion-meta">
+              <h4>Blur-fade</h4>
+              <p>
+                The site's signature transition — content resolves out of an 8px blur as it fades
+                in. Drives both the design-systems carousel and blog page navigation.
+              </p>
+              <p><code>opacity: 0 → 1 · filter: blur(8px) → blur(0)</code></p>
+              <p><code>0.8s carousel / 0.4s page · cubic-bezier(0.4, 0, 0.2, 1)</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tchotchkes Section -->
+      <div class="section" id="tchotchkes">
+        <h2 class="section-title">Tchotchkes</h2>
+
+        <style>
+          .tch-intro {
+            font-family: var(--font-system);
+            font-size: 13px;
+            color: var(--color-subtle);
+            margin-bottom: var(--space-lg);
+            max-width: 60ch;
+          }
+          .tch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-lg);
+          }
+          .tch-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          }
+          .tch-card.wide {
+            grid-column: 1 / -1;
+          }
+          .tch-stage {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+            background: rgba(255, 255, 255, 0.02);
+          }
+          .tch-stage img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+          /* scale the tiny marks up so they read at a glance */
+          .tch-card:not(.wide) .tch-stage img {
+            height: 48px;
+            width: auto;
+          }
+          .tch-meta {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+          }
+          .tch-name {
+            font-family: var(--font-guisol);
+            font-size: 14px;
+            text-transform: uppercase;
+          }
+          .tch-dim {
+            font-family: var(--font-iosevka);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--color-accent-secondary);
+            margin-top: 4px;
+          }
+        </style>
+
+        <p class="tch-intro">
+          Decorative marks scattered through the portfolio (via
+          <code style="font-family: var(--font-iosevka); font-style: italic"
+            >DecorativeElements</code
+          >). Light-filled for dark backgrounds.
+        </p>
+
+        <div class="tch-grid">
+          <div class="tch-card wide">
+            <div class="tch-stage">
+              <img
+                src="/ds-assets/TCHOTCHKES.svg"
+                alt="Tchotchkes strip — row of decorative marks"
+              />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Tchotchkes Strip</div>
+              <div class="tch-dim">340 × 29</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/WAVE.svg" alt="Wave mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Wave</div>
+              <div class="tch-dim">35 × 30</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/LIQUID.svg" alt="Liquid mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Liquid</div>
+              <div class="tch-dim">34 × 32</div>
+            </div>
+          </div>
+
+          <div class="tch-card">
+            <div class="tch-stage">
+              <img src="/ds-assets/asterix.svg" alt="Asterix mark" />
+            </div>
+            <div class="tch-meta">
+              <div class="tch-name">Asterix</div>
+              <div class="tch-dim">20 × 20</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons Section -->
+      <div class="section" id="buttons">
+        <h2 class="section-title">Buttons & CTAs</h2>
+        <div class="buttons-grid">
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Navigation Buttons</div>
+              <div class="button-spec-details">
+                GitHub Button: 100px × 50px, #fefefe bg, 40px radius<br />
+                Blog Button: 100px × 50px, #7fee40 bg, 40px radius<br />
+                Resumé Button: 100px × 50px, #e071e3 bg, 40px radius<br />
+                Font: Barlow Condensed, 800 weight, 22px, 0.91em line-height, UPPERCASE<br />
+                Hover state: background rgba(255, 255, 255, 0.5)
+              </div>
+            </div>
+            <div class="button-row">
+              <a href="#" class="btn-nav btn-nav-gh"><span>GITHUB</span></a>
+              <a href="#" class="btn-nav btn-nav-blog"><span>BLOG</span></a>
+              <a href="#" class="btn-nav btn-nav-resume"><span>RESUMÉ</span></a>
+            </div>
+          </div>
+
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Primary CTA Button — "GET IN TOUCH"</div>
+              <div class="button-spec-details">
+                800px × 158px (full portfolio width)<br />
+                #7fee40 bg, 77px radius<br />
+                Font: Guisol, 85px, #1c1c1c text, UPPERCASE<br />
+                Hover state: background #e071e3, text #fefefe<br />
+                <strong>Note:</strong> Height 158px provides intentional padding around text
+              </div>
+            </div>
+            <a href="#" class="btn-touch"><span>GET IN TOUCH</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Section -->
+      <div class="section" id="cards">
+        <h2 class="section-title">Card Components</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-title">Project Title</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">REACT | TYPESCRIPT | TAILWIND</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Another Project</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">NEXT.JS | SUPABASE | FIGMA</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Blog Post</div>
+            <p class="card-description">
+              A brief description of the blog post content goes here with insights about
+              development.
+            </p>
+            <a href="#" class="card-link">Read More...</a>
+            <p class="card-details">ASTRO | WEB DEV | DESIGN</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Design Tokens Summary -->
-      <div class="section">
+      <div class="section" id="tokens">
         <h2 class="section-title">Design Tokens Summary</h2>
         <div style="border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 24px">
-          <pre
-            style="
-              color: rgba(255, 255, 255, 0.8);
-              font-family: monospace;
-              font-size: 13px;
-              line-height: 1.8;
-              overflow-x: auto;
-            "
-          ><span style="color: #7fee40;">/* COLORS */</span>
---color-bg: #1c1c1c
---color-text: #fefefe
---color-accent: #7fee40
---color-accent-secondary: #e071e3
---color-button-text: #1c1c1c
---color-subtle: rgba(255, 255, 255, 0.7)
---color-muted: rgba(255, 255, 255, 0.5)
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="3" class="token-group">Colors</td>
+              </tr>
+              <tr>
+                <td>--color-bg</td>
+                <td><span class="tswatch" style="background: #1c1c1c"></span>#1c1c1c</td>
+                <td>Primary background</td>
+              </tr>
+              <tr>
+                <td>--color-text</td>
+                <td><span class="tswatch" style="background: #fefefe"></span>#fefefe</td>
+                <td>Primary text</td>
+              </tr>
+              <tr>
+                <td>--color-accent</td>
+                <td><span class="tswatch" style="background: #7fee40"></span>#7fee40</td>
+                <td>Accent — CTA, highlights</td>
+              </tr>
+              <tr>
+                <td>--color-accent-secondary</td>
+                <td><span class="tswatch" style="background: #e071e3"></span>#e071e3</td>
+                <td>Hover / secondary accent</td>
+              </tr>
+              <tr>
+                <td>--color-button-text</td>
+                <td><span class="tswatch" style="background: #1c1c1c"></span>#1c1c1c</td>
+                <td>Text on accent-colored buttons</td>
+              </tr>
+              <tr>
+                <td>--color-subtle</td>
+                <td>
+                  <span class="tswatch" style="background: rgba(255, 255, 255, 0.7)"></span
+                  >rgba(255, 255, 255, 0.7)
+                </td>
+                <td>Subtle text (70%)</td>
+              </tr>
+              <tr>
+                <td>--color-muted</td>
+                <td>
+                  <span class="tswatch" style="background: rgba(255, 255, 255, 0.5)"></span
+                  >rgba(255, 255, 255, 0.5)
+                </td>
+                <td>Muted text (50%)</td>
+              </tr>
 
-<span style="color: #7fee40;">/* TYPOGRAPHY */</span>
---font-fit: 'Fit' (portfolio name)
---font-guisol: 'Guisol' (headings & buttons)
---font-iosevka: 'Iosevka Fixed' (bio, italic)
---font-aptos: 'Aptos Narrow' (card content)
+              <tr>
+                <td colspan="3" class="token-group">Typography</td>
+              </tr>
+              <tr>
+                <td>--font-fit</td>
+                <td>'Fit'</td>
+                <td>Portfolio name</td>
+              </tr>
+              <tr>
+                <td>--font-guisol</td>
+                <td>'Guisol'</td>
+                <td>CTA button</td>
+              </tr>
+              <tr>
+                <td>--font-iosevka</td>
+                <td>'Iosevka Fixed'</td>
+                <td>Bio italic; section headings</td>
+              </tr>
+              <tr>
+                <td>--font-barlow</td>
+                <td>'Barlow Condensed'</td>
+                <td>Nav buttons, card title/description/link/details</td>
+              </tr>
 
-<span style="color: #7fee40;">/* SIZING */</span>
-Navigation buttons: 100px × 50px, radius: 40px
-CTA button: 800px × 158px (responsive, no max-width), radius: 77px
-Portfolio layout: 1280px max-width (fixed)
+              <tr>
+                <td colspan="3" class="token-group">Sizing</td>
+              </tr>
+              <tr>
+                <td>Nav buttons</td>
+                <td>100px × 50px</td>
+                <td>Radius 40px</td>
+              </tr>
+              <tr>
+                <td>CTA button</td>
+                <td>800px × 158px</td>
+                <td>Responsive, no max-width; radius 77px</td>
+              </tr>
+              <tr>
+                <td>Portfolio layout</td>
+                <td>1280px</td>
+                <td>Fixed max-width</td>
+              </tr>
 
-<span style="color: #7fee40;">/* TYPOGRAPHY SCALES */</span>
-Portfolio Name: 100px (Fit)
-Section Titles: 100px (Guisol, uppercase)
-Bio Top: 45px (Iosevka, italic)
-Bio Bottom: 40px (Guisol)
-Card Title: 30px (Guisol, uppercase)
-CTA Button: 85px (Guisol, uppercase)
-Nav Buttons: 22px (Guisol, uppercase)
+              <tr>
+                <td colspan="3" class="token-group">Type Scale</td>
+              </tr>
+              <tr>
+                <td>Portfolio Name</td>
+                <td>100px</td>
+                <td>Fit</td>
+              </tr>
+              <tr>
+                <td>Section Titles</td>
+                <td>100px</td>
+                <td>Iosevka Fixed, uppercase</td>
+              </tr>
+              <tr>
+                <td>Bio Top</td>
+                <td>45px</td>
+                <td>Iosevka Fixed, italic</td>
+              </tr>
+              <tr>
+                <td>Bio Bottom</td>
+                <td>40px</td>
+                <td>Guisol</td>
+              </tr>
+              <tr>
+                <td>Card Title</td>
+                <td>30px</td>
+                <td>Barlow Condensed, uppercase</td>
+              </tr>
+              <tr>
+                <td>CTA Button</td>
+                <td>85px</td>
+                <td>Guisol, uppercase</td>
+              </tr>
+              <tr>
+                <td>Nav Buttons</td>
+                <td>22px</td>
+                <td>Barlow Condensed, 800 weight, uppercase</td>
+              </tr>
 
-<span style="color: #7fee40;">/* TRANSITIONS */</span>
---transition-fast: 200ms ease (hover states)</pre>
+              <tr>
+                <td colspan="3" class="token-group">Transitions</td>
+              </tr>
+              <tr>
+                <td>--transition-fast</td>
+                <td>200ms ease</td>
+                <td>Hover states</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+
+    <script>
+      const sections = document.querySelectorAll('.section[id]')
+      const navLinks = document.querySelectorAll('.side-nav a[href^="#"]')
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((link) => link.classList.remove('active'))
+              const active = document.querySelector(`.side-nav a[href="#${entry.target.id}"]`)
+              if (active) active.classList.add('active')
+            }
+          })
+        },
+        { rootMargin: '-20% 0px -70% 0px' }
+      )
+
+      sections.forEach((section) => io.observe(section))
+    </script>
   </body>
 </html>
