@@ -1,0 +1,37 @@
+{
+  // This project uses oxlint + oxfmt only (matches global preference).
+  // Repo ships its own eslint.config.js / .prettierrc, so those are
+  // explicitly excluded here rather than relying on the global defaults.
+  // Biome is excluded too: Zed's Astro frontmatter is classified as plain
+  // JavaScript/TypeScript, so Biome auto-attaches there with no biome.json
+  // present unless "!biome" is listed (biomejs/biome-zed#155).
+  "languages": {
+    "JavaScript": {
+      "format_on_save": "on",
+      "prettier": { "allowed": false },
+      "language_servers": ["vtsls", "oxlint", "oxfmt", "!eslint", "!biome"],
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ]
+    },
+    "TypeScript": {
+      "format_on_save": "on",
+      "prettier": { "allowed": false },
+      "language_servers": ["vtsls", "oxlint", "oxfmt", "!eslint", "!biome"],
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ]
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "prettier": { "allowed": false },
+      "language_servers": ["vtsls", "oxlint", "oxfmt", "!eslint", "!biome"],
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ]
+    }
+  }
+}
