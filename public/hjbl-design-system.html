@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HJBL — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --maroon:       #8c1a11;
+      --maroon-deep:  #6b1209;
+      --maroon-light: #a8231a;
+      --cream:        #EEEBDD;
+      --cream-dark:   #e0dcc8;
+      --cream-muted:  #d4d0bf;
+      --brown:        #1B1717;
+      --brown-mid:    #2e2828;
+      --brown-light:  #433d3d;
+      --muted-text:   #9a9494;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--brown);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── LAYOUT ── */
+    aside {
+      position: fixed;
+      top: 0; left: 0;
+      width: 236px;
+      height: 100vh;
+      background: var(--brown);
+      border-right: 1px solid var(--brown-mid);
+      display: flex;
+      flex-direction: column;
+      padding: 40px 0;
+      overflow-y: auto;
+      z-index: 50;
+    }
+
+    .aside-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      color: var(--cream);
+      padding: 0 32px 4px;
+      display: block;
+      text-decoration: none;
+    }
+
+    .aside-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--maroon-light);
+      text-transform: uppercase;
+      padding: 0 32px 28px;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+
+    .aside-group { padding: 24px 32px 0; }
+
+    .aside-group-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 10px;
+    }
+
+    .aside-group ul { list-style: none; margin-bottom: 20px; }
+
+    .aside-group ul li a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted-text);
+      text-decoration: none;
+      padding: 5px 8px;
+      display: block;
+      border-left: 2px solid transparent;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .aside-group ul li a:hover { color: var(--cream); background: var(--brown-mid); }
+    .aside-group ul li a.active { color: var(--cream); border-left-color: var(--maroon); padding-left: 6px; background: var(--brown-mid); }
+
+    main { margin-left: 236px; }
+
+    /* ── PAGE HEADER ── */
+    .ds-page-header {
+      padding: 64px 72px 52px;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+
+    .ds-page-header .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--maroon-light);
+      margin-bottom: 14px;
+    }
+
+    .ds-page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 54px;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    .ds-page-header p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted-text);
+      max-width: 540px;
+    }
+
+    /* ── SECTION ── */
+    .ds-section {
+      padding: 72px 72px;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+
+    .ds-section:last-child { border-bottom: none; }
+
+    .ds-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 44px;
+    }
+
+    .ds-section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 34px;
+      color: var(--cream);
+    }
+
+    .ds-section-id {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--maroon);
+      text-transform: uppercase;
+    }
+
+    .ds-sub-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--brown-mid);
+      margin-bottom: 24px;
+    }
+
+    .ds-sub { margin-bottom: 48px; }
+    .ds-sub:last-child { margin-bottom: 0; }
+
+    /* ── COLOR ── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--brown-mid);
+    }
+
+    .color-grid-sm {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1px;
+      background: var(--brown-mid);
+      margin-top: 1px;
+    }
+
+    .swatch { display: flex; flex-direction: column; }
+    .swatch-block { height: 100px; }
+    .swatch-sm .swatch-block { height: 56px; }
+
+    .swatch-info { background: var(--brown-mid); padding: 14px 16px; }
+
+    .swatch-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      margin-bottom: 3px;
+    }
+
+    .swatch-hex {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted-text);
+    }
+
+    .swatch-var {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--brown-light);
+      margin-top: 4px;
+    }
+
+    .usage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--brown-mid);
+    }
+
+    .usage-cell { padding: 24px; }
+    .usage-cell-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .usage-cell p { font-size: 14px; line-height: 1.65; }
+
+    /* ── TYPE ── */
+    .type-specimen {
+      padding-bottom: 36px;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+    .type-specimen:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+    .type-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .type-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--maroon-light);
+    }
+
+    .type-spec {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted-text);
+    }
+
+    .scale-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 180px;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+    .scale-row:last-child { border-bottom: none; }
+
+    .scale-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted-text);
+    }
+
+    .scale-spec {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--brown-light);
+      text-align: right;
+    }
+
+    /* ── SPACING ── */
+    .space-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 28px;
+      align-items: end;
+    }
+
+    .space-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .space-swatch { width: 100%; background: var(--maroon); opacity: 0.65; border-radius: 2px; }
+
+    .space-token { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--maroon-light); }
+    .space-px    { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted-text); }
+    .space-usage { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--brown-light); }
+
+    /* ── GRID DEMO ── */
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+    }
+
+    .gcol {
+      background: rgba(140,26,17,0.18);
+      border: 1px solid rgba(140,26,17,0.35);
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gcol span { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--maroon-light); }
+
+    .grid-example { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin-bottom: 6px; }
+
+    .gspan {
+      background: rgba(140,26,17,0.38);
+      border: 1px solid var(--maroon);
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gspan span { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--cream); }
+
+    .grid-example-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--muted-text);
+      margin-bottom: 6px;
+      margin-top: 16px;
+      text-transform: uppercase;
+    }
+
+    /* ── MOTION ── */
+    .motion-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--brown-mid);
+    }
+
+    .motion-cell {
+      background: var(--brown-mid);
+      padding: 28px 24px;
+    }
+
+    .motion-cell h5 {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+
+    .motion-cell p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted-text);
+      margin-bottom: 12px;
+    }
+
+    .motion-cell code {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--maroon-light);
+      display: block;
+      line-height: 1.7;
+    }
+
+    /* ── COMPONENT ROWS ── */
+    .comp-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .comp-row:last-child { margin-bottom: 0; }
+
+    .comp-demo {
+      flex: 1;
+      background: var(--brown-mid);
+      padding: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      min-height: 100px;
+    }
+
+    .comp-demo.on-cream { background: var(--cream); }
+    .comp-demo.on-maroon { background: var(--maroon); }
+    .comp-demo.flush { padding: 0; background: var(--brown-light); flex-direction: column; gap: 1px; }
+    .comp-demo.flush-row { padding: 0; background: var(--brown-light); gap: 1px; align-items: stretch; }
+
+    .comp-notes { width: 200px; flex-shrink: 0; }
+
+    .comp-notes h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+
+    .comp-notes p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--muted-text);
+      margin-bottom: 10px;
+    }
+
+    .comp-notes code {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--maroon-light);
+      background: var(--brown-mid);
+      padding: 2px 6px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--maroon);
+      border: none;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .btn-primary:hover { background: var(--maroon-light); }
+
+    .btn-secondary {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--maroon-light);
+      background: transparent;
+      border: 1px solid var(--maroon);
+      padding: 15px 31px;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .btn-secondary:hover { background: var(--maroon); color: var(--cream); }
+
+    .btn-ghost {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 0;
+      transition: color 0.25s ease;
+    }
+    .btn-ghost::after { content: '→'; font-family: serif; font-size: 16px; }
+    .btn-ghost:hover { color: var(--cream); }
+
+    /* ── TAGS ── */
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      display: inline-block;
+    }
+    .tag-default { color: var(--muted-text); border: 1px solid var(--brown-light); }
+    .tag-outline  { color: var(--maroon-light); border: 1px solid var(--maroon); }
+    .tag-filled   { color: var(--cream); background: var(--maroon); }
+
+    /* ── SECTION LABEL ── */
+    .section-label-comp {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--maroon-light);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label-comp::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--maroon);
+    }
+
+    /* ── CARDS ── */
+    .card-comp {
+      background: var(--brown);
+      padding: 32px;
+      border-top: 2px solid var(--maroon);
+      flex: 1;
+    }
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--maroon);
+      margin-bottom: 12px;
+    }
+    .card-comp h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+    .card-comp p { font-size: 14px; line-height: 1.65; color: var(--muted-text); }
+
+    /* ── ROLE ROWS ── */
+    .role-row {
+      background: var(--brown-mid);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      width: 100%;
+    }
+    .role-row:hover { background: var(--brown); }
+    .role-row h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--cream);
+      margin-bottom: 2px;
+    }
+    .role-row span {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted-text);
+      text-transform: uppercase;
+    }
+    .role-arrow { font-size: 18px; color: var(--maroon); }
+
+    /* ── STAT CELLS ── */
+    .stat-cell {
+      background: var(--brown);
+      padding: 26px 22px;
+      flex: 1;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 44px;
+      color: var(--maroon-light);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-lbl {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+    }
+
+    /* ── DIVIDERS ── */
+    .div-full   { width: 100%; height: 1px; background: var(--brown-mid); }
+    .div-maroon { width: 60px; height: 2px; background: var(--maroon); }
+    .div-bar    { width: 4px; height: 80px; background: var(--maroon); }
+
+    /* ── INPUT ── */
+    .input-ds {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      background: var(--brown);
+      border: 1px solid var(--brown-light);
+      color: var(--cream);
+      padding: 13px 16px;
+      width: 220px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-ds::placeholder { color: var(--brown-light); }
+    .input-ds:focus { border-color: var(--maroon); }
+
+    /* ── QUOTE BAND ── */
+    .quote-band {
+      background: var(--maroon);
+      padding: 40px 48px;
+      width: 100%;
+    }
+    .quote-band blockquote {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .quote-band cite {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: rgba(238,235,221,0.45);
+      font-style: normal;
+    }
+
+    /* ── NAV SAMPLE ── */
+    .nav-sample {
+      background: var(--brown);
+      border-bottom: 1px solid var(--brown-mid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      width: 100%;
+    }
+    .nav-sample .logo { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 0.18em; color: var(--cream); }
+    .nav-sample ul { display: flex; gap: 32px; list-style: none; }
+    .nav-sample ul a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      text-decoration: none;
+    }
+
+    /* ── TOKENS TABLE ── */
+    .token-table { width: 100%; border-collapse: collapse; }
+    .token-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--brown-mid);
+    }
+    .token-table td {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted-text);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--brown-mid);
+      vertical-align: middle;
+    }
+    .token-table td:first-child { color: var(--maroon-light); }
+    .token-table tr:last-child td { border-bottom: none; }
+    .token-table tr:hover td { background: var(--brown-mid); }
+
+    .tswatch {
+      display: inline-block;
+      width: 13px; height: 13px;
+      vertical-align: middle;
+      margin-right: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── UTILS ── */
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside>
+  <a href="hjbl.html" class="aside-logo">HJBL</a>
+  <div class="aside-subtitle">Design System</div>
+
+  <div class="aside-group">
+    <div class="aside-group-label">Foundation</div>
+    <ul>
+      <li><a href="#brand" class="active">Brand Assets</a></li>
+      <li><a href="#color">Color</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#spacing">Spacing</a></li>
+      <li><a href="#grid">Grid</a></li>
+      <li><a href="#motion">Motion</a></li>
+    </ul>
+  </div>
+
+  <div class="aside-group">
+    <div class="aside-group-label">Components</div>
+    <ul>
+      <li><a href="#buttons">Buttons</a></li>
+      <li><a href="#labels">Labels & Tags</a></li>
+      <li><a href="#cards">Cards & Pillars</a></li>
+      <li><a href="#lists">List Rows</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="#dividers">Dividers</a></li>
+      <li><a href="#inputs">Form Inputs</a></li>
+      <li><a href="#quotes">Quote Bands</a></li>
+      <li><a href="#nav">Navigation</a></li>
+    </ul>
+  </div>
+
+  <div class="aside-group">
+    <div class="aside-group-label">Reference</div>
+    <ul>
+      <li><a href="#tokens">Design Tokens Summary</a></li>
+    </ul>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+  <!-- PAGE HEADER -->
+  <div class="ds-page-header">
+    <div class="eyebrow">v1.0 · 2025</div>
+    <h1>HJBL Design System</h1>
+    <p>The visual language of HJBL. Use these foundations and components to build pages and materials that are consistent, legible, and on-brand.</p>
+  </div>
+
+  <!-- ═══ 01 BRAND ASSETS ═══ -->
+  <div class="ds-section" id="brand">
+    <div class="ds-section-header">
+      <div class="ds-section-id">01</div>
+      <h2>Brand Assets</h2>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Logotype — Light / Dark</div>
+      <div class="comp-row">
+        <div class="comp-demo on-cream" style="justify-content: center;">
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:56px; letter-spacing:0.02em; color:var(--maroon);">HJBL</div>
+        </div>
+        <div class="comp-demo" style="justify-content: center; background: var(--brown);">
+          <div style="display:flex; align-items:flex-end; gap:6px;">
+            <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:56px; letter-spacing:0.02em; color:var(--maroon-light);">HJBL</span>
+            <span style="width:10px; height:10px; border-radius:50%; background:var(--cream); margin-bottom:10px;"></span>
+          </div>
+        </div>
+        <div class="comp-notes">
+          <h4>Wordmark</h4>
+          <p>Cormorant Garamond, weight 600, uppercase letterforms. Maroon on cream for light surfaces. Maroon Light with a cream period-dot on dark surfaces.</p>
+          <code>--maroon on --cream · --maroon-light on --brown</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Share Preview Card (Link / OG Card)</div>
+      <div class="comp-row">
+        <div class="comp-demo" style="background: transparent; padding: 0;">
+          <div style="width:320px; border-radius:16px; overflow:hidden; border:1px solid var(--brown-mid);">
+            <div style="background:var(--brown); padding:28px 24px 20px;">
+              <div style="display:flex; align-items:flex-end; gap:6px;">
+                <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:32px; letter-spacing:0.02em; color:var(--maroon-light);">HJBL</span>
+                <span style="width:6px; height:6px; border-radius:50%; background:var(--cream); margin-bottom:6px;"></span>
+              </div>
+              <div style="font-family:'DM Mono',monospace; font-size:11px; color:var(--muted-text); margin-top:8px;">Research driven proprietary trading</div>
+            </div>
+            <div style="background:var(--brown-light); padding:12px 24px;">
+              <div style="font-family:'DM Mono',monospace; font-size:12px; font-weight:700; color:var(--cream);">Home</div>
+              <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted-text); margin-top:2px;">hjbl.org</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp-notes">
+          <h4>Link Preview / OG Image</h4>
+          <p>Dark card — wordmark and tagline on --brown, metadata bar on --brown-light. Rendered by iMessage/social unfurls via og:image, og:title, og:description.</p>
+          <code>og:image · og:title · og:description</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Favicon / App Icon</div>
+      <div class="comp-row">
+        <div class="comp-demo" style="gap: 24px;">
+          <div style="width:64px; height:64px; background:var(--cream); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:16px; line-height:1.15; color:var(--maroon); text-align:center;">
+            <div>HJ</div>
+            <div>BL.</div>
+          </div>
+          <div style="width:64px; height:64px; border-radius:50%; background:var(--brown); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:16px; line-height:1.15; color:var(--maroon-light); text-align:center;">
+            <div>HJ</div>
+            <div>BL.</div>
+          </div>
+        </div>
+        <div class="comp-notes">
+          <h4>Monogram</h4>
+          <p>Two-line stacked "HJ / BL." monogram. Square favicon on cream for browser tabs; circular touch icon on dark brown for iOS/mobile home screens.</p>
+          <code>favicon.png · apple-touch-icon.png</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 02 COLOR ═══ -->
+  <div class="ds-section" id="color">
+    <div class="ds-section-header">
+      <div class="ds-section-id">02</div>
+      <h2>Color</h2>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Primary Palette</div>
+      <div class="color-grid">
+        <div class="swatch">
+          <div class="swatch-block" style="background:#8c1a11;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Maroon</div>
+            <div class="swatch-hex">#8C1A11</div>
+            <div class="swatch-var">--maroon</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-block" style="background:#EEEBDD;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Cream</div>
+            <div class="swatch-hex">#EEEBDD</div>
+            <div class="swatch-var">--cream</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-block" style="background:#1B1717;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Dark Brown</div>
+            <div class="swatch-hex">#1B1717</div>
+            <div class="swatch-var">--brown</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Extended Palette</div>
+      <div class="color-grid-sm">
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#6b1209;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Maroon Deep</div><div class="swatch-hex" style="font-size:9px;">#6B1209</div><div class="swatch-var">--maroon-deep</div></div>
+        </div>
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#a8231a;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Maroon Light</div><div class="swatch-hex" style="font-size:9px;">#A8231A</div><div class="swatch-var">--maroon-light</div></div>
+        </div>
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#e0dcc8;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Cream Dark</div><div class="swatch-hex" style="font-size:9px;">#E0DCC8</div><div class="swatch-var">--cream-dark</div></div>
+        </div>
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#d4d0bf;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Cream Muted</div><div class="swatch-hex" style="font-size:9px;">#D4D0BF</div><div class="swatch-var">--cream-muted</div></div>
+        </div>
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#2e2828;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Brown Mid</div><div class="swatch-hex" style="font-size:9px;">#2E2828</div><div class="swatch-var">--brown-mid</div></div>
+        </div>
+        <div class="swatch swatch-sm">
+          <div class="swatch-block" style="background:#433d3d;"></div>
+          <div class="swatch-info"><div class="swatch-name" style="font-size:9px;">Brown Light</div><div class="swatch-hex" style="font-size:9px;">#433D3D</div><div class="swatch-var">--brown-light</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Usage</div>
+      <div class="usage-grid">
+        <div class="usage-cell" style="background:var(--brown-mid);">
+          <div class="usage-cell-label" style="color:var(--maroon-light);">On Dark</div>
+          <p style="color:var(--muted-text); font-size:14px; line-height:1.65;">Dark Brown is the primary page background. Brown Mid for elevated cards and surfaces. Cream for primary text.</p>
+        </div>
+        <div class="usage-cell" style="background:var(--cream);">
+          <div class="usage-cell-label" style="color:var(--maroon);">On Light</div>
+          <p style="color:var(--brown-light); font-size:14px; line-height:1.65;">Cream sections provide visual contrast. Dark Brown text on cream. Maroon accents hold weight on either surface.</p>
+        </div>
+        <div class="usage-cell" style="background:var(--maroon);">
+          <div class="usage-cell-label" style="color:rgba(238,235,221,0.5);">On Maroon</div>
+          <p style="color:rgba(238,235,221,0.75); font-size:14px; line-height:1.65;">Reserved for emphasis bands and primary CTAs. Cream text only. Cream at 45–50% opacity for metadata.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 03 TYPOGRAPHY ═══ -->
+  <div class="ds-section" id="typography">
+    <div class="ds-section-header">
+      <div class="ds-section-id">03</div>
+      <h2>Typography</h2>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Typefaces</div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-role">Display · Body</div>
+          <div class="type-spec">Cormorant Garamond · 300–600</div>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:300; font-size:56px; color:var(--cream); line-height:1.05; margin-bottom:10px;">Finding edge in<br><em style="color:var(--cream-muted);">complex markets.</em></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--muted-text); line-height:1.75; max-width:500px;">Body text and paragraph copy. The editorial weight creates authority without heaviness. Well-suited to long-form content at any scale.</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-role">Labels · Navigation · Data</div>
+          <div class="type-spec">DM Mono · 300–400</div>
+        </div>
+        <div style="font-family:'DM Mono',monospace; font-size:28px; color:var(--cream); letter-spacing:0.05em; margin-bottom:8px;">HJBL — Proprietary Trading</div>
+        <div style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted-text);">Section Labels · Navigation · Tags · Timestamps · CSS Variables · Metadata</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-role">Pullquotes · Emphasis</div>
+          <div class="type-spec">Libre Baskerville · 400 Italic</div>
+        </div>
+        <div style="font-family:'Libre Baskerville',serif; font-style:italic; font-size:26px; color:var(--cream); line-height:1.55;">"Curiosity is the only sustainable edge."</div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Type Scale</div>
+      <div class="scale-row">
+        <div class="scale-label">Display XL</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:80px;color:var(--cream);line-height:1;">Aa</div>
+        <div class="scale-spec">80–94px · wt 300 · lh 1.0</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Heading 1</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:52px;color:var(--cream);line-height:1.05;">Section Title</div>
+        <div class="scale-spec">52px · wt 300 · lh 1.05</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Heading 2</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:34px;color:var(--cream);line-height:1.15;">Subsection Heading</div>
+        <div class="scale-spec">34px · wt 300 · lh 1.15</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Heading 3</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:26px;color:var(--cream);line-height:1.2;">Card / Pillar Title</div>
+        <div class="scale-spec">26px · wt 400 · lh 1.2</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Heading 4</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:20px;color:var(--cream);">List Item / Role Title</div>
+        <div class="scale-spec">18–20px · wt 400</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Body Large</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream-muted);line-height:1.75;">Body copy, descriptions, and paragraph text across all sections</div>
+        <div class="scale-spec">17–18px · wt 300 · lh 1.75</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Body Small</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted-text);line-height:1.65;">Secondary copy, card body, footer descriptions</div>
+        <div class="scale-spec">14px · wt 300 · lh 1.65</div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label">Mono Label</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--maroon-light);">Section Label · Nav · Tag</div>
+        <div class="scale-spec">10–11px · ls 0.2em · uppercase</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 04 SPACING ═══ -->
+  <div class="ds-section" id="spacing">
+    <div class="ds-section-header">
+      <div class="ds-section-id">04</div>
+      <h2>Spacing</h2>
+    </div>
+    <div class="space-grid">
+      <div class="space-item">
+        <div class="space-swatch" style="height: 4px;"></div>
+        <div class="space-token">--space-4</div>
+        <div class="space-px">4px</div>
+        <div class="space-usage">Icon / inline gap</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 8px;"></div>
+        <div class="space-token">--space-8</div>
+        <div class="space-px">8px</div>
+        <div class="space-usage">Tight inline gap</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 12px;"></div>
+        <div class="space-token">--space-12</div>
+        <div class="space-px">12px</div>
+        <div class="space-usage">Tag padding X</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 16px;"></div>
+        <div class="space-token">--space-16</div>
+        <div class="space-px">16px</div>
+        <div class="space-usage">Button padding Y</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 24px;"></div>
+        <div class="space-token">--space-24</div>
+        <div class="space-px">24px</div>
+        <div class="space-usage">Row padding / label gap</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 32px;"></div>
+        <div class="space-token">--space-32</div>
+        <div class="space-px">32px</div>
+        <div class="space-usage">Card padding / type margin</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 48px;"></div>
+        <div class="space-token">--space-48</div>
+        <div class="space-px">48px</div>
+        <div class="space-usage">Sub-section margin</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 60px;"></div>
+        <div class="space-token">--space-60</div>
+        <div class="space-px">60px</div>
+        <div class="space-usage">Page padding X</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 80px;"></div>
+        <div class="space-token">--space-80</div>
+        <div class="space-px">80px</div>
+        <div class="space-usage">Grid column gap</div>
+      </div>
+      <div class="space-item">
+        <div class="space-swatch" style="height: 100px;"></div>
+        <div class="space-token">--space-100</div>
+        <div class="space-px">100px</div>
+        <div class="space-usage">Section padding Y</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 05 GRID ═══ -->
+  <div class="ds-section" id="grid">
+    <div class="ds-section-header">
+      <div class="ds-section-id">05</div>
+      <h2>Grid</h2>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">12-Column Base</div>
+      <div class="grid-12" style="margin-bottom:32px;">
+        <div class="gcol"><span>1</span></div>
+        <div class="gcol"><span>2</span></div>
+        <div class="gcol"><span>3</span></div>
+        <div class="gcol"><span>4</span></div>
+        <div class="gcol"><span>5</span></div>
+        <div class="gcol"><span>6</span></div>
+        <div class="gcol"><span>7</span></div>
+        <div class="gcol"><span>8</span></div>
+        <div class="gcol"><span>9</span></div>
+        <div class="gcol"><span>10</span></div>
+        <div class="gcol"><span>11</span></div>
+        <div class="gcol"><span>12</span></div>
+      </div>
+    </div>
+
+    <div class="ds-sub">
+      <div class="ds-sub-label">Common Layouts</div>
+
+      <div class="grid-example-label">6 / 6 · Two-column</div>
+      <div class="grid-example"><div class="gspan" style="grid-column:span 6;"><span>6 col</span></div><div class="gspan" style="grid-column:span 6;"><span>6 col</span></div></div>
+
+      <div class="grid-example-label">4 / 8 · Label + Content</div>
+      <div class="grid-example"><div class="gspan" style="grid-column:span 4;"><span>4 col</span></div><div class="gspan" style="grid-column:span 8;"><span>8 col</span></div></div>
+
+      <div class="grid-example-label">4 / 4 / 4 · Three Pillars</div>
+      <div class="grid-example"><div class="gspan" style="grid-column:span 4;"><span>4</span></div><div class="gspan" style="grid-column:span 4;"><span>4</span></div><div class="gspan" style="grid-column:span 4;"><span>4</span></div></div>
+
+      <div class="grid-example-label">3 / 3 / 3 / 3 · Four Markets</div>
+      <div class="grid-example"><div class="gspan" style="grid-column:span 3;"><span>3</span></div><div class="gspan" style="grid-column:span 3;"><span>3</span></div><div class="gspan" style="grid-column:span 3;"><span>3</span></div><div class="gspan" style="grid-column:span 3;"><span>3</span></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ 06 MOTION ═══ -->
+  <div class="ds-section" id="motion">
+    <div class="ds-section-header">
+      <div class="ds-section-id">06</div>
+      <h2>Motion</h2>
+    </div>
+    <p style="font-size:17px;line-height:1.75;color:var(--muted-text);max-width:580px;margin-bottom:36px;">Motion is restrained and purposeful. One well-orchestrated entrance beats many scattered micro-interactions. Easing is always ease or ease-out — never linear.</p>
+    <div class="motion-grid">
+      <div class="motion-cell">
+        <h5>Page Load</h5>
+        <p>Hero elements fade up sequentially. Eyebrow 0.2s → Headline 0.4s → Sub 0.6s → CTAs 0.8s → Scroll indicator 1.1s.</p>
+        <code>animation: fadeUp 0.8s ease both;<br>animation-delay: 0.4s;</code>
+      </div>
+      <div class="motion-cell">
+        <h5>fadeUp Keyframe</h5>
+        <p>Standard entrance animation. Opacity 0→1, translateY 24px→0. Applied to any reveal element.</p>
+        <code>from: opacity:0; translateY(24px)<br>to: opacity:1; translateY(0)</code>
+      </div>
+      <div class="motion-cell">
+        <h5>Hover Colors</h5>
+        <p>Background and text color transitions on all interactive elements. Consistent easing.</p>
+        <code>transition: background 0.25s ease,<br>color 0.25s ease;</code>
+      </div>
+      <div class="motion-cell">
+        <h5>Hover Transform</h5>
+        <p>Arrow icons translate 4px on row hover to signal directionality and interactivity.</p>
+        <code>transform: translateX(4px);<br>transition: transform 0.2s ease;</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 07 BUTTONS ═══ -->
+  <div class="ds-section" id="buttons">
+    <div class="ds-section-header">
+      <div class="ds-section-id">07</div>
+      <h2>Buttons</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo">
+        <button class="btn-primary">Join the Firm</button>
+        <button class="btn-primary" style="opacity:0.4;cursor:not-allowed;">Disabled</button>
+      </div>
+      <div class="comp-notes">
+        <h4>Primary</h4>
+        <p>Maroon fill, cream text. The dominant action on any given section. Use one per view maximum.</p>
+        <code>.btn-primary</code>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo">
+        <button class="btn-secondary">Learn More</button>
+      </div>
+      <div class="comp-notes">
+        <h4>Secondary</h4>
+        <p>Maroon outline, fills on hover. Use when two equal-weight actions exist in the same zone.</p>
+        <code>.btn-secondary</code>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo">
+        <button class="btn-ghost">Our Approach</button>
+      </div>
+      <div class="comp-notes">
+        <h4>Ghost / Arrow</h4>
+        <p>Muted text with trailing arrow. For secondary navigation links and inline CTAs.</p>
+        <code>.btn-ghost</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 08 LABELS & TAGS ═══ -->
+  <div class="ds-section" id="labels">
+    <div class="ds-section-header">
+      <div class="ds-section-id">08</div>
+      <h2>Labels & Tags</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo">
+        <div class="section-label-comp">About HJBL</div>
+      </div>
+      <div class="comp-notes">
+        <h4>Section Label</h4>
+        <p>Opens every major section. 32px maroon rule prefix. DM Mono uppercase, 10px, 0.28em tracking.</p>
+        <code>.section-label</code>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo">
+        <span class="tag tag-default">Full-Time</span>
+        <span class="tag tag-outline">New York</span>
+        <span class="tag tag-filled">Hiring</span>
+      </div>
+      <div class="comp-notes">
+        <h4>Tags</h4>
+        <p>Three variants: Default (muted border), Outline (maroon border), Filled (maroon bg). Used in role rows and listings.</p>
+        <code>.tag-default<br>.tag-outline<br>.tag-filled</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 09 CARDS ═══ -->
+  <div class="ds-section" id="cards">
+    <div class="ds-section-header">
+      <div class="ds-section-id">09</div>
+      <h2>Cards & Pillars</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo flush-row" style="align-items:stretch;">
+        <div class="card-comp">
+          <div class="card-num">01</div>
+          <h4>Cross-Disciplinary Research</h4>
+          <p>Insight from economics, mathematics, and behavioral science combined.</p>
+        </div>
+        <div class="card-comp">
+          <div class="card-num">02</div>
+          <h4>Quantitative Rigor</h4>
+          <p>Every thesis is stress-tested before capital is ever deployed.</p>
+        </div>
+      </div>
+      <div class="comp-notes">
+        <h4>Pillar Card</h4>
+        <p>Numbered. Maroon 2px top border. Brown bg (slightly lighter than surface). Hover darkens. Used in 3-col approach grids.</p>
+        <code>.pillar / .card-comp</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 10 LIST ROWS ═══ -->
+  <div class="ds-section" id="lists">
+    <div class="ds-section-header">
+      <div class="ds-section-id">10</div>
+      <h2>List Rows</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo flush" style="width:100%;">
+        <div class="role-row">
+          <div><h4>Quantitative Researcher</h4><span>Full-Time · New York</span></div>
+          <div class="role-arrow">→</div>
+        </div>
+        <div class="role-row">
+          <div><h4>Systematic Trader</h4><span>Full-Time · New York</span></div>
+          <div class="role-arrow">→</div>
+        </div>
+        <div class="role-row">
+          <div><h4>Software Engineer — Trading Systems</h4><span>Full-Time · New York</span></div>
+          <div class="role-arrow">→</div>
+        </div>
+      </div>
+      <div class="comp-notes">
+        <h4>Role / List Row</h4>
+        <p>Cormorant title + DM Mono metadata left. Maroon arrow right. 1px gaps between rows on a darker background track.</p>
+        <code>.role-row</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 11 STATS ═══ -->
+  <div class="ds-section" id="stats">
+    <div class="ds-section-header">
+      <div class="ds-section-id">11</div>
+      <h2>Stats</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo flush-row" style="align-items:stretch;">
+        <div class="stat-cell"><div class="stat-num">NYC</div><div class="stat-lbl">Headquartered</div></div>
+        <div class="stat-cell"><div class="stat-num">24/7</div><div class="stat-lbl">Active Research</div></div>
+        <div class="stat-cell"><div class="stat-num">∞</div><div class="stat-lbl">Markets Monitored</div></div>
+      </div>
+      <div class="comp-notes">
+        <h4>Stat Cell</h4>
+        <p>Large Cormorant figure in --maroon-light at 44px. DM Mono label at 10px uppercase. Arranged in 1px-gap row grid.</p>
+        <code>.stat-cell</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 12 DIVIDERS ═══ -->
+  <div class="ds-section" id="dividers">
+    <div class="ds-section-header">
+      <div class="ds-section-id">12</div>
+      <h2>Dividers</h2>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div>
+        <div class="ds-sub-label" style="margin-bottom:14px;">Full-Width Rule</div>
+        <div class="div-full"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--brown-light);margin-top:8px;">Between all major sections. 1px. --brown-mid.</div>
+      </div>
+      <div>
+        <div class="ds-sub-label" style="margin-bottom:14px;">Maroon Accent Rule</div>
+        <div class="div-maroon"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--brown-light);margin-top:8px;">60×2px. Used below section labels in some layouts.</div>
+      </div>
+      <div>
+        <div class="ds-sub-label" style="margin-bottom:14px;">Left Accent Bar</div>
+        <div class="div-bar"></div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--brown-light);margin-top:8px;">4px wide, full-height absolute. Left edge of hero section.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 13 INPUTS ═══ -->
+  <div class="ds-section" id="inputs">
+    <div class="ds-section-header">
+      <div class="ds-section-id">13</div>
+      <h2>Form Inputs</h2>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-demo" style="flex-direction:column;align-items:flex-start;gap:14px;">
+        <input class="input-ds" type="text" placeholder="Your name" />
+        <input class="input-ds" type="email" placeholder="Email address" />
+        <input class="input-ds" type="text" value="Filled state" />
+      </div>
+      <div class="comp-notes">
+        <h4>Text Input</h4>
+        <p>DM Mono, dark bg, 1px --brown-light border. Focus shifts border to --maroon. Full-width in context.</p>
+        <code>.input-ds</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 14 QUOTE BANDS ═══ -->
+  <div class="ds-section" id="quotes">
+    <div class="ds-section-header">
+      <div class="ds-section-id">14</div>
+      <h2>Quote Bands</h2>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="quote-band">
+        <blockquote>"A well-rounded approach to knowledge leads to stronger solutions than narrow expertise."</blockquote>
+        <cite>HJBL — Core Principle</cite>
+      </div>
+      <p style="font-size:14px;line-height:1.65;color:var(--muted-text);max-width:540px;">Full-width maroon breakout band. Libre Baskerville italic at 22–34px. Optional grid texture overlay (4% white). Used once per page as a visual break. Cite in DM Mono at 45% cream opacity.</p>
+    </div>
+  </div>
+
+  <!-- ═══ 15 NAVIGATION ═══ -->
+  <div class="ds-section" id="nav">
+    <div class="ds-section-header">
+      <div class="ds-section-id">15</div>
+      <h2>Navigation</h2>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="nav-sample">
+        <span class="logo">HJBL</span>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Approach</a></li>
+          <li><a href="#">Markets</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <p style="font-size:14px;line-height:1.65;color:var(--muted-text);max-width:540px;">Fixed position with gradient-fade-to-transparent below. DM Mono logo at 15px / 0.18em tracking. Nav links at 11px / 0.2em / uppercase. Default: --cream-muted. Hover/active: --cream.</p>
+    </div>
+  </div>
+
+  <!-- ═══ 16 CSS VARIABLES ═══ -->
+  <div class="ds-section" id="tokens">
+    <div class="ds-section-header">
+      <div class="ds-section-id">16</div>
+      <h2>Design Tokens Summary</h2>
+    </div>
+    <p style="font-size:15px;line-height:1.7;color:var(--muted-text);max-width:540px;margin-bottom:32px;">All design decisions are tokenized. Use only these custom properties in new markup — never raw hex values.</p>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Value</th>
+          <th>Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>--maroon</td><td><span class="tswatch" style="background:#8c1a11;"></span>#8C1A11</td><td>CTAs, section labels, accent rules, tags</td></tr>
+        <tr><td>--maroon-deep</td><td><span class="tswatch" style="background:#6b1209;"></span>#6B1209</td><td>Active button hover, deep shadow tones</td></tr>
+        <tr><td>--maroon-light</td><td><span class="tswatch" style="background:#a8231a;"></span>#A8231A</td><td>Stat numbers, eyebrow labels on dark</td></tr>
+        <tr><td>--cream</td><td><span class="tswatch" style="background:#EEEBDD;border-color:rgba(0,0,0,0.2);"></span>#EEEBDD</td><td>Primary text on dark, light section background</td></tr>
+        <tr><td>--cream-dark</td><td><span class="tswatch" style="background:#e0dcc8;border-color:rgba(0,0,0,0.2);"></span>#E0DCC8</td><td>Italic headline accent, hover bg on cream sections</td></tr>
+        <tr><td>--cream-muted</td><td><span class="tswatch" style="background:#d4d0bf;border-color:rgba(0,0,0,0.2);"></span>#D4D0BF</td><td>Secondary text on dark backgrounds</td></tr>
+        <tr><td>--brown</td><td><span class="tswatch" style="background:#1B1717;"></span>#1B1717</td><td>Page background, primary surface</td></tr>
+        <tr><td>--brown-mid</td><td><span class="tswatch" style="background:#2e2828;"></span>#2E2828</td><td>Cards, elevated surfaces, grid gap color</td></tr>
+        <tr><td>--brown-light</td><td><span class="tswatch" style="background:#433d3d;"></span>#433D3D</td><td>Borders, dividers, muted labels, grid bg</td></tr>
+        <tr><td>--muted-text</td><td><span class="tswatch" style="background:#9a9494;"></span>#9A9494</td><td>Body copy on dark, secondary metadata</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('div[id], section[id]');
+  const links = document.querySelectorAll('aside a[href^="#"]');
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`aside a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => io.observe(s));
+
+  // The last section's top can never reach the shrunk rootMargin band once the
+  // page runs out of scroll room, so IntersectionObserver alone never fires for
+  // it. Force the last nav link active once the user hits the bottom of the page.
+  window.addEventListener('scroll', () => {
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    if (atBottom) {
+      links.forEach(l => l.classList.remove('active'));
+      links[links.length - 1].classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>
