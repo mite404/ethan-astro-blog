@@ -768,17 +768,11 @@
         <ul>
           <li><a href="#color" class="active">Color Palette</a></li>
           <li><a href="#typography">Typography</a></li>
+          <li><a href="#buttons">Buttons & CTAs</a></li>
+          <li><a href="#cards">Card Components</a></li>
           <li><a href="#spacing">Spacing System</a></li>
           <li><a href="#motion">Motion</a></li>
           <li><a href="#tchotchkes">Tchotchkes</a></li>
-        </ul>
-      </div>
-
-      <div class="side-nav-group">
-        <div class="side-nav-group-label">Components</div>
-        <ul>
-          <li><a href="#buttons">Buttons & CTAs</a></li>
-          <li><a href="#cards">Card Components</a></li>
         </ul>
       </div>
 
@@ -793,7 +787,7 @@
     <div class="page">
       <!-- Header -->
       <div class="header">
-        <h1 style="font-size: 200px">Portfolio Design System</h1>
+        <h1 style="font-size: 150px">Portfolio Design System</h1>
         <p>The visual language of Ethan Anderson's SWE Portfolio.</p>
       </div>
 
@@ -1124,6 +1118,78 @@
         </div>
       </div>
 
+      <!-- Buttons Section -->
+      <div class="section" id="buttons">
+        <h2 class="section-title">Buttons & CTAs</h2>
+        <div class="buttons-grid">
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Navigation Buttons</div>
+              <div class="button-spec-details">
+                GitHub Button: 100px × 50px, #fefefe bg, 40px radius<br />
+                Blog Button: 100px × 50px, #7fee40 bg, 40px radius<br />
+                Resumé Button: 100px × 50px, #e071e3 bg, 40px radius<br />
+                Font: Barlow Condensed, 800 weight, 22px, 0.91em line-height, UPPERCASE<br />
+                Hover state: background rgba(255, 255, 255, 0.5)
+              </div>
+            </div>
+            <div class="button-row">
+              <a href="#" class="btn-nav btn-nav-gh"><span>GITHUB</span></a>
+              <a href="#" class="btn-nav btn-nav-blog"><span>BLOG</span></a>
+              <a href="#" class="btn-nav btn-nav-resume"><span>RESUMÉ</span></a>
+            </div>
+          </div>
+
+          <div class="button-showcase">
+            <div class="button-spec">
+              <div class="button-spec-title">Primary CTA Button — "GET IN TOUCH"</div>
+              <div class="button-spec-details">
+                800px × 158px (full portfolio width)<br />
+                #7fee40 bg, 77px radius<br />
+                Font: Guisol, 85px, #1c1c1c text, UPPERCASE<br />
+                Hover state: background #e071e3, text #fefefe<br />
+                <strong>Note:</strong> Height 158px provides intentional padding around text
+              </div>
+            </div>
+            <a href="#" class="btn-touch"><span>GET IN TOUCH</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Section -->
+      <div class="section" id="cards">
+        <h2 class="section-title">Card Components</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-title">Project Title</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">REACT | TYPESCRIPT | TAILWIND</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Another Project</div>
+            <p class="card-description">
+              A brief description of the project content goes here showcasing multiple lines.
+            </p>
+            <a href="#" class="card-link">GitHub | Live</a>
+            <p class="card-details">NEXT.JS | SUPABASE | FIGMA</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Blog Post</div>
+            <p class="card-description">
+              A brief description of the blog post content goes here with insights about
+              development.
+            </p>
+            <a href="#" class="card-link">Read More...</a>
+            <p class="card-details">ASTRO | WEB DEV | DESIGN</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Spacing Reference Section -->
       <div class="section" id="spacing">
         <h2 class="section-title">Spacing System</h2>
@@ -1325,10 +1391,7 @@
         </style>
 
         <p class="tch-intro">
-          Decorative marks scattered through the portfolio (via
-          <code style="font-family: var(--font-iosevka); font-style: italic"
-            >DecorativeElements</code
-          >). Light-filled for dark backgrounds.
+          Decorative ornamental designs scattered through the site for texture.
         </p>
 
         <div class="tch-grid">
@@ -1373,78 +1436,6 @@
               <div class="tch-name">Asterix</div>
               <div class="tch-dim">20 × 20</div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Buttons Section -->
-      <div class="section" id="buttons">
-        <h2 class="section-title">Buttons & CTAs</h2>
-        <div class="buttons-grid">
-          <div class="button-showcase">
-            <div class="button-spec">
-              <div class="button-spec-title">Navigation Buttons</div>
-              <div class="button-spec-details">
-                GitHub Button: 100px × 50px, #fefefe bg, 40px radius<br />
-                Blog Button: 100px × 50px, #7fee40 bg, 40px radius<br />
-                Resumé Button: 100px × 50px, #e071e3 bg, 40px radius<br />
-                Font: Barlow Condensed, 800 weight, 22px, 0.91em line-height, UPPERCASE<br />
-                Hover state: background rgba(255, 255, 255, 0.5)
-              </div>
-            </div>
-            <div class="button-row">
-              <a href="#" class="btn-nav btn-nav-gh"><span>GITHUB</span></a>
-              <a href="#" class="btn-nav btn-nav-blog"><span>BLOG</span></a>
-              <a href="#" class="btn-nav btn-nav-resume"><span>RESUMÉ</span></a>
-            </div>
-          </div>
-
-          <div class="button-showcase">
-            <div class="button-spec">
-              <div class="button-spec-title">Primary CTA Button — "GET IN TOUCH"</div>
-              <div class="button-spec-details">
-                800px × 158px (full portfolio width)<br />
-                #7fee40 bg, 77px radius<br />
-                Font: Guisol, 85px, #1c1c1c text, UPPERCASE<br />
-                Hover state: background #e071e3, text #fefefe<br />
-                <strong>Note:</strong> Height 158px provides intentional padding around text
-              </div>
-            </div>
-            <a href="#" class="btn-touch"><span>GET IN TOUCH</span></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cards Section -->
-      <div class="section" id="cards">
-        <h2 class="section-title">Card Components</h2>
-        <div class="cards-grid">
-          <div class="card">
-            <div class="card-title">Project Title</div>
-            <p class="card-description">
-              A brief description of the project content goes here showcasing multiple lines.
-            </p>
-            <a href="#" class="card-link">GitHub | Live</a>
-            <p class="card-details">REACT | TYPESCRIPT | TAILWIND</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Another Project</div>
-            <p class="card-description">
-              A brief description of the project content goes here showcasing multiple lines.
-            </p>
-            <a href="#" class="card-link">GitHub | Live</a>
-            <p class="card-details">NEXT.JS | SUPABASE | FIGMA</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Blog Post</div>
-            <p class="card-description">
-              A brief description of the blog post content goes here with insights about
-              development.
-            </p>
-            <a href="#" class="card-link">Read More...</a>
-            <p class="card-details">ASTRO | WEB DEV | DESIGN</p>
           </div>
         </div>
       </div>
