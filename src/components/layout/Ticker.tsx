@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { motion, useAnimation } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 interface TickerProps {
@@ -46,6 +46,7 @@ export default function Ticker({
   const [isPaused, setIsPaused] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const textRef = useRef<HTMLDivElement>(null)
+  const controls = useAnimation()
 
   // Detect mobile breakpoint (< 768px)
   useEffect(() => {
@@ -63,6 +64,20 @@ export default function Ticker({
       setTextWidth(width)
     }
   }, [repeatedText])
+
+  useEffect(() => {
+    if (textWidth > 0) {
+      controls.start({
+        x: [0, -textWidth],
+        transition: { duration: speed, repeat: Infinity, ease: 'linear', repeatType: 'loop' }
+      })
+    }
+  }, [textWidth, speed, controls])
+
+  useEffect(() => {
+    if (isPaused) controls.pause()
+    else controls.play()
+  }, [isPaused, controls])
 
   // Estimate distance (can be refined with useRef + getBoundingClientRect)
   // const estimatedWidth = fullText.length * 8 // ~8px per character
@@ -90,22 +105,13 @@ export default function Ticker({
         <motion.div
           ref={textRef}
           className="whitespace-nowrap"
+          animate={controls}
           style={{
             fontFamily: 'Barlow Condensed, sans-serif',
             fontWeight: '200',
             fontStyle: 'italic',
             fontSize: fontSize,
             color: '#FFFFFF'
-          }}
-          animate={{
-            x: [0, -textWidth]
-          }}
-          transition={{
-            duration: speed,
-            repeat: Infinity,
-            ease: 'linear',
-            repeatType: 'loop',
-            paused: isPaused
           }}
         >
           {repeatedText}
