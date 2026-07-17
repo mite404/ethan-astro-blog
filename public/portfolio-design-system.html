@@ -50,6 +50,7 @@
         --color-subtle: rgba(255, 255, 255, 0.7);
         --color-muted: rgba(255, 255, 255, 0.5);
         --color-border: rgba(255, 255, 255, 1);
+        --redline: #ff5c3d; /* Figma annotation orange — used only in the Process section */
 
         /* Typography - Font Families */
         --font-fit: 'Fit', sans-serif;
@@ -122,7 +123,7 @@
 
       .side-nav-title {
         font-family: var(--font-barlow);
-        font-size: 14px;
+        font-size: 0.875rem;
         letter-spacing: 0.05em;
         color: var(--color-accent);
         padding: 0 var(--space-lg) var(--space-md);
@@ -134,7 +135,7 @@
 
       .side-nav-group-label {
         font-family: var(--font-barlow);
-        font-size: 10px;
+        font-size: 0.875rem;
         letter-spacing: 0.15em;
         text-transform: uppercase;
         color: var(--color-muted);
@@ -148,7 +149,7 @@
       .side-nav ul li a {
         display: block;
         font-family: var(--font-barlow);
-        font-size: 12px;
+        font-size: 0.875rem;
         letter-spacing: 0.05em;
         text-transform: uppercase;
         color: var(--color-subtle);
@@ -191,7 +192,7 @@
 
       .header p {
         font-family: var(--font-barlow);
-        font-size: 14px;
+        font-size: 1.5rem;
         color: var(--color-subtle);
         margin: 0;
       }
@@ -244,6 +245,7 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
+        text-align: center;
         padding: var(--space-sm);
         font-family: var(--font-system);
         font-size: 12px;
@@ -257,7 +259,7 @@
       }
 
       .color-name {
-        font-family: var(--font-guisol);
+        font-family: var(--font-barlow);
         font-size: 14px;
         font-weight: 400;
         text-transform: uppercase;
@@ -265,7 +267,7 @@
 
       .color-value {
         font-family: var(--font-system);
-        font-size: 12px;
+        font-size: 0.75rem;
         color: var(--color-subtle);
         font-family: monospace;
       }
@@ -308,7 +310,7 @@
 
       .typography-item-spec {
         font-family: monospace;
-        font-size: 11px;
+        font-size: 0.75rem;
         color: var(--color-muted);
       }
 
@@ -378,7 +380,7 @@
 
       .sample-card-details {
         font-family: var(--font-barlow);
-        font-size: 0.813rem;
+        font-size: 0.75rem;
         color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -420,7 +422,7 @@
 
       .button-spec-details {
         font-family: monospace;
-        font-size: 11px;
+        font-size: 0.75rem;
         color: var(--color-muted);
         margin-bottom: var(--space-md);
       }
@@ -557,7 +559,7 @@
 
       .card-details {
         font-family: var(--font-barlow);
-        font-size: 0.813rem;
+        font-size: 0.75rem;
         color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -755,6 +757,13 @@
       <div class="side-nav-title">Design System</div>
 
       <div class="side-nav-group">
+        <div class="side-nav-group-label">Overview</div>
+        <ul>
+          <li><a href="#process">Process</a></li>
+        </ul>
+      </div>
+
+      <div class="side-nav-group">
         <div class="side-nav-group-label">Foundation</div>
         <ul>
           <li><a href="#color" class="active">Color Palette</a></li>
@@ -784,8 +793,181 @@
     <div class="page">
       <!-- Header -->
       <div class="header">
-        <h1 style="font-size: 100px">Portfolio Design System</h1>
+        <h1 style="font-size: 200px">Portfolio Design System</h1>
         <p>The visual language of Ethan Anderson's SWE Portfolio.</p>
+      </div>
+
+      <!-- Process Section -->
+      <div class="section" id="process">
+        <h2 class="section-title">Process</h2>
+
+        <style>
+          .cs-lead {
+            font-family: var(--font-barlow);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-subtle);
+            max-width: 64ch;
+            margin-bottom: var(--space-2xl);
+          }
+          .cs-lead a {
+            color: var(--color-accent);
+          }
+          .cs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+          }
+          .cs-step {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          }
+          /* orange redline step badge — echoes the Figma spec annotations */
+          .cs-num {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 3;
+            font-family: var(--font-barlow);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            color: var(--color-bg);
+            background: var(--redline);
+            padding: 2px 8px;
+            border-radius: 3px;
+          }
+          .cs-shot {
+            position: relative;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+          }
+          .cs-shot img {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+          }
+          /* placeholder shows until the screenshot is dropped in /case-study/ */
+          .cs-ph {
+            font-family: var(--font-iosevka);
+            font-style: italic;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: var(--color-muted);
+          }
+          .cs-cap {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+          }
+          .cs-cap h4 {
+            font-family: var(--font-barlow);
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+          }
+          .cs-cap p {
+            font-family: var(--font-barlow);
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--color-subtle);
+          }
+          .cs-links {
+            display: flex;
+            gap: 18px;
+            margin-top: 12px;
+          }
+          .cs-links a {
+            font-family: var(--font-barlow);
+            font-size: 14px;
+            letter-spacing: 0.04em;
+            color: var(--color-accent);
+            text-decoration: none;
+          }
+          .cs-links a:hover {
+            color: var(--color-accent-secondary);
+          }
+          @media (max-width: 900px) {
+            .cs-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+        </style>
+
+        <p class="cs-lead">From Figma spec to shipped Astro & React.</p>
+
+        <div class="cs-grid">
+          <figure class="cs-step">
+            <span class="cs-num">01</span>
+            <div class="cs-shot">
+              <img
+                src="/case-study/spec.png"
+                alt="Figma spec with redline spacing measurements"
+                onerror="this.remove()"
+              />
+              <span class="cs-ph">spec.png</span>
+            </div>
+            <figcaption class="cs-cap">
+              <h4>Design</h4>
+              <p>Designed, Iterated, Spaced and Specced in Figma to the pixel.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="cs-step">
+            <span class="cs-num">02</span>
+            <div class="cs-shot">
+              <img
+                src="/case-study/layers.png"
+                alt="Figma Dev Mode showing the layer tree and MCP inspect panel"
+                onerror="this.remove()"
+              />
+              <span class="cs-ph">layers.png</span>
+            </div>
+            <figcaption class="cs-cap">
+              <h4>Handoff</h4>
+              <p>
+                Structured into semantic layers, then implemented both by hand and via the Figma
+                Desktop MCP bridge.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="cs-step">
+            <span class="cs-num">03</span>
+            <div class="cs-shot">
+              <img
+                src="/case-study/build.png"
+                alt="The shipped portfolio homepage rendered in the browser"
+                onerror="this.remove()"
+              />
+              <span class="cs-ph">build.png</span>
+            </div>
+            <figcaption class="cs-cap">
+              <h4>Build</h4>
+              <p>
+                Leaning on Astro's "component island" architecture, Astro components and plain HTML
+                render the layout statically, while React components hydrate interactivity.
+                JavaScript ships only where it moves.
+              </p>
+              <div class="cs-links">
+                <a href="https://github.com/mite404/ethan-astro-blog" target="_blank" rel="noopener"
+                  >Source →</a
+                >
+              </div>
+            </figcaption>
+          </figure>
+        </div>
       </div>
 
       <!-- Color Palette Section -->
@@ -1042,15 +1224,9 @@
             flex-direction: column;
             gap: 6px;
           }
-          .motion-meta h4 {
-            font-family: var(--font-guisol);
-            font-size: 14px;
-            font-weight: 400;
-            text-transform: uppercase;
-          }
           .motion-meta p {
-            font-family: var(--font-system);
-            font-size: 13px;
+            font-family: var(--font-barlow);
+            font-size: 14px;
             color: var(--color-subtle);
             margin: 0;
           }
@@ -1075,7 +1251,7 @@
               <span class="motion-chip">Guisol</span>
             </div>
             <div class="motion-meta">
-              <h4>Blur-fade</h4>
+              <div class="tch-name">Blur-fade</div>
               <p>
                 The site's signature transition — content resolves out of an 8px blur as it fades
                 in. Drives both the design-systems carousel and blog page navigation.
@@ -1093,8 +1269,8 @@
 
         <style>
           .tch-intro {
-            font-family: var(--font-system);
-            font-size: 13px;
+            font-family: var(--font-barlow);
+            font-size: 14px;
             color: var(--color-subtle);
             margin-bottom: var(--space-lg);
             max-width: 60ch;
@@ -1134,14 +1310,15 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
           }
           .tch-name {
-            font-family: var(--font-guisol);
-            font-size: 14px;
+            font-family: var(--font-barlow);
+            font-size: 16px;
+            font-weight: 700;
             text-transform: uppercase;
           }
           .tch-dim {
             font-family: var(--font-iosevka);
             font-style: italic;
-            font-size: 12px;
+            font-size: 0.75rem;
             color: var(--color-accent-secondary);
             margin-top: 4px;
           }

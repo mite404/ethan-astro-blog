@@ -114,6 +114,7 @@ body {
   font-family: var(--sans);
   font-feature-settings: 'ss03' 1;
   font-size: var(--font-size-m);
+  /* Intentional space insertion in text for certain scripts; CSS Text Level 4 draft, supported in Chrome 123+ */
   text-autospace: normal;
   text-rendering: optimizeLegibility;
   line-height: 1.75;
