@@ -513,11 +513,11 @@ body[data-layout-type='portfolio'] section.bordered {
    ladder + palette in the right-hand negative space.
    =========================== */
 
-/* Outer frame comes from .bordered (matches Projects/Blog); these are just
-   outer margins so the section doesn't collide with the bio above or Blog below. */
+/* Outer frame comes from .bordered (matches Projects/Blog). No bottom margin:
+   the bat-bottom graphic sits flush against this section's lower border. */
 body[data-layout-type='portfolio'] [data-ds-carousel] {
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
 body[data-layout-type='portfolio'] .ds-carousel {
