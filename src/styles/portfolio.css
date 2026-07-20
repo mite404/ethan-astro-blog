@@ -516,7 +516,8 @@ body[data-layout-type='portfolio'] section.bordered {
 /* Outer frame comes from .bordered (matches Projects/Blog). No bottom margin:
    the bat-bottom graphic sits flush against this section's lower border. */
 body[data-layout-type='portfolio'] [data-ds-carousel] {
-  margin-top: 2rem;
+  /* 0.5rem matches the blog-border → tchotchkes gap set in DecorativeElements */
+  margin-top: 0.5rem;
   margin-bottom: 0;
 }
 
