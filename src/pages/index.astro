@@ -149,34 +149,6 @@ const mostRecentPosts = posts.slice(0, 4)
     </div>
   </section>
 
-  <!-- BIO BOTTOM Section (below Projects) — bat zone 2 wraps this -->
-  <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
-  <div class="bat-zone-2-wrapper">
-    <div class="bat-zone-2" aria-hidden="true">
-      <Image
-        src={batBottomImg}
-        alt=""
-        width="1280"
-        height="543"
-        class="bat-zone-2-img"
-      />
-    </div>
-
-    <div class="bat-zone-2-content relative z-10 pl-8">
-      <div class="bio-btm">
-        <p>
-          Bringing 19 years of <span class="highlight">systems thinking and team leadership</span> within
-          entertainment for brands like VICE, SPOTIFY, SQUARESPACE & BEYONCÉ to early-stage companies
-          building creative tools.
-        </p>
-      </div>
-
-      <div class="bio-stars-divider flex justify-center w-full">
-        <Image src={starsImg} alt="" width="120" height="20" />
-      </div>
-    </div>
-  </div>
-
   <!-- DESIGN SYSTEMS Carousel — featured, auto-advances every 6s -->
   <!-- No padding classes: each slide's bg must reach the border flush; content
        is inset via .ds-slide-inner instead -->
@@ -245,6 +217,34 @@ const mostRecentPosts = posts.slice(0, 4)
       <div class="ds-dots"></div>
     </div>
   </section>
+
+  <!-- BIO BOTTOM Section (below Projects) — bat zone 2 wraps this -->
+  <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
+  <div class="bat-zone-2-wrapper">
+    <div class="bat-zone-2" aria-hidden="true">
+      <Image
+        src={batBottomImg}
+        alt=""
+        width="1280"
+        height="543"
+        class="bat-zone-2-img"
+      />
+    </div>
+
+    <div class="bat-zone-2-content relative z-10 pl-8">
+      <div class="bio-btm">
+        <p>
+          Bringing 19 years of <span class="highlight">systems thinking and team leadership</span> within
+          entertainment for brands like VICE, SPOTIFY, SQUARESPACE & BEYONCÉ to early-stage companies
+          building creative tools.
+        </p>
+      </div>
+
+      <div class="bio-stars-divider flex justify-center w-full">
+        <Image src={starsImg} alt="" width="120" height="20" />
+      </div>
+    </div>
+  </div>
 
   <!-- BLOG Section -->
   <section class="bordered pl-8">
