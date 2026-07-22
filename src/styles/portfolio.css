@@ -17,30 +17,25 @@ body[data-layout-type='portfolio'] {
    BAT BACKGROUND ZONES
    =========================== */
 
-/* Zone 1: from page-top to projects section top border.
-   Absolutely positioned relative to .portfolio-layout (position:relative).
-   Placed before the header in the DOM via the bg-layer slot, so it renders
-   behind all page content without needing z-index tricks.
+/* Zone 1: wraps bio-top section, flush with ticker's bottom border on resize
+   (same pattern as zone 2 — normal document flow, not pinned to a fixed offset). */
+body[data-layout-type='portfolio'] .bat-zone-1-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 33.75rem; /* 540px — matches BAT_TOP_CROPPED_FIXED.png dimensions */
+}
 
-   Note: Adjusted top: 0 → 66px to align bat asset top with ETHAN ANDERSON
-   heading (16px padding + 50px nav), closing the gap before PROJECTS border. */
 body[data-layout-type='portfolio'] .bat-zone-1 {
   position: absolute;
-  top: 66px;
-  left: 0;
-  width: 100%;
-  /* Locked to match bat-zone-1-img height (819px) for flush alignment with projects border */
-  height: 51.1875rem;
-  overflow: hidden;
+  inset: 0;
   pointer-events: none;
 }
 
 body[data-layout-type='portfolio'] .bat-zone-1-img {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 51.1875rem; /* 819px — lock height, crop sides as viewport shrinks */
+  height: 100%;
   object-fit: cover;
   object-position: center top;
   max-width: none;
@@ -225,14 +220,14 @@ body[data-layout-type='portfolio'] .bio-top p {
 }
 
 body[data-layout-type='portfolio'] .bio-stars-divider-top {
-  margin-bottom: 6.0625rem; /* 97px */
+  margin-bottom: 10.875rem; /* 174px — matches container's pt-[174px] so bio-top is equidistant top/bottom */
   margin-top: 3.125rem; /* 50px */
   position: relative;
   z-index: 10;
 }
 
 body[data-layout-type='portfolio'] .bio-stars-divider {
-  margin-bottom: 7.1875rem; /* 115px */
+  margin-bottom: 11.9375rem; /* 191px — matches .bat-zone-2-content's padding-top so bio-btm is equidistant top/bottom */
   margin-top: 3.125rem; /* 50px */
   position: relative;
   z-index: 10;
@@ -452,6 +447,10 @@ body[data-layout-type='portfolio'] section.bordered {
 
   body[data-layout-type='portfolio'] .bio-btm {
     font-size: 24px;
+  }
+
+  body[data-layout-type='portfolio'] .bio-stars-divider-top {
+    margin-bottom: 6.25rem; /* 100px — matches container's mobile pt-[100px] */
   }
 
   /* Increase nav button touch targets on mobile */
