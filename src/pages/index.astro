@@ -9,7 +9,7 @@ import { getSortedFilteredPosts } from '@/utils/draft'
 import { getExcerpt } from '@/utils/excerpt'
 import type { Project } from '@/data/projects'
 import { Image, getImage } from 'astro:assets'
-import batTopImg from '@/images/BAT_TOP_CROPPED.png'
+import batTopImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
 import batBottomImg from '@/images/BAT_BOTTOM_CROPPED.png'
 import starsImg from '@/images/STARS.png'
 import globeImg from '@/images/MOVIE_GLOBE.svg'
@@ -31,39 +31,37 @@ const mostRecentPosts = posts.slice(0, 4)
 ---
 
 <PortfolioLayout title={themeConfig.site.title} description={themeConfig.site.description}>
-  <!-- BAT ZONE 1: covers page-top through bio-top section, clipped at projects border -->
-  <!-- Rendered via bg-layer slot so it sits behind PortfolioHeader in the DOM -->
-  <Fragment slot="bg-layer">
-    <div class="bat-zone-1" aria-hidden="true">
-      <Image
-        src={batTopImg}
-        alt=""
-        width="1280"
-        height="819"
-        class="bat-zone-1-img"
-      />
-    </div>
-  </Fragment>
-
   <!-- TICKER Component -->
   <div class="pt-4 pb-2.5 md:pt-4 sm:pt-2">
     <Ticker client:load />
   </div>
 
-  <!-- BIO TOP Section (above Projects) -->
-  <!-- pt-[174px] desktop, pt-[100px] mobile: Adjusted for mobile screen height -->
-  <div class="relative pl-8 pt-[100px] md:pt-[174px]">
-    <div class="bio-top">
-      <p>
-        An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
-        where my professional background in video and audio production becomes a <span
-          class="highlight">technical advantage</span
-        >.
-      </p>
+  <!-- BIO TOP Section (above Projects) — bat zone 1 wraps this, flush with ticker's bottom border -->
+  <div class="bat-zone-1-wrapper">
+    <div class="bat-zone-1" aria-hidden="true">
+      <Image
+        src={batTopImg}
+        alt=""
+        width="1280"
+        height="540"
+        class="bat-zone-1-img"
+      />
     </div>
 
-    <div class="bio-stars-divider-top flex justify-center w-full">
-      <Image src={starsImg} alt="" width="120" height="20" />
+    <!-- pt-[174px] desktop, pt-[100px] mobile: Adjusted for mobile screen height -->
+    <div class="relative z-10 pl-8 pt-[100px] md:pt-[174px]">
+      <div class="bio-top">
+        <p>
+          An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
+          where my professional background in video and audio production becomes a <span
+            class="highlight">technical advantage</span
+          >.
+        </p>
+      </div>
+
+      <div class="bio-stars-divider-top flex justify-center w-full">
+        <Image src={starsImg} alt="" width="120" height="20" />
+      </div>
     </div>
   </div>
 
