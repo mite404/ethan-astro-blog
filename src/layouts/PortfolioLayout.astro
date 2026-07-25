@@ -65,7 +65,6 @@ const { title, description } = Astro.props
   // Tunables:
   const DESIGN_WIDTH = 1280
   const GUTTER = 24 // px of breathing room kept on each side while shrinking
-  const FLOOR = 0.5 // stop shrinking here; below this the page scrolls so text stays legible
 
   const stage = document.querySelector<HTMLElement>('.portfolio-stage')
   const poster = document.querySelector<HTMLElement>('.portfolio-layout')
@@ -73,7 +72,9 @@ const { title, description } = Astro.props
   function fit() {
     if (!stage || !poster) return
     const available = window.innerWidth - GUTTER * 2
-    const scale = Math.max(FLOOR, Math.min(1, available / DESIGN_WIDTH))
+    // Fit-to-width: always scale the whole poster to fit the viewport (never > 1x).
+    // No lower floor, so phones get "small but fully visible" instead of clipped.
+    const scale = Math.min(1, available / DESIGN_WIDTH)
     poster.style.transform = `scale(${scale})`
     // Match the stage to the poster's *visual* size so there's no phantom gap.
     stage.style.width = DESIGN_WIDTH * scale + 'px'
