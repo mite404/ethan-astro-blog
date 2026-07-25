@@ -35,25 +35,20 @@ export default function ParallaxHand() {
   useEffect(() => {
     const calculateGlobePosition = () => {
       const globeContainer = document.querySelector('[data-globe-container]')
-      if (globeContainer) {
-        const rect = globeContainer.getBoundingClientRect()
-        const scrollTop = window.scrollY || window.pageYOffset
-        const globeBottomFromPageTop = rect.bottom + scrollTop
+      const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
+      if (globeContainer && portfolioLayout) {
+        // getBoundingClientRect returns *visual* (post-transform) pixels, but the
+        // hand's `top` is applied INSIDE the scaled poster. Divide by the poster's
+        // current scale to convert the globe into the poster's local, un-scaled
+        // space — otherwise it's scaled twice and the hand drifts as you resize.
+        const posterRect = portfolioLayout.getBoundingClientRect()
+        const globeRect = globeContainer.getBoundingClientRect()
+        const scale = posterRect.width / portfolioLayout.offsetWidth || 1
 
-        // Find the .portfolio-layout container
-        const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
-        const layoutOffsetTop = portfolioLayout ? portfolioLayout.offsetTop : 0
-
-        // Calculate globe position relative to .portfolio-layout
-        const globeOffsetFromLayout = globeBottomFromPageTop - layoutOffsetTop
+        const globeOffsetFromLayout = (globeRect.bottom - posterRect.top) / scale
 
         if (process.env.NODE_ENV === 'development') {
-          console.warn('🖐️ Calculated position:', {
-            globeOffsetFromLayout,
-            globeBottomFromPageTop,
-            layoutOffsetTop,
-            viewportHeight: window.innerHeight
-          })
+          console.warn('🖐️ Calculated position:', { globeOffsetFromLayout, scale })
         }
         setGlobeOffsetTop(globeOffsetFromLayout)
 
