@@ -1,5 +1,5 @@
 ---
-status: doing
+status: done
 ---
 
 # 004 — Flow + breakpoints
@@ -58,3 +58,30 @@ ever broken by the fixed 1280px parent.
 - At <768px nothing sits side-by-side; the page is a single vertical flow.
 - Crossing 1024 and 768 changes **column count only** — no font-size jump.
 - No horizontal scrollbar at any width from 320px up.
+
+## Notes
+
+### Implementation
+
+- Deleted `<style>` block (lines 336–351) from `index.astro`; its bare `.grid` rules at 1024/640px
+  were overriding Tailwind's `lg:grid-cols-4 md:grid-cols-2 grid-cols-1` classes.
+- `bat-zone-1-content` class added to the bio-top wrapper div; `padding-top: var(--space-bio)`
+  in `portfolio.css` replaces the two-step `pt-[100px] md:pt-[174px]` Tailwind classes.
+  Mirrors the existing `bat-zone-2-content` pattern.
+- `pl-8`/`pr-8` removed from `<section class="bordered">` at PROJECTS (line 69) and BLOG (line 248).
+  `padding-inline: var(--gutter)` added to `section.bordered:not([data-ds-carousel])` in CSS.
+  Carousel section excluded explicitly — at ≤767px its slides go `position: relative`, making
+  section-level padding additive with `.ds-slide-inner`'s own inset.
+- Fixed `style="padding-top: 120px"` replaced by `class="spacer-contact-bottom"` with
+  `padding-top: var(--space-contact-bottom)`. Token `--space-contact-bottom` (60→120px ramp)
+  added to the fluid token block on `body[data-layout-type='portfolio']`.
+- `@media (max-width: 1023px)` block added: `.ds-slide-inner` goes 2-col on iPad.
+- The two `@media (max-width: 767px)` blocks (new flow rules + existing carousel stacking) merged
+  into one; redundant `grid-template-columns: 1fr` dropped from the flow section since the
+  carousel block's fuller `.ds-slide-inner` declaration covers it.
+
+### Gate
+
+- `bun run lint`: 0 errors (1 pre-existing `any` warning in index.astro, unchanged).
+- `bun run build`: clean.
+- `bun run verify`: not yet available (ticket 006 builds the script).

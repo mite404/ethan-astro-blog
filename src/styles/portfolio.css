@@ -21,8 +21,9 @@ body[data-layout-type='portfolio'] {
   --fs-card-title: clamp(1.25rem,  0.98rem + 1.12vw,  1.875rem);  /*  20 →  30 */
   --h-touch:       clamp(4rem,     1.43rem + 10.56vw, 9.875rem);  /*  64 → 158 */
   --space-bio:     clamp(3.75rem,  0.63rem + 12.80vw, 10.875rem); /*  60 → 174 */
-  --zone-min:      clamp(20rem,    13.98rem + 24.7vw, 33.75rem);  /* 320 → 540 */
-  --h-carousel:    clamp(13.75rem, 11.01rem + 11.24vw, 20rem);    /* 220 → 320 */
+  --zone-min:              clamp(20rem,    13.98rem + 24.7vw, 33.75rem);  /* 320 → 540 */
+  --h-carousel:            clamp(13.75rem, 11.01rem + 11.24vw, 20rem);    /* 220 → 320 */
+  --space-contact-bottom:  clamp(3.75rem,  2.11rem + 6.74vw,  7.5rem);    /*  60 → 120 */
 }
 
 /* ===========================
@@ -58,6 +59,10 @@ body[data-layout-type='portfolio'] .bat-zone-2-wrapper {
   position: relative;
   overflow: hidden;
   min-height: var(--zone-min);
+}
+
+body[data-layout-type='portfolio'] .bat-zone-1-content {
+  padding-top: var(--space-bio);
 }
 
 /* Inner content: bio text at local y=191 within zone (Figma 195:5468: y=1587, zone y=1396) */
@@ -428,6 +433,11 @@ body[data-layout-type='portfolio'] section.bordered {
   border: 1px solid rgba(255, 255, 255, 1);
 }
 
+/* carousel section is flush — content is inset via .ds-slide-inner instead */
+body[data-layout-type='portfolio'] section.bordered:not([data-ds-carousel]) {
+  padding-inline: var(--gutter);
+}
+
 /* ===========================
    DESIGN SYSTEMS CAROUSEL
    Featured, auto-advancing. Each slide is its own visual world:
@@ -711,8 +721,19 @@ body[data-layout-type='portfolio'] .ds-dot:focus-visible {
   outline-offset: 3px;
 }
 
-/* stack on narrow viewports */
+body[data-layout-type='portfolio'] .spacer-contact-bottom {
+  padding-top: var(--space-contact-bottom);
+}
+
+/* ── iPad ─────────────────────────────────────── */
+@media (max-width: 1023px) {
+  body[data-layout-type='portfolio'] .ds-slide-inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── iPhone: vertical flow + carousel stacking ── */
 @media (max-width: 767px) {
+  body[data-layout-type='portfolio'] .decorative-container { flex-direction: column; }
+  body[data-layout-type='portfolio'] header nav            { flex-wrap: wrap; gap: 0.5rem; }
   body[data-layout-type='portfolio'] .ds-slide {
     position: relative;
     display: none;
