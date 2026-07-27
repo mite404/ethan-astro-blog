@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 011 — Compare + verify
 
 **Branch:** `scroll-experiments` · **Depends on:** 008, 009, 010 · **Blocks:** —

@@ -9,13 +9,11 @@ const { title, description } = Astro.props
 
 <BaseLayout type="portfolio">
   <BaseHead slot="head" title={title} description={description} />
-  <div class="portfolio-stage">
-    <div class="portfolio-layout">
-      <PortfolioHeader />
-      <main class="portfolio-main">
-        <slot />
-      </main>
-    </div>
+  <div class="portfolio-layout">
+    <PortfolioHeader />
+    <main class="portfolio-main">
+      <slot />
+    </main>
   </div>
 </BaseLayout>
 
@@ -32,25 +30,17 @@ const { title, description } = Astro.props
     background-color: #1c1c1c !important;
   }
 
-  /* Stage: sized by JS to the poster's *visual* (scaled) box, then centered.
-     overflow:hidden clips the empty remainder of the poster's un-scaled
-     layout box (the transform shrinks how it looks, not the space it reserves). */
-  .portfolio-stage {
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
   .portfolio-layout {
-    /* Authored at a fixed 1280px and scaled as a whole poster via JS (see below). */
-    width: 1280px;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: var(--gutter); /* was a hardcoded 2rem — 001's placeholder, which 002 never replaced */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     padding-top: 1rem;
-    position: relative; /* Contain absolutely positioned children */
+    position: relative;
     overflow: hidden; /* Clip overflowing elements like the 1513px hand */
-    transform-origin: top left;
-    /*background-color: #282828 !important;*/
   }
 
   .portfolio-main {
@@ -59,30 +49,3 @@ const { title, description } = Astro.props
     width: 100%;
   }
 </style>
-
-<script>
-  // Scale the whole 1280px poster to fit the viewport instead of clipping it.
-  // Tunables:
-  const DESIGN_WIDTH = 1280
-  const GUTTER = 24 // px of breathing room kept on each side while shrinking
-
-  const stage = document.querySelector<HTMLElement>('.portfolio-stage')
-  const poster = document.querySelector<HTMLElement>('.portfolio-layout')
-
-  function fit() {
-    if (!stage || !poster) return
-    const available = window.innerWidth - GUTTER * 2
-    // Fit-to-width: always scale the whole poster to fit the viewport (never > 1x).
-    // No lower floor, so phones get "small but fully visible" instead of clipped.
-    const scale = Math.min(1, available / DESIGN_WIDTH)
-    poster.style.transform = `scale(${scale})`
-    // Match the stage to the poster's *visual* size so there's no phantom gap.
-    stage.style.width = DESIGN_WIDTH * scale + 'px'
-    stage.style.height = poster.offsetHeight * scale + 'px'
-  }
-
-  fit()
-  window.addEventListener('resize', fit)
-  window.addEventListener('load', fit) // fonts/images loading can change poster height
-  if (poster) new ResizeObserver(fit).observe(poster) // recalc if content height shifts
-</script>

@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 008 — Option A: pinned horizontal rail
 
 **Branch:** `scroll-experiments` · **Depends on:** 007 · **Blocks:** 011

@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # 002 — Fluid token system
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 001 · **Blocks:** 003, 004, 005
@@ -52,3 +56,12 @@ body[data-layout-type='portfolio'] {
   the first thing to tune if phone text reads too small.
 - `line-height` is authored unitless (`105%`, `0.756`) and `letter-spacing` in `em`, so both scale
   **automatically** with font size. No separate tokens are needed for line or word spacing.
+
+### Implementation notes
+
+- Token block added to `src/styles/portfolio.css`, merged into the existing
+  `body[data-layout-type='portfolio']` reset block (simplify flagged the duplicate selector).
+- Verification: lint passes (1 pre-existing `any` warning in index.astro, not ours), build green.
+- No visual change confirmed — tokens defined but not yet consumed (003 does that).
+- Acceptance: at 390px all `clamp()` min values apply; at 1280px all max values apply;
+  at ~800px intermediate values interpolate linearly.

@@ -48,8 +48,7 @@ const mostRecentPosts = posts.slice(0, 4)
       />
     </div>
 
-    <!-- pt-[174px] desktop, pt-[100px] mobile: Adjusted for mobile screen height -->
-    <div class="relative z-10 pl-8 pt-[100px] md:pt-[174px]">
+    <div class="bat-zone-1-content relative z-10 pl-8">
       <div class="bio-top">
         <p>
           An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
@@ -66,7 +65,7 @@ const mostRecentPosts = posts.slice(0, 4)
   </div>
 
   <!-- PROJECTS Section -->
-  <section class="bordered pl-8 pr-8 pb-4">
+  <section class="bordered pb-4">
     <h2 class="section-title pt-4">PROJECTS:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
@@ -245,7 +244,7 @@ const mostRecentPosts = posts.slice(0, 4)
   </div>
 
   <!-- BLOG Section -->
-  <section class="bordered pl-8">
+  <section class="bordered">
     <h2 class="section-title pt-4">BLOG:</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {
@@ -281,7 +280,7 @@ const mostRecentPosts = posts.slice(0, 4)
   </div>
 
   <!-- SPACING BELOW BUTTON -->
-  <div style="padding-top: 120px;"></div>
+  <div class="spacer-contact-bottom"></div>
 
   <!-- PARALLAX HAND -->
   <ParallaxHand client:only="react" />
@@ -332,20 +331,3 @@ const mostRecentPosts = posts.slice(0, 4)
   document.addEventListener('astro:page-load', initDsCarousel)
   initDsCarousel()
 </script>
-
-<style>
-  /* portfolio styles:  src/styles/portfolio.css */
-
-  /* Responsive grid adjustments */
-  @media (max-width: 1024px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

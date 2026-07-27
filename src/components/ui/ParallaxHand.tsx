@@ -21,14 +21,13 @@ export default function ParallaxHand() {
   // Apply spring physics for smooth easing
   const y = useSpring(yRaw, { stiffness: 100, damping: 30, mass: 1 })
 
-  // Detect mobile breakpoint (< 768px)
+  // matchMedia fires only at the 767px threshold crossing, not on every resize pixel
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    const mql = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mql.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
   }, [])
 
   // Measure globe position on mount and resize
@@ -37,18 +36,12 @@ export default function ParallaxHand() {
       const globeContainer = document.querySelector('[data-globe-container]')
       const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
       if (globeContainer && portfolioLayout) {
-        // getBoundingClientRect returns *visual* (post-transform) pixels, but the
-        // hand's `top` is applied INSIDE the scaled poster. Divide by the poster's
-        // current scale to convert the globe into the poster's local, un-scaled
-        // space — otherwise it's scaled twice and the hand drifts as you resize.
-        const posterRect = portfolioLayout.getBoundingClientRect()
+        const portfolioRect = portfolioLayout.getBoundingClientRect()
         const globeRect = globeContainer.getBoundingClientRect()
-        const scale = posterRect.width / portfolioLayout.offsetWidth || 1
-
-        const globeOffsetFromLayout = (globeRect.bottom - posterRect.top) / scale
+        const globeOffsetFromLayout = globeRect.bottom - portfolioRect.top
 
         if (process.env.NODE_ENV === 'development') {
-          console.warn('🖐️ Calculated position:', { globeOffsetFromLayout, scale })
+          console.warn('🖐️ Calculated position:', { globeOffsetFromLayout })
         }
         setGlobeOffsetTop(globeOffsetFromLayout)
 
@@ -80,13 +73,12 @@ export default function ParallaxHand() {
     }
   }, [])
 
-  // Don't render until mounted (SSR safety)
-  if (!mounted) return null
+  // Don't render until mounted (SSR safety), or on mobile where the hand is absent
+  if (!mounted || isMobile) return null
 
-  // Calculate responsive dimensions: 75% on mobile (< 768px), 100% on desktop
-  const scale = isMobile ? 0.75 : 1
-  const handWidth = 2875 * scale
-  const leftOffset = isMobile ? 100 : 150 // Slightly closer on mobile
+  // 2875px hand at 1280px design → 224.6vw fluid, capped at 2875px
+  // Left offset tracks composition: 150px at 1280px → clamp(90px, 11.72vw, 150px)
+  const handWidth = 'clamp(1724px, 224.6vw, 2875px)'
 
   return (
     <div
@@ -95,8 +87,8 @@ export default function ParallaxHand() {
         position: 'absolute',
         top: 0,
         left: '50%',
-        transform: `translateX(calc(-50% - ${leftOffset}px))`,
-        width: `${handWidth}px`,
+        transform: 'translateX(calc(-50% - clamp(90px, 11.72vw, 150px)))',
+        width: handWidth,
         pointerEvents: 'none',
         zIndex: 20
       }}
@@ -106,10 +98,10 @@ export default function ParallaxHand() {
           position: 'absolute',
           top: globeOffsetTop,
           left: '50%',
-          y, // Motion's animated Y transform (660px → 288px)
-          x: '-50%', // Center horizontally
+          y,
+          x: '-50%',
           pointerEvents: 'none',
-          willChange: 'transform' // GPU acceleration
+          willChange: 'transform'
         }}
       >
         <img
@@ -117,9 +109,9 @@ export default function ParallaxHand() {
           alt=""
           style={{
             display: 'block',
-            width: `${handWidth}px`,
+            width: handWidth,
             height: 'auto',
-            flexShrink: 0 // Prevent flex container from shrinking the image
+            flexShrink: 0
           }}
         />
       </motion.div>
