@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "new": "tsx scripts/new-post.ts",
-    "update-theme": "tsx scripts/update-theme.ts"
+    "update-theme": "tsx scripts/update-theme.ts",
+    "verify": "node scripts/verify-006.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",

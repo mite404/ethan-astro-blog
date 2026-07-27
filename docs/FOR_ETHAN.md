@@ -1325,6 +1325,109 @@ bun new "_Draft"     # Create draft post (with _ prefix)
 
 ---
 
+## Behind the Scenes: Fluid CSS vs. `transform: scale()` (Tickets 001–006)
+
+### Why `transform: scale()` Lost
+
+The original portfolio used `transform: scale()` to shrink the 1280px design down
+to fit narrow viewports. It felt like a quick win — one line of CSS, everything
+stays in proportion. But it has a fundamental flaw.
+
+**The film analogy:** `scale()` is like photographing a printed A1 poster to fit
+a phone screen. The poster still exists at A1 size; you're just showing a
+miniaturized photograph of it. The text becomes unreadably small. You can't zoom
+into individual elements. The poster can't reflow its columns.
+
+In CSS terms, `transform: scale()` rasterizes a fixed canvas. The browser renders
+at 1280px and then mathematically shrinks the bitmap:
+
+- **Text can't hold a legibility floor.** Body copy that's 20px at desktop becomes
+  6px at 390px — technically "rendered at 20px" but displayed at ~5px. WCAG
+  2.1 §1.4.4 requires a 16px minimum at the user's zoom level, but scale()
+  bypasses the cascade entirely.
+- **Touch targets can't stay at ≥44px.** A 50px button scaled to 30% of its
+  original size is displayed at 15px — unwappable by human thumbs.
+- **Media queries don't fire.** Since the viewport is still "1280px" to the
+  browser, breakpoints at 768px or 390px never trigger. You lose all responsive
+  layout logic.
+
+### Why Fluid CSS Wins
+
+The fluid approach (tickets 001–005) replaced scale() with CSS custom properties
+using `clamp()`:
+
+```css
+--fs-bio: clamp(1.25rem, 0.57rem + 2.81vw, 2.8125rem); /* 20px → 45px */
+--h-touch: clamp(4rem, 1.43rem + 10.56vw, 9.875rem);   /* 64px → 158px */
+```
+
+**The film analogy:** Fluid CSS is a re-blocked scene. Instead of photographing
+the poster smaller, you re-arrange the set — tighter columns, scaled-down props,
+same actors. The scene is re-composed for the new frame, not shrunk.
+
+At every viewport width:
+- Text is rendered at its actual size (not a bitmap shrink). WCAG floors hold.
+- Touch targets are measured and clamped to ≥44px by the browser's box model.
+- Media queries fire at real breakpoints, so columns collapse at 768px and the
+  design-system carousel reflows its grid.
+
+Verified numbers from `bun run verify` at the worst-case widths:
+
+| Width | Bio font-size | Nav button height | Overflow |
+|-------|--------------|-------------------|---------|
+| 390px | 20.1px ✓ | 44.0px ✓ | none ✓ |
+| 320px | 20.0px ✓ | 44.0px ✓ | none ✓ |
+| 768px | 30.7px ✓ | 46.5px ✓ | none ✓ |
+
+---
+
+## Bloopers: Viewport vs. Fixed-Container Conflict
+
+### The Textbook Bug
+
+When media queries respond to the **viewport** but the container is pinned at a
+**fixed width**, the two systems will always disagree.
+
+Imagine you have:
+
+```css
+.portfolio-layout {
+  max-width: 1280px; /* fixed container — never shrinks below this at zoom 1× */
+}
+
+@media (max-width: 768px) {
+  /* This fires when the VIEWPORT is ≤768px... */
+  /* ...but if the user is on a 1440px screen, the container is 1280px wide. */
+  /* If the user is on a 390px phone, the container is 390px wide — this fires. */
+}
+```
+
+At design time on a 1440px monitor, the container is 1280px. A rule targeting
+`@media (max-width: 1024px)` will never fire during development. But on a real
+768px tablet, the same rule fires and may produce unexpected results — because
+the developer never saw that state on their wide monitor.
+
+The fix: fluid tokens (`clamp()`) respond to the viewport continuously, so there's
+no breakpoint mismatch between the container and the media query. Discrete
+breakpoints are reserved for structural shifts (column count changes) not type
+scaling.
+
+### The Unit-less `font-size` Typo (portfolio.css)
+
+During the refactor phase, a unit-less `font-size: 8` was discovered in the
+pre-refactor `portfolio.css`. CSS requires a unit (px, rem, em) on non-zero length
+values — a bare `8` is invalid and silently ignored by all browsers. The section
+was intended to set a tiny metadata size but had no effect. It was removed during
+the fluid token pass (ticket 003).
+
+**Why this matters:** silent CSS failures are the hardest to debug. The page
+"looks fine" because the browser ignored the rule and fell back to the inherited
+size. Only a careful diff of what the cascade was supposed to produce vs. what
+it actually produced reveals the gap. Always use `px`, `rem`, or `em` — never
+bare numbers for length properties.
+
+---
+
 ## Resources
 
 - **Astro Docs**: <https://docs.astro.build>
