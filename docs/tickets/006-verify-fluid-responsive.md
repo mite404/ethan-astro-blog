@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 006 — Verify fluid responsive
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 004, 005 · **Blocks:** —

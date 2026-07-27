@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 004 — Flow + breakpoints
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 003 · **Blocks:** 006

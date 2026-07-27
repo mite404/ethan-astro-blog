@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 009 — Option B: native scroll-snap rail ⭐ recommended
 
 **Branch:** `scroll-experiments` · **Depends on:** 007 · **Blocks:** 011

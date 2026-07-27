@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 002 — Fluid token system
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 001 · **Blocks:** 003, 004, 005

@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 005 — Component fluidity
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 003 · **Blocks:** 006

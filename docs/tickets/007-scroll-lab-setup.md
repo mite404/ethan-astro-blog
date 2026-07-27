@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 007 — Scroll lab setup
 
 **Branch:** `scroll-experiments` · **Depends on:** 000 · **Blocks:** 008, 009, 010

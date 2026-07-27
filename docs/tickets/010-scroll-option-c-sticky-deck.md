@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 010 — Option C: sticky stacked deck (stretch)
 
 **Branch:** `scroll-experiments` · **Depends on:** 007 · **Blocks:** 011

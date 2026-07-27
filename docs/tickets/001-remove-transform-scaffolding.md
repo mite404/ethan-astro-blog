@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 001 — Remove transform scaffolding
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 000 · **Blocks:** 002

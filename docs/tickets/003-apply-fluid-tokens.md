@@ -1,3 +1,7 @@
+---
+status: todo
+---
+
 # 003 — Apply fluid tokens, delete fixed values
 
 **Branch:** `fluid-responsive-portfolio` · **Depends on:** 002 · **Blocks:** 004, 005, 006
