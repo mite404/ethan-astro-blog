@@ -37,18 +37,12 @@ export default function ParallaxHand() {
       const globeContainer = document.querySelector('[data-globe-container]')
       const portfolioLayout = document.querySelector('.portfolio-layout') as HTMLElement | null
       if (globeContainer && portfolioLayout) {
-        // getBoundingClientRect returns *visual* (post-transform) pixels, but the
-        // hand's `top` is applied INSIDE the scaled poster. Divide by the poster's
-        // current scale to convert the globe into the poster's local, un-scaled
-        // space — otherwise it's scaled twice and the hand drifts as you resize.
-        const posterRect = portfolioLayout.getBoundingClientRect()
+        const portfolioRect = portfolioLayout.getBoundingClientRect()
         const globeRect = globeContainer.getBoundingClientRect()
-        const scale = posterRect.width / portfolioLayout.offsetWidth || 1
-
-        const globeOffsetFromLayout = (globeRect.bottom - posterRect.top) / scale
+        const globeOffsetFromLayout = globeRect.bottom - portfolioRect.top
 
         if (process.env.NODE_ENV === 'development') {
-          console.warn('🖐️ Calculated position:', { globeOffsetFromLayout, scale })
+          console.warn('🖐️ Calculated position:', { globeOffsetFromLayout })
         }
         setGlobeOffsetTop(globeOffsetFromLayout)
 
