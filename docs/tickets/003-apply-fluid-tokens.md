@@ -1,5 +1,5 @@
 ---
-status: doing
+status: done
 ---
 
 # 003 — Apply fluid tokens, delete fixed values
@@ -58,3 +58,21 @@ something regresses later, look here first.
   disappears with the block. **Do not port it forward.**
 - The same block also set `.btn-nav-*` to a 44px WCAG touch target. That intent must be preserved
   — see ticket 005.
+
+### Implementation notes
+
+- All selectors in the ticket table updated to use tokens: `.portfolio-name` → `--fs-name`,
+  `.section-title` → `--fs-section`, `.bio-top`/`.bio-btm` → `--fs-bio`, `.btn-touch` →
+  `100%` / `--h-touch` / `--fs-touch` / `999px`, `.bat-zone-1-wrapper`/`.bat-zone-2-wrapper` →
+  `--zone-min`, `.bat-zone-2-content` → `--space-bio`, `.bio-stars-divider-top`/`.bio-stars-divider`
+  → `--space-bio`, `.project-title`/`.blog-title` → `--fs-card-title`.
+- `.ds-carousel`: changed from `height: 320px` to `height: auto; min-height: var(--h-carousel)`.
+  `--h-carousel: clamp(13.75rem, 11.01rem + 11.24vw, 20rem)` added to the token block (220px→320px).
+- Four media queries deleted: 950px, 640px, 570px, 480px.
+- ds-carousel stacking breakpoint retuned 760px → 767px. Redundant `height: auto` in that block
+  removed (base rule already sets it).
+- `--space-bio` intentionally collapses two slightly different original values (10.875rem /
+  11.9375rem) per ticket table — both bio-zone spacings share the same fluid ramp.
+- `--zone-min` intentionally collapses zone-1 (33.75rem) and zone-2 (33.9375rem) — 3px delta at
+  max viewport; within visual tolerance, per ticket table.
+- Gate: lint 0 errors (1 pre-existing `any` warning in index.astro), build clean.
