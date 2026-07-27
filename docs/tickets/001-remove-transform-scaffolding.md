@@ -1,5 +1,5 @@
 ---
-status: todo
+status: doing
 ---
 
 # 001 — Remove transform scaffolding
