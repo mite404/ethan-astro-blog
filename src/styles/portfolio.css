@@ -14,7 +14,16 @@ body[data-layout-type='portfolio'] {
 
   /* ── fluid ramp: 390px → 1280px viewport ───────────────── */
   --gutter:        clamp(1rem,     0.55rem + 1.80vw,  2rem);      /*  16 →  32 */
-  --fs-name:       clamp(6rem,     24.7vw,            19.75rem);  /*  96 → 316 */
+  /* Sized against the CONTENT box, not the viewport: .portfolio-layout applies
+     padding-inline: var(--gutter), so the name has (100vw - 2×gutter) to fill, not 100vw.
+     Sizing against 100vw overshoots by exactly the two gutters and wraps onto two lines.
+
+     The coefficient is MEASURED, not derived from the Figma numbers. "Ethan Anderson" in
+     Fit at letter-spacing -0.3px occupies 4.0565 × font-size; the Figma comment implies
+     4.0506 (1280/316), which is 0.15% too generous — enough to overflow by ~2px and wrap.
+     Max fit is 1/4.0565 = 0.2465; 0.244 leaves ~1% for font-loading and rounding.
+     Max = 0.244 × (1280 - 64) = 297px. Re-measure if the string or tracking changes. */
+  --fs-name:       clamp(6rem, calc(0.244 * (100vw - 2 * var(--gutter))), 18.5rem); /* 96 → 296 */
   --fs-section:    clamp(2.5rem,   0.86rem + 6.74vw,  6.25rem);   /*  40 → 100 */
   --fs-bio:        clamp(1.25rem,  0.57rem + 2.81vw,  2.8125rem); /*  20 →  45 */
   --fs-touch:      clamp(2.125rem, 0.73rem + 5.73vw,  5.3125rem); /*  34 →  85 */
