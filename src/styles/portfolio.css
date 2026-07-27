@@ -24,6 +24,10 @@ body[data-layout-type='portfolio'] {
   --zone-min:              clamp(20rem,    13.98rem + 24.7vw, 33.75rem);  /* 320 → 540 */
   --h-carousel:            clamp(13.75rem, 11.01rem + 11.24vw, 20rem);    /* 220 → 320 */
   --space-contact-bottom:  clamp(3.75rem,  2.11rem + 6.74vw,  7.5rem);    /*  60 → 120 */
+  --h-ticker:              clamp(1.25rem,  calc(17.81px + 0.562vw),   1.5625rem); /* 20 → 25 */
+  --fs-ticker:             clamp(0.75rem,  calc(11.124px + 0.2247vw), 0.875rem);  /* 12 → 14 */
+  --border-ticker-h:       clamp(3.5px,    calc(2.567px + 0.2393vw),  5.63px);   /* 3.5 → 5.63 */
+  --border-ticker-v:       clamp(1.2px,    calc(0.858px + 0.0876vw),  1.98px);   /* 1.2 → 1.98 */
 }
 
 /* ===========================
@@ -114,13 +118,13 @@ body[data-layout-type='portfolio'] .portfolio-name {
 body[data-layout-type='portfolio'] .btn-nav-gh,
 body[data-layout-type='portfolio'] .btn-nav-blog,
 body[data-layout-type='portfolio'] .btn-nav-resume {
-  /* Button styling */
+  /* Button styling — fluid 390→1280px; 44px WCAG touch-target floor */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 6.25rem; /* 100px */
-  height: 3.125rem; /* 50px */
-  border-radius: 2.5rem; /* 40px */
+  width: clamp(5.5rem, calc(82.74px + 1.348vw), 6.25rem);   /* 88px → 100px */
+  height: clamp(2.75rem, calc(41.37px + 0.6742vw), 3.125rem); /* 44px → 50px */
+  border-radius: clamp(1.375rem, calc(14.11px + 2.022vw), 2.5rem); /* 22px → 40px */
 
   /* Text styling — Figma 195:6363: Barlow Condensed Regular 20px */
   font-family: 'Barlow Condensed', sans-serif;
@@ -732,7 +736,9 @@ body[data-layout-type='portfolio'] .spacer-contact-bottom {
 
 /* ── iPhone: vertical flow + carousel stacking ── */
 @media (max-width: 767px) {
-  body[data-layout-type='portfolio'] .decorative-container { flex-direction: column; }
+  body[data-layout-type='portfolio'] .decorative-container { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; }
+  body[data-layout-type='portfolio'] .decorative-wave,
+  body[data-layout-type='portfolio'] .decorative-liquid    { align-self: center; }
   body[data-layout-type='portfolio'] header nav            { flex-wrap: wrap; gap: 0.5rem; }
   body[data-layout-type='portfolio'] .ds-slide {
     position: relative;
