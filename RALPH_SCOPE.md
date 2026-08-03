@@ -88,12 +88,12 @@ Then `status: done`, commit. Never push.
 
 Read it in full including `## Notes`, run `git diff`, run the gate.
 
-| Tree | Gate | Likely | Action |
-| --- | --- | --- | --- |
-| clean | pass | finished, unmarked | verify against acceptance, mark done |
-| clean | fail | broke on the way out | fix the gate, then mark done |
-| dirty | pass | mid-flight, healthy | read the diff, finish, mark done |
-| dirty | fail | mid-flight, broken | read the notes, fix or redo |
+| Tree  | Gate | Likely               | Action                               |
+| ----- | ---- | -------------------- | ------------------------------------ |
+| clean | pass | finished, unmarked   | verify against acceptance, mark done |
+| clean | fail | broke on the way out | fix the gate, then mark done         |
+| dirty | pass | mid-flight, healthy  | read the diff, finish, mark done     |
+| dirty | fail | mid-flight, broken   | read the notes, fix or redo          |
 
 Cannot tell what was intended? Append to `## Notes`, set `status: blocked`, commit, exit.
 

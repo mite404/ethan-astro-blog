@@ -11,7 +11,7 @@
 The v2 design is an evolution, not a revolution. The color palette, fonts, and
 most components are preserved. The key changes are:
 
-1. **Page structure reordered** — Bio paragraph 1 moves *above* the Projects
+1. **Page structure reordered** — Bio paragraph 1 moves _above_ the Projects
    section (currently both bio paragraphs live below Projects).
 2. **Stars/arrows decorators appear twice** — once above Projects, once above Blog.
 3. **Header buttons switch from Guisol → Aptos Narrow** font.
@@ -27,14 +27,14 @@ No new dependencies needed. All changes are HTML/CSS/Astro/React.
 
 ## Design Tokens (Unchanged)
 
-| Token            | Value       | Usage                          |
-|------------------|-------------|--------------------------------|
-| Background       | `#1c1c1c`   | Body, page background          |
-| Text primary     | `#fefefe`   | Body copy, headings            |
-| Accent green     | `#7fee40`   | BLOG button, GET IN TOUCH btn  |
-| Accent purple    | `#e071e3`   | RESUMÉ button, highlight text  |
-| GitHub button    | `#d9d9d9`   | GITHUB nav button background   |
-| Section border   | `#ffffff`   | Projects + Blog box borders    |
+| Token          | Value     | Usage                         |
+| -------------- | --------- | ----------------------------- |
+| Background     | `#1c1c1c` | Body, page background         |
+| Text primary   | `#fefefe` | Body copy, headings           |
+| Accent green   | `#7fee40` | BLOG button, GET IN TOUCH btn |
+| Accent purple  | `#e071e3` | RESUMÉ button, highlight text |
+| GitHub button  | `#d9d9d9` | GITHUB nav button background  |
+| Section border | `#ffffff` | Projects + Blog box borders   |
 
 ---
 
@@ -372,11 +372,11 @@ Run `bun dev` and verify:
 
 ## Files Changed Summary
 
-| File | Type of Change |
-|------|---------------|
-| `src/pages/index.astro` | Major structural reorder + new elements |
-| `src/styles/portfolio.css` | Font/size updates, new `.blog-subheading` rule |
-| `src/components/layout/PortfolioHeader.astro` | RESUMÉ typo fix |
+| File                                          | Type of Change                                 |
+| --------------------------------------------- | ---------------------------------------------- |
+| `src/pages/index.astro`                       | Major structural reorder + new elements        |
+| `src/styles/portfolio.css`                    | Font/size updates, new `.blog-subheading` rule |
+| `src/components/layout/PortfolioHeader.astro` | RESUMÉ typo fix                                |
 
 **No new components** need to be created for this redesign.
 **No new assets** need to be exported from Figma (all SVGs/images already exist).

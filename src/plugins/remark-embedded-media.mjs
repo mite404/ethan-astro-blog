@@ -249,7 +249,7 @@ const embedHandlers = {
     }
 
     let height = '175'
-    
+
     // '?i=' means a single track in Apple Music land...
     if (url.includes('?i=')) {
       height = '175'

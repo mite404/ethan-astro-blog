@@ -316,12 +316,9 @@ bun dev
 Then in code:
 
 ```astro
-# 3a. Remove duplicate import from src/pages/index.astro (line 2)
-# DELETE: import '@/styles/portfolio.css'
-
-# 3b. Fix bat image path in src/pages/index.astro (line 23)
-# FROM: src="/assets/portfolio/BAT_TOP_CROPPED.png"
-# TO:   src="/assets/BAT_TOP_CROPPED.png"
+# 3a. Remove duplicate import from src/pages/index.astro (line 2) # DELETE: import
+'@/styles/portfolio.css' # 3b. Fix bat image path in src/pages/index.astro (line 23) # FROM:
+src="/assets/portfolio/BAT_TOP_CROPPED.png" # TO: src="/assets/BAT_TOP_CROPPED.png"
 ```
 
 After restart, hard-refresh browser (Cmd+Shift+R / Ctrl+Shift+R) to load fresh CSS.
@@ -576,7 +573,7 @@ Portfolio-specific styles now live in dedicated file, preventing blog style conf
 
 Bio sections now have consistent spacing:
 
-```css
+````css
 /* Both top and bottom bio text blocks */
 .bio-top, .bio-btm {
   margin-bottom: 30px; /* Unified spacing */
@@ -614,7 +611,7 @@ Bio sections now have consistent spacing:
 
 ```typescript
 export function getExcerpt(body: string, length = 45): string
-```
+````
 
 **Usage in index.astro:**
 

@@ -33,11 +33,7 @@ const HAND = { selector: 'img[src*="HAND"]', threshold: 768 }
 // Sandbox environment noise — not portfolio code errors.
 // 403s: sandbox network policy blocks external CDN/media requests.
 // frame-src/bilibili: blog posts embed iframes that can't load in a sandbox.
-const NOISE = [
-  /the server responded with a status of 403/i,
-  /frame-src/i,
-  /player\.bilibili\.com/i,
-]
+const NOISE = [/the server responded with a status of 403/i, /frame-src/i, /player\.bilibili\.com/i]
 
 let failures = 0
 let devProc = null
@@ -73,7 +69,7 @@ async function waitReady(url, timeout = 60_000) {
   const deadline = Date.now() + timeout
   while (Date.now() < deadline) {
     if (await probe(url)) return
-    await new Promise(r => setTimeout(r, 700))
+    await new Promise((r) => setTimeout(r, 700))
   }
   throw new Error(`Dev server not ready at ${url} after ${timeout}ms`)
 }
@@ -87,11 +83,11 @@ async function maybeStartServer() {
   const proc = spawn('bun', ['run', 'dev'], {
     cwd: ROOT,
     stdio: 'pipe',
-    detached: false,
+    detached: false
   })
-  proc.stdout.on('data', d => process.stdout.write(d))
-  proc.stderr.on('data', d => process.stderr.write(d))
-  proc.on('error', err => console.error('Dev server spawn error:', err.message))
+  proc.stdout.on('data', (d) => process.stdout.write(d))
+  proc.stderr.on('data', (d) => process.stderr.write(d))
+  proc.on('error', (err) => console.error('Dev server spawn error:', err.message))
   return proc
 }
 
@@ -117,14 +113,14 @@ async function run() {
     const page = await context.newPage()
 
     const collectedErrors = []
-    page.on('console', msg => {
+    page.on('console', (msg) => {
       if (msg.type() === 'error') {
         const text = msg.text()
-        if (!NOISE.some(re => re.test(text))) collectedErrors.push(`console.error: ${text}`)
+        if (!NOISE.some((re) => re.test(text))) collectedErrors.push(`console.error: ${text}`)
       }
     })
-    page.on('pageerror', err => {
-      if (!NOISE.some(re => re.test(err.message)))
+    page.on('pageerror', (err) => {
+      if (!NOISE.some((re) => re.test(err.message)))
         collectedErrors.push(`pageerror: ${err.message}`)
     })
 
@@ -149,7 +145,7 @@ async function run() {
             scrollW: document.documentElement.scrollWidth,
             btnH: nav ? nav.getBoundingClientRect().height : null,
             handFound: hand !== null,
-            bioFs: bio ? parseFloat(getComputedStyle(bio).fontSize) : null,
+            bioFs: bio ? parseFloat(getComputedStyle(bio).fontSize) : null
           }
         },
         { navSel: NAV_SELECTOR, handSel: HAND.selector }
@@ -157,7 +153,9 @@ async function run() {
 
       // Check 1: no horizontal overflow
       if (metrics.scrollW > width) {
-        fail(`[${width}] horizontal overflow — scrollWidth ${metrics.scrollW}px > viewport ${width}px`)
+        fail(
+          `[${width}] horizontal overflow — scrollWidth ${metrics.scrollW}px > viewport ${width}px`
+        )
       } else {
         pass(`[${width}] no horizontal overflow (scrollWidth ${metrics.scrollW}px)`)
       }
@@ -189,10 +187,7 @@ async function run() {
       const blogBtn = page.locator('.btn-nav-blog')
       if (await blogBtn.isVisible()) {
         try {
-          await Promise.all([
-            page.waitForURL(/\/blog/, { timeout: 12_000 }),
-            blogBtn.click(),
-          ])
+          await Promise.all([page.waitForURL(/\/blog/, { timeout: 12_000 }), blogBtn.click()])
           await page.waitForLoadState('networkidle')
           await page.screenshot({ path: `${SHOTS}/w${width}-blog.png` })
           console.warn(`  📸 w${width}-blog.png`)
@@ -213,9 +208,7 @@ async function run() {
 
     // Accumulated browser errors
     if (collectedErrors.length) {
-      fail(
-        `${collectedErrors.length} browser error(s):\n    ${collectedErrors.join('\n    ')}`
-      )
+      fail(`${collectedErrors.length} browser error(s):\n    ${collectedErrors.join('\n    ')}`)
     } else {
       pass('No browser console errors')
     }
@@ -233,7 +226,7 @@ async function run() {
   console.warn('✓ All checks passed. Screenshots in shots/006/')
 }
 
-run().catch(err => {
+run().catch((err) => {
   console.error(err)
   stopServer(devProc)
   process.exit(1)

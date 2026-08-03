@@ -28,14 +28,14 @@ This ticket is a **net deletion**.
 - [ ] Rewrite `.portfolio-layout` as a normal fluid container:
 
       ```css
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      padding-inline: var(--gutter); /* token lands in 002 */
-      ```
+          max-width: 1280px;
+          width: 100%;
+          margin: 0 auto;
+          padding-inline: var(--gutter); /* token lands in 002 */
+          ```
 
-      Keep `min-height`, `display: flex`, `flex-direction`, `position: relative`, and
-      `overflow: hidden` (still needed to clip the hand).
+          Keep `min-height`, `display: flex`, `flex-direction`, `position: relative`, and
+          `overflow: hidden` (still needed to clip the hand).
 
 - [ ] In `ParallaxHand.tsx`, revert the scale-compensation block that divides by
       `posterRect.width / portfolioLayout.offsetWidth`. With no transform this always computes 1.
@@ -56,11 +56,12 @@ within this ticket only.
 ### Implementation (2026-07-27)
 
 **What was done:**
+
 - Deleted `.portfolio-stage` wrapper div and all JS scaling (`fit()`, `DESIGN_WIDTH`, `GUTTER`,
   resize/load listeners, ResizeObserver) from `PortfolioLayout.astro`.
 - Removed `.portfolio-stage` CSS block and `transform-origin: top left` from `.portfolio-layout`.
 - Rewrote `.portfolio-layout` as a fluid container: `max-width: 1280px; width: 100%; margin: 0 auto;
-  padding-inline: 2rem` (temp hardcode; replaced by `--gutter` in 002).
+padding-inline: 2rem` (temp hardcode; replaced by `--gutter` in 002).
 - Kept `min-height: 100vh`, `display: flex`, `flex-direction: column`, `position: relative`,
   `overflow: hidden`.
 - In `ParallaxHand.tsx`: removed scale-compensation division

@@ -34,7 +34,9 @@ const { title, description } = Astro.props
     max-width: 1280px;
     width: 100%;
     margin: 0 auto;
-    padding-inline: var(--gutter); /* was a hardcoded 2rem — 001's placeholder, which 002 never replaced */
+    padding-inline: var(
+      --gutter
+    ); /* was a hardcoded 2rem — 001's placeholder, which 002 never replaced */
     min-height: 100vh;
     display: flex;
     flex-direction: column;

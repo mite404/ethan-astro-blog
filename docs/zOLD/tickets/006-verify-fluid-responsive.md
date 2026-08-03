@@ -52,21 +52,22 @@ chrome-devtools MCP does not exist in sandbox (see RALPH_SCOPE.md). Built
 
 **Playwright verify results — all 11 widths passed on first run:**
 
-| Width | scrollWidth | Nav btn h | Hand | Bio fs |
-|-------|-------------|-----------|------|--------|
-| 1440  | 1425px ✓   | 50.0px ✓  | ✓    | 45.0px |
-| 1280  | 1265px ✓   | 50.0px ✓  | ✓    | 45.0px |
-| 1100  | 1085px ✓   | 48.8px ✓  | ✓    | 40.0px |
-| 1024  | 1009px ✓   | 48.3px ✓  | ✓    | 37.9px |
-| 900   | 885px ✓    | 47.4px ✓  | ✓    | 34.4px |
-| 834   | 819px ✓    | 47.0px ✓  | ✓    | 32.6px |
-| 768   | 753px ✓    | 46.5px ✓  | ✓    | 30.7px |
-| 600   | 585px ✓    | 45.4px ✓  | absent ✓ | 26.0px |
-| 430   | 415px ✓    | 44.3px ✓  | absent ✓ | 21.2px |
-| 390   | 375px ✓    | 44.0px ✓  | absent ✓ | 20.1px |
-| 320   | 305px ✓    | 44.0px ✓  | absent ✓ | 20.0px |
+| Width | scrollWidth | Nav btn h | Hand     | Bio fs |
+| ----- | ----------- | --------- | -------- | ------ |
+| 1440  | 1425px ✓    | 50.0px ✓  | ✓        | 45.0px |
+| 1280  | 1265px ✓    | 50.0px ✓  | ✓        | 45.0px |
+| 1100  | 1085px ✓    | 48.8px ✓  | ✓        | 40.0px |
+| 1024  | 1009px ✓    | 48.3px ✓  | ✓        | 37.9px |
+| 900   | 885px ✓     | 47.4px ✓  | ✓        | 34.4px |
+| 834   | 819px ✓     | 47.0px ✓  | ✓        | 32.6px |
+| 768   | 753px ✓     | 46.5px ✓  | ✓        | 30.7px |
+| 600   | 585px ✓     | 45.4px ✓  | absent ✓ | 26.0px |
+| 430   | 415px ✓     | 44.3px ✓  | absent ✓ | 21.2px |
+| 390   | 375px ✓     | 44.0px ✓  | absent ✓ | 20.1px |
+| 320   | 305px ✓     | 44.0px ✓  | absent ✓ | 20.0px |
 
 **Expected vs observed:**
+
 - 390px (iPhone 12 Pro) — original failure width. Expected: layout issues from the
   pre-001 `transform: scale()` approach. Observed: clean reflow, bio at 20.1px,
   buttons exactly at 44px floor. Tickets 001–005 fixed the root cause.

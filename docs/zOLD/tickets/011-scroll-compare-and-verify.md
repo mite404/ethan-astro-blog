@@ -21,11 +21,11 @@ status: todo
 
 Write `docs/tickets/011-results.md` scoring each variant:
 
-| | Feel | A11y cost | Mobile/touch | JS weight | Ship-ready? |
-|---|---|---|---|---|---|
-| A — pinned rail | | | | | |
-| B — snap rail | | | | | |
-| C — sticky deck | | | | | |
+|                 | Feel | A11y cost | Mobile/touch | JS weight | Ship-ready? |
+| --------------- | ---- | --------- | ------------ | --------- | ----------- |
+| A — pinned rail |      |           |              |           |             |
+| B — snap rail   |      |           |              |           |             |
+| C — sticky deck |      |           |              |           |             |
 
 Include a one-line recommendation and the screenshots.
 

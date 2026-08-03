@@ -20,12 +20,13 @@ section pins to the viewport while the cards slide sideways, then releases.
   ```ts
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
-    offset: ['start start', 'end end'],
+    offset: ['start start', 'end end']
   })
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-75%'])
   ```
 
   applied to a flex row of the 4 cards.
+
 - Cards `flex: 0 0 auto`, width `clamp(280px, 60vw, 520px)`.
 
 ## Tasks
@@ -45,4 +46,4 @@ section pins to the viewport while the cards slide sideways, then releases.
 - **Hijacks native scroll.** A real accessibility and user-agency cost. Record it in ticket 011.
 - Tripling page height changes `document.documentElement.scrollHeight`, which **`ParallaxHand`
   reads to compute `scrollRange.end`** (`src/components/ui/ParallaxHand.tsx`). The hand's timing
-  *will* shift. Verify the hand still meets the globe, and record the interaction in 011.
+  _will_ shift. Verify the hand still meets the globe, and record the interaction in 011.
