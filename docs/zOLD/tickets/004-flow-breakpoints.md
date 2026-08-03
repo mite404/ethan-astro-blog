@@ -41,14 +41,23 @@ ever broken by the fixed 1280px parent.
 ```css
 /* ── iPad ─────────────────────────────────────── */
 @media (max-width: 1023px) {
-  body[data-layout-type='portfolio'] .ds-slide-inner { grid-template-columns: 1fr 1fr; }
+  body[data-layout-type='portfolio'] .ds-slide-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ── iPhone: everything becomes a vertical flow ── */
 @media (max-width: 767px) {
-  body[data-layout-type='portfolio'] .ds-slide-inner       { grid-template-columns: 1fr; }
-  body[data-layout-type='portfolio'] .decorative-container { flex-direction: column; }
-  body[data-layout-type='portfolio'] header nav            { flex-wrap: wrap; gap: 0.5rem; }
+  body[data-layout-type='portfolio'] .ds-slide-inner {
+    grid-template-columns: 1fr;
+  }
+  body[data-layout-type='portfolio'] .decorative-container {
+    flex-direction: column;
+  }
+  body[data-layout-type='portfolio'] header nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
 ```
 

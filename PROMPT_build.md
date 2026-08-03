@@ -9,12 +9,13 @@ are all `done`. Set it to `doing`, commit that. Work on the branch its `Branch:`
 names. Never `but` — plain git only.
 
 Work test-first where a test is possible. Commit only after ALL FOUR, in order:
-  1. `bun install && bun run lint && bun run build` green
-  2. Feature verified — for layout tickets, `bun run verify` (which you build in 006)
-     passing at the widths the ticket names, screenshots captured, and `## Notes` saying
-     what you expected vs what the screenshots show
-  3. `/simplify` run in a sub-agent
-  4. gate green again after that refactor
+
+1. `bun install && bun run lint && bun run build` green
+2. Feature verified — for layout tickets, `bun run verify` (which you build in 006)
+   passing at the widths the ticket names, screenshots captured, and `## Notes` saying
+   what you expected vs what the screenshots show
+3. `/simplify` run in a sub-agent
+4. gate green again after that refactor
 
 Then set `status: done` and commit.
 

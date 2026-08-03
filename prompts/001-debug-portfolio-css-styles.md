@@ -6,6 +6,7 @@ Debug why Tailwind CSS utility classes and custom styles are not applying correc
 This is an Astro 5 project originally built as a blog using the Chiri theme. The user is now building a portfolio landing page at the index route while keeping all blog functionality under `/blog`. The portfolio components should have their own distinct styling (Tailwind v4 utilities + custom CSS) separate from the blog's styling.
 
 Current architecture:
+
 - Portfolio landing: `src/pages/index.astro` using `PortfolioLayout.astro`
 - Blog routes: `src/pages/blog/` using existing blog layouts (`BaseLayout`, `IndexLayout`, `PostLayout`)
 - PortfolioLayout attempts to override blog styles using `data-layout-type='portfolio'` attribute
@@ -20,6 +21,7 @@ Review the project's CLAUDE.md for architecture details and conventions.
 3. **Blog styles bleeding into portfolio**: Global blog styles may be overriding portfolio-specific styles
 
 Design specs (from reference):
+
 - Buttons: 61px wide × 30px tall, 40px border radius
 - GitHub button: #d9d9d9 background
 - Blog button: #7fee40 background (neon green)
@@ -33,7 +35,7 @@ Before making changes, thoroughly investigate these files:
 1. **Configuration files**:
    @tailwind.config.js - Check if portfolio component paths are in the `content` array for Tailwind scanning
    @astro.config.ts - Verify Tailwind integration setup
-   
+
 2. **Portfolio components**:
    @src/components/layout/PortfolioHeader.astro - Button implementation with mixed Tailwind + custom CSS
    @src/layouts/PortfolioLayout.astro - Layout attempting to override blog styles
@@ -49,6 +51,7 @@ Before making changes, thoroughly investigate these files:
    @src/layouts/PostLayout.astro
 
 For each file, analyze:
+
 - How styles are scoped (scoped vs global)
 - CSS specificity conflicts
 - Whether Tailwind is configured to scan these files
@@ -85,7 +88,7 @@ Systematically check:
    - [ ] Run `pnpm build` and inspect the compiled CSS in `dist/`
    - [ ] Are Tailwind utilities being purged from the final CSS?
    - [ ] Are the portfolio component files being processed at all?
-</investigation_checklist>
+         </investigation_checklist>
 
 <debugging_steps>
 Execute these steps systematically:
@@ -114,7 +117,7 @@ Execute these steps systematically:
    !pnpm build
    - Check `dist/_astro/*.css` for portfolio component styles
    - Verify Tailwind utilities are present in the compiled CSS
-</debugging_steps>
+     </debugging_steps>
 
 <solution_requirements>
 Your solution should:
@@ -123,7 +126,7 @@ Your solution should:
 2. **Fix Ticker text clamping**: Make ticker display single-line scrolling text
 3. **Properly isolate portfolio styles**: Prevent blog styles from bleeding into portfolio components
 4. **Maintain blog functionality**: Don't break existing blog styling at `/blog` routes
-5. **Follow best practices**: 
+5. **Follow best practices**:
    - Use proper CSS cascade and specificity
    - Avoid excessive `!important` declarations
    - Keep styles maintainable and organized
@@ -155,6 +158,7 @@ Before declaring complete, verify your fixes by:
 </verification>
 
 <success_criteria>
+
 - [ ] Button Tailwind utilities apply correctly (w-[61px], h-[30px], rounded-[40px])
 - [ ] Buttons render with correct dimensions and styling per design spec
 - [ ] Ticker component displays as single-line scrolling text
@@ -162,4 +166,4 @@ Before declaring complete, verify your fixes by:
 - [ ] Blog routes remain unaffected with original styling
 - [ ] Build completes without errors
 - [ ] Clear explanation provided for why issues occurred and how fixes resolve them
-</success_criteria>
+      </success_criteria>

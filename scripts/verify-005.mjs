@@ -24,10 +24,10 @@ async function run() {
   const page = await ctx.newPage()
 
   const errors = []
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     if (msg.type() === 'error') errors.push(msg.text())
   })
-  page.on('pageerror', err => errors.push(err.message))
+  page.on('pageerror', (err) => errors.push(err.message))
 
   await page.goto(BASE, { waitUntil: 'networkidle' })
 
@@ -93,7 +93,7 @@ async function run() {
 
   if (errors.length > 0) {
     console.error(`\n✗ Console/page errors:`)
-    errors.forEach(e => console.error(`  ${e}`))
+    errors.forEach((e) => console.error(`  ${e}`))
     failures++
   }
 
@@ -107,7 +107,7 @@ async function run() {
   }
 }
 
-run().catch(err => {
+run().catch((err) => {
   console.error(err)
   process.exit(1)
 })

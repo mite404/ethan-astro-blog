@@ -24,7 +24,7 @@ system. Two of them duplicate work that CSS now does for free.
 
 - [ ] **`ParallaxHand.tsx`** — the asset is **2875px wide**; meaningless on a 390px screen and pure
       bandwidth + scroll math. Return `null` below 768px. The existing `isMobile` state already
-      tracks this breakpoint — change it from a *size* switch to a *render* switch. Make the
+      tracks this breakpoint — change it from a _size_ switch to a _render_ switch. Make the
       desktop width fluid rather than a hardcoded 2875px so it tracks the composition.
 
 - [ ] **`Ticker.tsx`** — replace the JS `isMobile` branch (lines 43–59: `fontSize`, `height`,
@@ -50,7 +50,7 @@ system. Two of them duplicate work that CSS now does for free.
 
 ### Implementation
 
-- **ParallaxHand.tsx** — `isMobile` state changed from a *size-switch* to a *render-switch*: `if (!mounted || isMobile) return null` now returns null below 768px, eliminating the 2875×0.75 scaled path entirely. Desktop width made fluid: `clamp(1724px, 224.6vw, 2875px)` (2875/1280 × 100vw). Left offset tracks composition: `clamp(90px, 11.72vw, 150px)`. `matchMedia('(max-width: 767px)')` replaces the resize-listener `isMobile` effect — fires only at the threshold crossing, not on every resize pixel. Breakpoint aligned to canonical 767px.
+- **ParallaxHand.tsx** — `isMobile` state changed from a _size-switch_ to a _render-switch_: `if (!mounted || isMobile) return null` now returns null below 768px, eliminating the 2875×0.75 scaled path entirely. Desktop width made fluid: `clamp(1724px, 224.6vw, 2875px)` (2875/1280 × 100vw). Left offset tracks composition: `clamp(90px, 11.72vw, 150px)`. `matchMedia('(max-width: 767px)')` replaces the resize-listener `isMobile` effect — fires only at the threshold crossing, not on every resize pixel. Breakpoint aligned to canonical 767px.
 - **Ticker.tsx** — `isMobile` state + `useEffect` + resize listener deleted. Four clamp values moved to CSS custom properties in `portfolio.css` (`--h-ticker`, `--fs-ticker`, `--border-ticker-h`, `--border-ticker-v`). Component uses `var(--h-ticker)` etc. in inline styles, keeping values in the CSS token system.
 - **DecorativeElements.astro** — scoped `@media (max-width: 767px)` block deleted; all rules (flex-direction, gap, padding, align-self) moved to portfolio.css's merged 767px block, which is the canonical owner of portfolio mobile layout.
 - **portfolio.css** — nav buttons (`btn-nav-gh`, `btn-nav-blog`, `btn-nav-resume`) changed from fixed `6.25rem × 3.125rem` to fluid: width `clamp(5.5rem, ..., 6.25rem)`, height `clamp(2.75rem, ..., 3.125rem)` with 44px WCAG floor, border-radius `clamp(1.375rem, ..., 2.5rem)`.
@@ -59,14 +59,14 @@ system. Two of them duplicate work that CSS now does for free.
 
 Ad-hoc Playwright script. All checks passed at all widths. Measured values:
 
-| Width | Nav button height | Hand |
-|-------|------------------|------|
-| 1440px | 50.0px | present |
-| 1280px | 50.0px | present |
-| 768px | 46.5px | present |
-| 600px | 45.4px | absent ✓ |
-| 390px | 44.0px | absent ✓ |
-| 320px | 44.0px | absent ✓ |
+| Width  | Nav button height | Hand     |
+| ------ | ----------------- | -------- |
+| 1440px | 50.0px            | present  |
+| 1280px | 50.0px            | present  |
+| 768px  | 46.5px            | present  |
+| 600px  | 45.4px            | absent ✓ |
+| 390px  | 44.0px            | absent ✓ |
+| 320px  | 44.0px            | absent ✓ |
 
 Expected: hand absent below 768px, nav buttons ≥44px at all widths. Screenshots match expectation — continuous sizing, no overflow.
 

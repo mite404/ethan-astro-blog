@@ -36,7 +36,7 @@ the previous 4 days of the week.
 ## _What I Built_
 
 > _"You can contact a third-party agency and pay for an article about yourself
-in Forbes."_ - Oobah Butler, BBC Journalist [(the article)](https://forbes.ge/en/digital-trickster-s-latest-projects/)
+> in Forbes."_ - Oobah Butler, BBC Journalist [(the article)](https://forbes.ge/en/digital-trickster-s-latest-projects/)
 
 Within 3 days I had a working Raycast extension tested and deployed. I also
 accomplished another goal of mine coming into this program: to contribute to
@@ -47,6 +47,7 @@ learning a whole new framework. I learned more about the CI/CD process which was
 one of my goals for this program too.
 
 <!--::github{repo="raycast/extensions/pull/22434"}-->
+
 ::link{url="https://github.com/raycast/extensions/pull/22434"}
 
 ### This Week's Theme Song

@@ -26,7 +26,7 @@ payload of any section.
 - [ ] Variant switcher via query param `?v=a|b|c`, defaulting to a plain vertical stack.
 - [ ] Render visible variant labels + a link back to `/`.
 - [ ] Extract the project card markup so all three variants share **one** card component —
-      differences must live in the *container*, not the card.
+      differences must live in the _container_, not the card.
 
 ## Acceptance criteria
 

@@ -22,19 +22,19 @@ of relying on playback by only counting the frames played.
 ```typescript
 const scheduledEventId = transport.scheduleRepeat((time) => {
   // Callback fires every step
-  const stepToPlay = currentStep;
-  const activeTrackIds = getActiveSamplesAtStep(stepToPlay, gridRef.current);
+  const stepToPlay = currentStep
+  const activeTrackIds = getActiveSamplesAtStep(stepToPlay, gridRef.current)
 
   for (const trackId of activeTrackIds) {
-    tracks[trackId].player.start(time); // Use Transport time
+    tracks[trackId].player.start(time) // Use Transport time
   }
 
   Tone.Draw.schedule(() => {
-    onStep(stepToPlay);  // Schedule UI update on audio context
-  }, time);
+    onStep(stepToPlay) // Schedule UI update on audio context
+  }, time)
 
-  currentStep = (currentStep + 1) % 16;
-}, "16n");
+  currentStep = (currentStep + 1) % 16
+}, '16n')
 ```
 
 ## Mapping my graphics knowledge to the audio engine
@@ -45,18 +45,18 @@ is almost identical GPU resource management when rendering sprites on screen wit
 - `transport.scheduleRepeat()` is similar to requestAnimationFrame callback in graphics
 - `Tone.Draw.schedule()` this is like syncing the UI to paint to the audio render thread
 - `currentStep = (currentStep + 1) % 16` the same mental model I use when working
-on music or editing video the frame counter is the playhead position
+  on music or editing video the frame counter is the playhead position
 
 ```typescript
 // GPU resource lifecycle (PixiJS)
-const renderer = new Renderer(); // init
-renderer.render(stage);           // subscribe to frame events
-renderer.destroy();               // cleanup
+const renderer = new Renderer() // init
+renderer.render(stage) // subscribe to frame events
+renderer.destroy() // cleanup
 
 // Audio state machine lifecycle (Tone.js)
-const sequencer = createSequencer(); // init
-transport.scheduleRepeat(onStep);    // subscribe to tick events
-sequencer.dispose();                 // cleanup
+const sequencer = createSequencer() // init
+transport.scheduleRepeat(onStep) // subscribe to tick events
+sequencer.dispose() // cleanup
 ```
 
 ## _Cross domain fluency is about leveraging overlapping knowledge to gain clarity quickly_
@@ -76,6 +76,7 @@ Deployed Site:
 
 Source Code:
 <!--::github{repo="raycast/extensions/pull/22434"}-->
+
 ::github{repo="mite404/tr-08"}
 
 ### This Week's Theme Song
