@@ -919,6 +919,126 @@ tested the dev server's generosity.
 
 ---
 
+### 🐛 Bug #11: The Name Header Drifted Off the Right Edge (Aug 3, 2026)
+
+**The Symptom:**
+
+"ETHAN ANDERSON" — the giant green display headline — stopped being flush with the right edge of
+the page. It used to land exactly under the right edge of the RESUMÉ button. Now it stopped about
+15px short. Nothing looked _broken_; it just looked slightly, unaccountably wrong. The kind of
+thing you notice two merges later and can't place.
+
+**Root Cause Analysis:**
+
+Three changes stacked up, each one a reasonable fix for the last one's damage:
+
+| Stage        | The rule                                | What happened                              |
+| ------------ | --------------------------------------- | ------------------------------------------ |
+| Original     | `font-size: 19.7rem` (hardcoded)         | Flush — but only at exactly 1280px          |
+| `f9051fb`    | `clamp(6rem, 24.7vw, 19.75rem)`          | Sized against `100vw` → **wrapped to 2 lines** |
+| `1daab20`    | `0.244 × (100vw − 2×gutter)`, max `18.5rem` | Fixed the wrap, **overshot ~1.3% short**  |
+
+Stage two is the classic viewport-vs-container mistake documented below in _Viewport vs.
+Fixed-Container Conflict_: `.portfolio-layout` has `padding-inline: var(--gutter)`, so the
+headline has `100vw − 2×gutter` to fill, not `100vw`. Sizing to `100vw` overshot by exactly the
+two gutters and wrapped.
+
+Stage three fixed that, but over-corrected — and **said so in its own comment**:
+
+```css
+/* Max fit is 1/4.0565 = 0.2465; 0.244 leaves ~1% for font-loading and rounding. */
+```
+
+That deliberate 1% haircut _is_ the gap. The `18.5rem` cap then rounded 296.78px down to 296px,
+so both terms of the `clamp()` undershot. Measured live in the browser: 296px rendered where
+**299.81px** was needed — text ending 15.5px short.
+
+**The trap underneath it — `em` freezes when it's inherited:**
+
+Here's why that "~1% for rounding" fudge factor was needed at all. `global.css:130` (Chiri blog
+theme) sets:
+
+```css
+body {
+  letter-spacing: var(--spacing-m); /* -0.02em */
+}
+```
+
+`em` resolves against the element it's declared on — the **body**, at ~15px. So it computes to a
+flat **−0.3px** and then inherits down into the h1 as an **absolute** value. It does _not_
+re-resolve against the h1's 300px font-size. Fourteen letter gaps × −0.3px = a constant −4.195px
+shaved off the headline's width at _every_ size.
+
+So the real width formula is:
+
+```text
+width = 4.071 × font-size − 4.195px
+```
+
+That's a line with a **y-intercept**, not a pure ratio. Any single multiplier is approximating a
+line with a straight proportion — which is exactly why the previous author had to leave "1% for
+rounding." That 1% was silently compensating for a term nobody had identified.
+
+**The Fix:**
+
+Rather than re-tune two magic numbers that duplicate the gutter value in a second place, switch
+to **container query units** — the native CSS feature built for precisely this:
+
+```css
+/* before — re-derives the content box by hand, and gets it slightly wrong */
+--fs-name: clamp(6rem, calc(0.244 * (100vw - 2 * var(--gutter))), 18.5rem);
+
+/* after — asks the container how wide it actually is */
+body[data-layout-type='portfolio'] header {
+  container-type: inline-size;
+}
+body[data-layout-type='portfolio'] .portfolio-name {
+  font-size: 24.64cqi;
+}
+```
+
+`cqi` is 1% of the nearest inline-size container's width — the header's content box, gutters
+already subtracted. The `--fs-name` token was deleted entirely.
+
+Verified across widths — one line everywhere, and it always errs _short_, so it can never wrap:
+
+| viewport | 390    | 500    | 768    | 1024   | 1280      | 1600   |
+| -------- | ------ | ------ | ------ | ------ | --------- | ------ |
+| gap      | 3.1px  | 2.8px  | 2.0px  | 1.2px  | **0.5px** | 0.4px  |
+
+This also killed a latent bug that hadn't been hit yet: the old `clamp()`'s `6rem` floor forced
+96px at a 390px viewport, which computes to 386px of text inside a 358px box — it would have
+wrapped to two lines on an iPhone. It's 88.2px on one line now.
+
+**Director's Commentary — stop re-measuring the set; ask the set:**
+
+`100vw − 2 × var(--gutter)` is a **hand-drawn copy of the floor plan**. The real floor plan lives
+on `.portfolio-layout` (its `max-width` and its `padding-inline`). The moment you copy those
+numbers into a second file, you own two floor plans that must be kept in sync forever — and the
+day someone nudges the padding, only one of them updates. That's not a hypothetical: it's
+literally what happened between `f9051fb` and `1daab20`.
+
+`cqi` doesn't copy the floor plan. It walks onto the set and measures the actual wall. Change the
+padding, change the `max-width`, add a sidebar — the headline follows, because it was never
+guessing in the first place.
+
+**The rules:**
+
+1. **Size type against its container, not the viewport.** If you're writing
+   `calc(100vw - <something you also wrote somewhere else>)`, you want `cqi` and a
+   `container-type: inline-size` on the parent.
+2. **A fudge factor is a bug you haven't found yet.** "Leaves ~1% for rounding" is a confession.
+   When a measured constant needs a safety margin, something unmodeled is in the equation — go
+   find it before you paper over it.
+3. **`em` is relative to the element that _declares_ it, then inherits as a frozen px value.**
+   A `letter-spacing: -0.02em` on `body` is `-0.3px` on a 300px headline, not `-6px`. If you want
+   tracking that scales with the type, declare it **on the element**, not on an ancestor.
+4. **Measure in the browser, don't derive from Figma.** The Figma comment implied a ratio of
+   4.0506; the real rendered ratio is 4.071. `document.createRange()` +
+   `selectNodeContents()` + `getBoundingClientRect()` gives you the truth in one line.
+
+---
+
 ## Behind the Scenes: March 13 Session Insights
 
 ### CSS Cascade Subtleties
