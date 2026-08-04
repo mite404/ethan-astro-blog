@@ -1,13 +1,14 @@
 name: CI
 
+# Do NOT add `status:` or `check_suite:` triggers here. This workflow posts its own
+# check/status results, so those events re-trigger it — a self-sustaining loop that
+# accounted for 75% of all CI runs before it was removed (63 `status` + 12 `check_suite`
+# out of 100). The `auto-merge` job already waits on external checks explicitly.
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-  check_suite:
-    types: [completed]
-  status: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,23 +34,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Check formatting (if prettier is available)
-        run: |
-          if [ -f "bun.lockb" ] && bun list prettier &>/dev/null; then
-            bunx prettier --check .
-          else
-            echo "Prettier not configured, skipping format check"
-          fi
-        continue-on-error: true
-
-      - name: Run ESLint (if available)
-        run: |
-          if [ -f "bun.lockb" ] && bun list eslint &>/dev/null; then
-            bunx eslint .
-          else
-            echo "ESLint not configured, skipping lint check"
-          fi
-        continue-on-error: true
+      # Removed two `if [ -f "bun.lockb" ]` guarded steps here. Bun 1.1.39 renamed the
+      # lockfile to the text-based `bun.lock`, so both guards were always false — the
+      # steps printed "not configured, skipping" on every run and never checked anything.
+      # ESLint is covered by `bun run lint` below. Formatting is NOT yet enforced:
+      # `prettier --check` currently fails on pre-existing files, so wire it up only
+      # after those are cleaned.
 
       - name: Run linting
         run: bun run lint
