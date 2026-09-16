@@ -25,7 +25,7 @@ const optimizedProjectImages = {
   claudeDashboard: await getImage({ src: claudeDashboardImg }),
   tr08: await getImage({ src: tr08Img }),
   beatPerMinute: await getImage({ src: beatPerMinuteImg }),
-  phillips: await getImage({ src: phillipsImg }),
+  phillips: await getImage({ src: phillipsImg })
 }
 const mostRecentPosts = posts.slice(0, 4)
 ---
@@ -39,20 +39,14 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- BIO TOP Section (above Projects) — bat zone 1 wraps this, flush with ticker's bottom border -->
   <div class="bat-zone-1-wrapper">
     <div class="bat-zone-1" aria-hidden="true">
-      <Image
-        src={batTopImg}
-        alt=""
-        width="1280"
-        height="540"
-        class="bat-zone-1-img"
-      />
+      <Image src={batTopImg} alt="" width="1280" height="540" class="bat-zone-1-img" />
     </div>
 
     <div class="bat-zone-1-content relative z-10 pl-8">
       <div class="bio-top">
         <p>
-          An early-stage engineer drawn to <span class="highlight">creative tools</span> and developer experience,
-          where my professional background in video and audio production becomes a <span
+          I'm an early-stage engineer drawn to <span class="highlight">creative tools</span> and developer
+          experience, where my professional background in video and audio production becomes a <span
             class="highlight">technical advantage</span
           >.
         </p>
@@ -84,24 +78,29 @@ const mostRecentPosts = posts.slice(0, 4)
 
           return (
             <div class="project-card">
-              {optimizedImg && (
+              {optimizedImg &&
                 (() => {
-                  const imageSrc = optimizedImg.src;
-                  const imageAlt = `${project.title} preview`;
-                  const imgElement = <img src={imageSrc} alt={imageAlt} class="project-image" />;
+                  const imageSrc = optimizedImg.src
+                  const imageAlt = `${project.title} preview`
+                  const imgElement = <img src={imageSrc} alt={imageAlt} class="project-image" />
 
                   // Agent Dashboard links to GitHub, others link to live site
-                  const href = project.title === 'Agent Dashboard' ? project.ghLink : project.liveLink;
+                  const href =
+                    project.title === 'Agent Dashboard' ? project.ghLink : project.liveLink
 
                   return href ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer" class="project-image-link">
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="project-image-link"
+                    >
                       {imgElement}
                     </a>
                   ) : (
                     imgElement
-                  );
-                })()
-              )}
+                  )
+                })()}
               <h3 class="project-title">{project.title}</h3>
               <p class="project-description">{project.description}</p>
               <div class="project-footer">
@@ -165,7 +164,8 @@ const mostRecentPosts = posts.slice(0, 4)
           </div>
           <div class="ds-glance">
             <div class="ds-rung ds-r1">
-              <span class="ds-role">Display</span><span class="ds-face ds-face-display">Guisol</span>
+              <span class="ds-role">Display</span><span class="ds-face ds-face-display">Guisol</span
+              >
             </div>
             <div class="ds-rung ds-r2">
               <span class="ds-role">Text</span><span class="ds-face ds-face-text">Barlow</span>
@@ -193,8 +193,9 @@ const mostRecentPosts = posts.slice(0, 4)
           </div>
           <div class="ds-glance">
             <div class="ds-rung ds-r1">
-              <span class="ds-role">Display</span
-              ><span class="ds-face ds-face-display">Cormorant</span>
+              <span class="ds-role">Display</span><span class="ds-face ds-face-display"
+                >Cormorant</span
+              >
             </div>
             <div class="ds-rung ds-r2">
               <span class="ds-role">Text</span><span class="ds-face ds-face-text">Baskerville</span>
@@ -219,13 +220,7 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
   <div class="bat-zone-2-wrapper">
     <div class="bat-zone-2" aria-hidden="true">
-      <Image
-        src={batBottomImg}
-        alt=""
-        width="1280"
-        height="543"
-        class="bat-zone-2-img"
-      />
+      <Image src={batBottomImg} alt="" width="1280" height="543" class="bat-zone-2-img" />
     </div>
 
     <div class="bat-zone-2-content relative z-10 pl-8">
