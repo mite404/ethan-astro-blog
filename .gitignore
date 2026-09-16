@@ -30,8 +30,3 @@ pnpm-debug.log*
 
 # rumdl cache
 .rumdl_cache
-lib-guards.sh
-lib-status.sh
-loop.sh
-ralph.log
-supervisor.sh
