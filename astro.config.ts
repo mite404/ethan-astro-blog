@@ -38,6 +38,11 @@ export default defineConfig({
   integrations: [
     react(),
     playformInline({
+      // pruneSource deletes "unused" rules from the built stylesheet. beasties 0.4
+      // (shipped in @playform/inline 0.1.4) misses selectors inside Tailwind's
+      // `@layer utilities`, so it stripped every utility class and flattened the
+      // production layout while dev stayed fine.
+      Beasties: { pruneSource: false },
       Exclude: [(file) => file.toLowerCase().includes('katex')]
     }),
     mdx(),
