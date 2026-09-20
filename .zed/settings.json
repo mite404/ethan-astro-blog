@@ -23,6 +23,12 @@
       "prettier": { "allowed": true },
       "language_servers": ["vtsls", "eslint", "!oxlint", "!oxfmt", "!biome"],
       "formatter": ["prettier", { "code_action": "source.fixAll.eslint" }]
+    },
+    "Astro": {
+      "language_servers": [
+        "!oxlint",
+        "..."
+      ]
     }
   }
 }
