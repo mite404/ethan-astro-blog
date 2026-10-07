@@ -1,0 +1,23 @@
+---
+interface Props {
+  id: string
+  label: string
+}
+
+const { id, label } = Astro.props
+---
+
+<aside id={id} class="case-preview" popover="manual" aria-label={label}>
+  <button
+    type="button"
+    class="case-close case-asset-close"
+    popovertarget={id}
+    popovertargetaction="hide"
+    aria-label={`Close ${label}`}
+  >
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.5"></path>
+    </svg>
+  </button>
+  <slot />
+</aside>

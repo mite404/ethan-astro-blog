@@ -1,0 +1,418 @@
+---
+import { getEntry, render } from 'astro:content'
+import CaseStudyKeyword from './CaseStudyKeyword.astro'
+
+interface Props {
+  slug: string
+}
+
+const { slug } = Astro.props
+const entry = await getEntry('caseStudies', slug)
+if (!entry) throw new Error(`Case study not found: ${slug}`)
+const { Content } = await render(entry)
+---
+
+<article
+  id="project-case-study"
+  class="case-study"
+  popover
+  aria-labelledby="case-title"
+  tabindex="-1"
+>
+  <header class="case-header">
+    <span class="case-kicker">{entry.data.context}</span>
+    <button
+      type="button"
+      class="case-close"
+      popovertarget="project-case-study"
+      popovertargetaction="hide"
+      aria-label="Close case study"
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.5"></path>
+      </svg>
+    </button>
+  </header>
+  <h2 id="case-title">{entry.data.title}</h2>
+  <Content components={{ a: CaseStudyKeyword }} />
+  <p class="case-hint">Hover or select the underlined text to see images and code.</p>
+</article>
+
+<style is:global>
+  .case-study {
+    --case-edge: 16px;
+    --case-font-size: 0.9375rem;
+    --case-small-size: 0.8125rem;
+  }
+
+  .case-study :where(h2, h3, p, figure, blockquote) {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .case-study,
+  .case-study .case-preview {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    box-sizing: border-box;
+    width: min(540px, calc(100vw - 2 * var(--case-edge)));
+    max-height: calc(100dvh - 2 * var(--case-edge));
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: var(--case-font-size);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.75;
+    box-shadow: 0 16px 64px rgb(0 0 0 / 24%);
+  }
+
+  .case-study .case-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .case-study .case-kicker,
+  .case-study .case-hint {
+    color: var(--text-secondary);
+    font-size: var(--case-small-size);
+  }
+
+  .case-study h2 {
+    margin: 8px 0 0.375rem;
+  }
+
+  .case-study p {
+    margin: 1.75em 0;
+  }
+
+  .case-study em {
+    font-family: var(--serif);
+    font-style: italic;
+    letter-spacing: 0;
+  }
+
+  .case-study h2,
+  .case-study h3,
+  .case-study strong {
+    font-weight: 500;
+    line-height: 1.75;
+  }
+
+  .case-study hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 1.75em 0 18px;
+  }
+
+  .case-study hr + p {
+    margin: 0;
+    font-size: var(--case-small-size);
+    color: var(--text-secondary);
+  }
+
+  .case-study h3 {
+    margin: 4px 0 8px;
+  }
+
+  .case-study .case-keyword {
+    display: inline;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+  }
+
+  .case-study a,
+  .case-study .case-keyword {
+    color: inherit;
+    text-decoration: underline solid var(--text-secondary);
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .case-study a:hover,
+  .case-study .case-keyword:hover {
+    text-decoration-color: var(--text-primary);
+  }
+
+  .case-study .case-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--code-bg);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .case-study :is(button, a):focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+  }
+
+  .case-study .case-preview {
+    width: min(480px, calc(100vw - 2 * var(--case-edge)));
+    padding: 12px;
+    margin: 0;
+  }
+
+  .case-study .case-asset-close {
+    display: none;
+  }
+
+  .case-study .case-preview img {
+    width: 100%;
+    max-height: calc(100dvh - 2 * var(--case-edge) - 136px);
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+    height: auto;
+    margin: 0;
+  }
+
+  .case-study .case-preview figcaption {
+    margin: 12px 4px 4px;
+    line-height: 1.5;
+    font-size: var(--case-small-size);
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .case-study code {
+    padding: 2.5px 3.5px;
+    border-radius: 5px;
+    background: var(--code-bg);
+    border: 0.5px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.9em;
+    font-feature-settings:
+      'liga' 0,
+      'calt' 0;
+  }
+
+  .case-study pre {
+    background: var(--astro-code-background);
+    border-radius: 8px;
+    padding: 1.25em 1.5em;
+    margin: 0;
+    overflow-x: auto;
+  }
+
+  .case-study pre > code {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: var(--case-small-size);
+    line-height: 1.5;
+    white-space: pre;
+  }
+
+  .case-study .case-preview > p {
+    margin: 12px 4px 4px;
+    font-size: var(--case-small-size);
+  }
+
+  @media (max-width: 600px) {
+    .case-study {
+      --case-edge: 32px;
+      padding: 20px;
+    }
+
+    .case-study .case-close {
+      width: 44px;
+      height: 44px;
+    }
+
+    .case-study .case-asset-close {
+      display: grid;
+      margin: 0 0 12px auto;
+    }
+  }
+</style>
+
+<script>
+  function initCaseStudy() {
+    const panel = document.querySelector<HTMLElement>('#project-case-study:not([data-ready])')
+    if (!panel) return
+    panel.dataset.ready = ''
+    const cards = document.querySelectorAll<HTMLElement>('[data-case-study]')
+    const previews = panel.querySelectorAll<HTMLElement>('.case-preview')
+    const events = new AbortController()
+    let activeCard: HTMLElement | undefined
+    let closeTimer: ReturnType<typeof setTimeout>
+
+    function position(popover: HTMLElement, anchor: HTMLElement) {
+      const rect = anchor.getBoundingClientRect()
+      const width = popover.offsetWidth
+      const edge = parseFloat(getComputedStyle(popover).getPropertyValue('--case-edge'))
+      const right = rect.right + 12
+      const isPreview = popover.classList.contains('case-preview')
+      const left = isPreview
+        ? rect.left + (rect.width - width) / 2
+        : right + width <= innerWidth - edge
+          ? right
+          : rect.left - width - 12
+      const top = isPreview ? rect.top + (rect.height - popover.offsetHeight) / 2 : rect.top
+      popover.style.left = `${Math.max(edge, Math.min(left, innerWidth - width - edge))}px`
+      popover.style.top = `${Math.max(edge, Math.min(top, innerHeight - popover.offsetHeight - edge))}px`
+    }
+
+    function keepOpen() {
+      clearTimeout(closeTimer)
+    }
+
+    function scheduleClose() {
+      keepOpen()
+      closeTimer = setTimeout(() => {
+        if (
+          panel.matches(':hover') ||
+          activeCard?.matches(':hover') ||
+          panel.contains(document.activeElement) ||
+          activeCard?.contains(document.activeElement)
+        )
+          return
+        panel.hidePopover()
+      }, 250)
+    }
+
+    function open(card: HTMLElement) {
+      keepOpen()
+      if (panel.matches(':popover-open')) return
+      activeCard = card
+      panel.showPopover()
+      position(panel, card)
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') open(card)
+      })
+      card.addEventListener('pointerleave', scheduleClose)
+      const trigger = card.querySelector<HTMLButtonElement>('.case-study-trigger')
+      trigger?.addEventListener('click', (event) => {
+        event.preventDefault()
+        open(card)
+        panel.focus({ preventScroll: true })
+      })
+    })
+
+    panel.addEventListener('pointerenter', keepOpen)
+    panel.addEventListener('pointerleave', scheduleClose)
+    panel.addEventListener('focusout', scheduleClose)
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        const preview = panel.querySelector<HTMLElement>('.case-preview:popover-open')
+        if (event.key !== 'Escape' || !preview) return
+        event.preventDefault()
+        preview.hidePopover()
+      },
+      { signal: events.signal }
+    )
+    panel.addEventListener('pointerdown', (event) => {
+      if (
+        event.target instanceof Element &&
+        !event.target.closest('.case-preview, [data-case-preview]')
+      ) {
+        previews.forEach((preview) => preview.hidePopover())
+      }
+    })
+    panel.addEventListener('toggle', () => {
+      const isOpen = panel.matches(':popover-open')
+      cards.forEach((card) => {
+        card
+          .querySelector('.case-study-trigger')
+          ?.setAttribute('aria-expanded', String(isOpen && card === activeCard))
+      })
+      if (!isOpen) previews.forEach((preview) => preview.hidePopover())
+    })
+
+    panel.querySelectorAll<HTMLButtonElement>('[data-case-preview]').forEach((trigger) => {
+      const preview = document.getElementById(trigger.dataset.casePreview ?? '')
+      if (!preview?.classList.contains('case-preview')) return
+      let previewTimer: ReturnType<typeof setTimeout>
+      preview.addEventListener('toggle', () => {
+        trigger.setAttribute('aria-expanded', String(preview.matches(':popover-open')))
+      })
+      function showPreview() {
+        keepOpen()
+        clearTimeout(previewTimer)
+        previews.forEach((other) => {
+          if (other !== preview) other.hidePopover()
+        })
+        preview.showPopover()
+        position(preview, panel)
+      }
+      function hidePreviewLater() {
+        previewTimer = setTimeout(() => {
+          if (
+            preview.matches(':hover') ||
+            trigger.matches(':hover') ||
+            preview.contains(document.activeElement) ||
+            (document.activeElement === trigger && trigger.matches(':focus-visible'))
+          )
+            return
+          preview.hidePopover()
+        }, 250)
+      }
+      preview.addEventListener('pointerenter', () => clearTimeout(previewTimer))
+      preview.addEventListener('pointerleave', hidePreviewLater)
+      preview.addEventListener('focusout', hidePreviewLater)
+      trigger.addEventListener('pointerleave', (event) => {
+        if (event.pointerType === 'mouse') hidePreviewLater()
+      })
+      trigger.addEventListener('blur', hidePreviewLater)
+      trigger.addEventListener('pointerenter', (event) => {
+        if (
+          event.pointerType === 'mouse' &&
+          (!(event.relatedTarget instanceof Node) || !preview.contains(event.relatedTarget))
+        )
+          showPreview()
+      })
+      trigger.addEventListener('focus', () => {
+        if (trigger.matches(':focus-visible')) showPreview()
+      })
+      trigger.addEventListener('click', showPreview)
+    })
+
+    const resize = new ResizeObserver(() => {
+      if (!panel.matches(':popover-open') || !activeCard) return
+      position(panel, activeCard)
+      previews.forEach((preview) => {
+        if (preview.matches(':popover-open')) position(preview, panel)
+      })
+    })
+    resize.observe(panel)
+    previews.forEach((preview) => resize.observe(preview))
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        keepOpen()
+        events.abort()
+        resize.disconnect()
+      },
+      { once: true }
+    )
+  }
+
+  document.addEventListener('astro:page-load', initCaseStudy)
+  initCaseStudy()
+</script>

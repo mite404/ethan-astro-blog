@@ -5,6 +5,7 @@ import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 import Ticker from '@/components/layout/Ticker'
 import ParallaxHand from '@/components/ui/ParallaxHand'
+import ProjectCaseStudy from '@/components/ui/ProjectCaseStudy.astro'
 import { getSortedFilteredPosts } from '@/utils/draft'
 import { getExcerpt } from '@/utils/excerpt'
 import type { Project } from '@/data/projects'
@@ -17,6 +18,8 @@ import claudeDashboardImg from '@/images/claude-dashboard.png'
 import tr08Img from '@/images/tr-08.png'
 import beatPerMinuteImg from '@/images/beat-per-minute-1-small.png'
 import phillipsImg from '@/images/phillips-poc.png'
+
+type OptimizedProjectImage = Awaited<ReturnType<typeof getImage>>
 
 const posts = await getSortedFilteredPosts()
 
@@ -65,7 +68,7 @@ const mostRecentPosts = posts.slice(0, 4)
       {
         projects.map((project: Project) => {
           // Map project image to optimized version
-          let optimizedImg: any = null
+          let optimizedImg: OptimizedProjectImage | null = null
           if (project.image.includes('claude-dashboard')) {
             optimizedImg = optimizedProjectImages.claudeDashboard
           } else if (project.image.includes('tr-08')) {
@@ -77,7 +80,7 @@ const mostRecentPosts = posts.slice(0, 4)
           }
 
           return (
-            <div class="project-card">
+            <div class="project-card" data-case-study>
               {optimizedImg &&
                 (() => {
                   const imageSrc = optimizedImg.src
@@ -138,11 +141,21 @@ const mostRecentPosts = posts.slice(0, 4)
                 </div>
                 <p class="project-details">{project.details}</p>
               </div>
+              <button
+                type="button"
+                class="case-study-trigger"
+                popovertarget="project-case-study"
+                aria-expanded="false"
+                aria-label={`Read test case study from ${project.title}`}
+              >
+                Case study ↗
+              </button>
             </div>
           )
         })
       }
     </div>
+    <ProjectCaseStudy slug="agentic-desktop" />
   </section>
 
   <!-- DESIGN SYSTEMS Carousel — featured, auto-advances every 6s -->
@@ -280,6 +293,27 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- PARALLAX HAND -->
   <ParallaxHand client:only="react" />
 </PortfolioLayout>
+
+<style>
+  .case-study-trigger {
+    align-self: flex-start;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 8px 0;
+    border: 0;
+    background: none;
+    color: #e071e3;
+    font-family: var(--sans);
+    font-size: var(--font-size-s);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+
+  .case-study-trigger:focus-visible {
+    outline: 2px solid #e071e3;
+  }
+</style>
 
 <script>
   // Design-systems carousel: 4s crossfade + clickable dots.

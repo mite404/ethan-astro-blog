@@ -603,11 +603,13 @@ Portfolio header nav buttons (GitHub, Blog, Resumé) worked perfectly on desktop
 **The Root Cause Investigation:**
 
 Initial suspects:
+
 - ❌ `bat-zone-1` (background image overlay) — Removed temporarily, still broken
 - ❌ Stacking context z-index issues
 - ✅ **The real culprit: The `portfolio-name` h1 element**
 
 The h1 had:
+
 ```css
 .portfolio-name {
   font-size: 19.7rem; /* 316px */
@@ -620,6 +622,7 @@ The h1 had:
 **Why This Broke Hover:**
 
 CSS line-height creates an **invisible line box** that's larger than the visual text. With a 19.7rem font-size:
+
 - Visual height (collapsed): ~239px
 - DOM box height (line-height): 0.756 × 316px = ~239px ✓
 - **But the margins auto-calculated**: 0.67em × 316px = ~212px above + ~212px below
@@ -647,8 +650,8 @@ Explicit margin/padding reset to clip the invisible box to visual bounds:
 .portfolio-name {
   font-size: 19.7rem;
   line-height: 0.756;
-  margin: 0;      /* ← Kill auto margins */
-  padding: 0;     /* ← Kill auto padding */
+  margin: 0; /* ← Kill auto margins */
+  padding: 0; /* ← Kill auto padding */
   overflow: hidden; /* ← Clip any overshoot */
 }
 ```
@@ -671,7 +674,9 @@ Added an iPhone SE responsive breakpoint:
 
 ```css
 @media (max-width: 480px) {
-  .portfolio-name { font-size: 8.75rem; }
+  .portfolio-name {
+    font-size: 8.75rem;
+  }
 }
 ```
 
@@ -701,6 +706,7 @@ Reorder from **largest → smallest** so specific breakpoints apply last:
 ```
 
 Now at 375px:
+
 1. 950px matches → 60px
 2. 640px matches → 40px (overrides)
 3. 480px matches → 8.75rem (final winner ✓)
@@ -713,9 +719,15 @@ Media query specificity isn't about the `max-width` number—it's about file ord
 
 ```css
 /* Desktop first (largest screens) */
-@media (max-width: 1200px) { /* iPad Pro, laptops */ }
-@media (max-width: 768px) { /* iPad, tablets */ }
-@media (max-width: 480px) { /* iPhone, small phones */ }
+@media (max-width: 1200px) {
+  /* iPad Pro, laptops */
+}
+@media (max-width: 768px) {
+  /* iPad, tablets */
+}
+@media (max-width: 480px) {
+  /* iPhone, small phones */
+}
 ```
 
 ---
@@ -731,6 +743,7 @@ Both zones were the same width (1280px), but only zone 2 looked correct.
 **Root Cause:**
 
 **Zone 1** used:
+
 ```css
 .bat-zone-1-img {
   height: auto; /* Scales based on image aspect ratio */
@@ -743,6 +756,7 @@ Both zones were the same width (1280px), but only zone 2 looked correct.
 If the image was wider than tall (landscape aspect), it would be shorter than 58rem, leaving white space below.
 
 **Zone 2** used:
+
 ```css
 .bat-zone-2-img {
   object-fit: cover; /* Fills container completely */
@@ -756,6 +770,7 @@ If the image was wider than tall (landscape aspect), it would be shorter than 58
 **The Attempted Fix & Why It Failed:**
 
 Initially changed zone 1 to:
+
 ```css
 height: 100%;
 object-fit: cover;
@@ -766,6 +781,7 @@ This filled the space but **covered the bio-top text**, since both the texture a
 **Current Status:**
 
 The gap remains. The solution needs either:
+
 1. Adjust the container height to match actual image dimensions
 2. Reduce spacing below bio-top text to compensate
 3. Check Figma design specs for intended container height
@@ -775,6 +791,7 @@ The gap remains. The solution needs either:
 **The Insight:**
 
 `object-fit: cover` works when:
+
 - Image is layered **behind** content (z-index managed)
 - OR container height matches image aspect ratio naturally
 
@@ -839,13 +856,14 @@ Serves: /blog/       Generates:           Catches:           Renders:
    - Old `src/pages/[...slug].astro` → root `/` routes (already deleted)
 
 2. **Dynamic paths require `getStaticPaths()`**: At build time, Astro needs to know every URL
+
    ```typescript
    export async function getStaticPaths() {
      const posts = await getCollection('posts')
      return posts
        .filter((post) => !post.id.startsWith('_'))
        .map((post) => ({
-         params: { slug: post.id },  // post.id = filename without extension
+         params: { slug: post.id }, // post.id = filename without extension
          props: post
        }))
    }
@@ -859,6 +877,7 @@ Serves: /blog/       Generates:           Catches:           Renders:
 **Director's Commentary:**
 
 This migration was the toughest coordination challenge of Phase 3:
+
 - Delete old routing file without breaking anything
 - Update internal links in two places (PostList, index)
 - Configure redirects for external/old links
@@ -887,10 +906,10 @@ _source repo_, where `public/` is a real folder. But `public/` is a build conven
 runtime location. At deploy time its **contents** move to the site root and the folder name
 disappears:
 
-| URL requested at runtime      | Dev server | Production (Netlify) |
-| ----------------------------- | ---------- | -------------------- |
-| `/fonts/guisol.woff2`         | 200        | 200                  |
-| `/public/fonts/guisol.woff2`  | **200**    | **404**              |
+| URL requested at runtime     | Dev server | Production (Netlify) |
+| ---------------------------- | ---------- | -------------------- |
+| `/fonts/guisol.woff2`        | 200        | 200                  |
+| `/public/fonts/guisol.woff2` | **200**    | **404**              |
 
 The Astro dev server generously serves `public/` at _both_ `/` and `/public/`, so the broken
 `../public/fonts/` path resolved locally and hid the bug. Netlify only serves the flattened
@@ -932,11 +951,11 @@ thing you notice two merges later and can't place.
 
 Three changes stacked up, each one a reasonable fix for the last one's damage:
 
-| Stage        | The rule                                | What happened                              |
-| ------------ | --------------------------------------- | ------------------------------------------ |
-| Original     | `font-size: 19.7rem` (hardcoded)         | Flush — but only at exactly 1280px          |
-| `f9051fb`    | `clamp(6rem, 24.7vw, 19.75rem)`          | Sized against `100vw` → **wrapped to 2 lines** |
-| `1daab20`    | `0.244 × (100vw − 2×gutter)`, max `18.5rem` | Fixed the wrap, **overshot ~1.3% short**  |
+| Stage     | The rule                                    | What happened                                  |
+| --------- | ------------------------------------------- | ---------------------------------------------- |
+| Original  | `font-size: 19.7rem` (hardcoded)            | Flush — but only at exactly 1280px             |
+| `f9051fb` | `clamp(6rem, 24.7vw, 19.75rem)`             | Sized against `100vw` → **wrapped to 2 lines** |
+| `1daab20` | `0.244 × (100vw − 2×gutter)`, max `18.5rem` | Fixed the wrap, **overshot ~1.3% short**       |
 
 Stage two is the classic viewport-vs-container mistake documented below in _Viewport vs.
 Fixed-Container Conflict_: `.portfolio-layout` has `padding-inline: var(--gutter)`, so the
@@ -1002,9 +1021,9 @@ already subtracted. The `--fs-name` token was deleted entirely.
 
 Verified across widths — one line everywhere, and it always errs _short_, so it can never wrap:
 
-| viewport | 390    | 500    | 768    | 1024   | 1280      | 1600   |
-| -------- | ------ | ------ | ------ | ------ | --------- | ------ |
-| gap      | 3.1px  | 2.8px  | 2.0px  | 1.2px  | **0.5px** | 0.4px  |
+| viewport | 390   | 500   | 768   | 1024  | 1280      | 1600  |
+| -------- | ----- | ----- | ----- | ----- | --------- | ----- |
+| gap      | 3.1px | 2.8px | 2.0px | 1.2px | **0.5px** | 0.4px |
 
 This also killed a latent bug that hadn't been hit yet: the old `clamp()`'s `6rem` floor forced
 96px at a 390px viewport, which computes to 386px of text inside a 358px box — it would have
@@ -1053,13 +1072,16 @@ This means your media query structure needs to be:
 
 ```css
 /* Broad (affects 1280px and below) */
-@media (max-width: 1280px) { }
+@media (max-width: 1280px) {
+}
 
 /* Medium (affects 640px and below) */
-@media (max-width: 640px) { }
+@media (max-width: 640px) {
+}
 
 /* Specific (affects 480px and below – applies last) */
-@media (max-width: 480px) { }
+@media (max-width: 480px) {
+}
 ```
 
 ### Typography as an Invisible Layout Tool
@@ -1067,6 +1089,7 @@ This means your media query structure needs to be:
 **Discovery**: `line-height` creates real, invisible DOM boxes that affect interactivity, not just appearance.
 
 When you use:
+
 - Large font-size (19.7rem)
 - Collapsed line-height (0.756)
 - Implicit margins (auto-calculated from line-height)
@@ -1074,13 +1097,14 @@ When you use:
 ...you get an enormous invisible box that can block pointer events and break layouts.
 
 **Best Practice**:
+
 ```css
 .large-display-font {
   font-size: 19.7rem;
   line-height: 0.756;
-  margin: 0;        /* Explicit zero, not auto */
-  padding: 0;       /* Explicit zero, not auto */
-  overflow: hidden;  /* Clip any overshoot */
+  margin: 0; /* Explicit zero, not auto */
+  padding: 0; /* Explicit zero, not auto */
+  overflow: hidden; /* Clip any overshoot */
 }
 ```
 
@@ -1478,7 +1502,7 @@ using `clamp()`:
 
 ```css
 --fs-bio: clamp(1.25rem, 0.57rem + 2.81vw, 2.8125rem); /* 20px → 45px */
---h-touch: clamp(4rem, 1.43rem + 10.56vw, 9.875rem);   /* 64px → 158px */
+--h-touch: clamp(4rem, 1.43rem + 10.56vw, 9.875rem); /* 64px → 158px */
 ```
 
 **The film analogy:** Fluid CSS is a re-blocked scene. Instead of photographing
@@ -1486,6 +1510,7 @@ the poster smaller, you re-arrange the set — tighter columns, scaled-down prop
 same actors. The scene is re-composed for the new frame, not shrunk.
 
 At every viewport width:
+
 - Text is rendered at its actual size (not a bitmap shrink). WCAG floors hold.
 - Touch targets are measured and clamped to ≥44px by the browser's box model.
 - Media queries fire at real breakpoints, so columns collapse at 768px and the
@@ -1494,10 +1519,10 @@ At every viewport width:
 Verified numbers from `bun run verify` at the worst-case widths:
 
 | Width | Bio font-size | Nav button height | Overflow |
-|-------|--------------|-------------------|---------|
-| 390px | 20.1px ✓ | 44.0px ✓ | none ✓ |
-| 320px | 20.0px ✓ | 44.0px ✓ | none ✓ |
-| 768px | 30.7px ✓ | 46.5px ✓ | none ✓ |
+| ----- | ------------- | ----------------- | -------- |
+| 390px | 20.1px ✓      | 44.0px ✓          | none ✓   |
+| 320px | 20.0px ✓      | 44.0px ✓          | none ✓   |
+| 768px | 30.7px ✓      | 46.5px ✓          | none ✓   |
 
 ---
 
@@ -1547,6 +1572,45 @@ it actually produced reveals the gap. Always use `px`, `rem`, or `em` — never
 bare numbers for length properties.
 
 ---
+
+### Project case-study popovers (October 2026)
+
+Case studies live in `src/content/case-studies/*.mdx`, loaded through Astro's content collections
+just like posts. Frontmatter supplies the title and context. Markdown supplies paragraphs, headings,
+links, images and fenced code blocks. `ProjectCaseStudy.astro` is the shared renderer; a new case study
+does not need another Astro or JSX file. The temporary demo still shares one entry across all four
+project cards; project data stays unchanged.
+
+The popover copies the blog's Inter type, paragraph rhythm and Besley italics into `.case-study`
+selectors. It does not use `.prose`, so popover edits cannot restyle blog posts. Think of it as a copy
+of the editorial template, not a linked instance. Fonts remain shared. `PortfolioLayout.astro` fixes
+the portfolio's color tokens to dark, including previews and code highlighting. The blog's saved
+light/dark preference cannot turn a portfolio panel white; the blog itself still supports both themes.
+
+Write `[words to hover](#case-example)` in the MDX body. An `<Asset id="case-example" label="Example">`
+block supplies the matching image or fenced code block. The shared `CaseStudyAsset.astro` adds the
+native popover. Previews sit over the case-study text, not beside it, and close when the cursor leaves
+the keyword and preview. On mobile, a tap opens the preview and a centered X closes it without closing
+the case study. Asset close buttons remain hidden on desktop; keyboard focus also opens previews.
+`CaseStudyKeyword.astro` renders the Markdown keyword links as buttons, avoiding linked-page previews
+on long press while leaving ordinary links unchanged. Keep keywords short so buttons read naturally
+within paragraphs. Code examples are labeled illustrative pseudocode until the source is available.
+
+Native HTML popovers put the case study and its image previews in the browser's top layer. This
+matters because `PortfolioLayout.astro` clips overflowing artwork with `overflow: hidden`. A normal
+absolutely positioned panel would be clipped too, regardless of its `z-index`.
+
+Mouse hover opens the panel without moving keyboard focus. A visible Case study button lets keyboard
+and touch users open it explicitly. A short pointer-exit delay lets the cursor cross the gap to the
+panel. Escape dismisses the nested image first, then the case study; outside clicks also dismiss it.
+The panel scrolls on small screens instead of shrinking the blog type. Mobile windows leave 32px
+between their border and each screen edge, exposing the homepage like the set around a picture frame.
+The inner case-study padding remains 20px; only the exterior gap increased.
+
+Run `bash scripts/verify-case-study.sh <local-site-url>` against a running dev or preview server to
+check all four project targets, four images, two code previews, overlay placement and independent
+Escape dismissal. The check deliberately changes blog selectors to prove the case-study typography
+stays unchanged. The case-study ADR copy comes from supplied notes; the ADRs are not in this repo.
 
 ## Resources
 
