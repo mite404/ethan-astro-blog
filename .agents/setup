@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+started=$SECONDS
+printf '[setup] Checking Bun...\n'
+command -v bun >/dev/null || {
+  printf '[setup] Bun is required but was not found.\n' >&2
+  exit 1
+}
+printf '[setup] Bun %s\n' "$(bun --version)"
+
+printf '[setup] Installing locked dependencies...\n'
+bun install --frozen-lockfile
+printf '[setup] Complete in %ss.\n' "$((SECONDS - started))"
