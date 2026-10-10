@@ -21,4 +21,9 @@ const about = defineCollection({
   schema: z.object({})
 })
 
-export const collections = { posts, about }
+const caseStudies = defineCollection({
+  loader: glob({ base: './src/content/case-studies', pattern: '**/*.mdx' }),
+  schema: z.object({ title: z.string(), context: z.string() })
+})
+
+export const collections = { posts, about, caseStudies }

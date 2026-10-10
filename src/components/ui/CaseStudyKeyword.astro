@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'a'>
+
+const { href, ...attributes } = Astro.props
+const previewId = href?.startsWith('#case-') ? href.slice(1) : undefined
+---
+
+{
+  previewId ? (
+    <button
+      type="button"
+      class="case-keyword"
+      data-case-preview={previewId}
+      aria-controls={previewId}
+      aria-expanded="false"
+    >
+      <slot />
+    </button>
+  ) : (
+    <a href={href} {...attributes}>
+      <slot />
+    </a>
+  )
+}

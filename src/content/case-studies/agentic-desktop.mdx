@@ -1,0 +1,99 @@
+---
+title: Making agent work legible
+context: Design engineering · ~1 week
+---
+
+import Asset from '@/components/ui/CaseStudyAsset.astro'
+
+An agentic [knowledge-work desktop](#case-threads), prototyped end to end for a design engineering
+interview in about a week. I mirrored the company's docs, data policies and architecture, separating
+daemon and gateway so the UI could move onto its stack unchanged.
+
+_"Make agent work more legible for non-technical people."_
+
+---
+
+01 · ADR-014
+
+### Flexible output, predictable cards
+
+A validated catalog keeps the model from inventing unfamiliar UI.
+[`resolve()`](#case-schema) rejects cards outside its schema. Familiar cards let people inspect
+[how the agent got there](#case-receipt).
+
+---
+
+02 · ADR-155 + ADR-157
+
+### Keep the loop where the key and cost are
+
+I rejected a browser-owned loop. The gateway streams Kimi through OpenRouter, limits rounds and
+[withdraws tools](#case-loop) after two failed calls. The UI shows
+[work steps and outcomes](#case-work); the gateway contains repeated failures.
+
+---
+
+03 · ADR-065 + ADR-051
+
+### Taste plus measurement, with a human final say
+
+My CLI and review app compare Storybook captures with approved references and check tokens and
+accessibility. [Motion gets measured, too](#case-motion). Checks catch drift from human and agent
+changes; only a human can approve a new baseline.
+
+<Asset id="case-threads" label="Knowledge-work desktop">
+
+![A desktop for working with threads, text and UI cards.](/images/case-study/threads.webp)
+
+</Asset>
+
+<Asset id="case-receipt" label="How the agent got there">
+
+![Show the method in language the person doing the work can follow.][receipt-image]
+
+</Asset>
+
+<Asset id="case-work" label="Work steps and outcomes">
+
+![Each step has a named outcome instead of an unexplained stream of tool calls.][work-image]
+
+</Asset>
+
+<Asset id="case-motion" label="Measured motion reference">
+
+![Taste, checked against a reference: 90% of the movement happens by 95 ms.][motion-image]
+
+</Asset>
+
+<Asset id="case-schema" label="Schema validation pseudocode">
+
+```typescript
+function resolve(output: unknown) {
+  const card = catalogSchema.parse(output)
+  return renderCatalogCard(card)
+}
+```
+
+Illustrative pseudocode based on ADR-014, not an excerpt from the project source.
+
+</Asset>
+
+<Asset id="case-loop" label="Tool withdrawal pseudocode">
+
+```typescript
+try {
+  await runTool(call)
+} catch {
+  const count = (failures.get(call.name) ?? 0) + 1
+  failures.set(call.name, count)
+  if (count >= 2) offeredTools.delete(call.name)
+}
+```
+
+Illustrative pseudocode based on ADR-157. The gateway owns this loop and its round limit.
+
+</Asset>
+
+[receipt-image]: /images/case-study/receipt.webp
+[work-image]: /images/case-study/work.webp
+[motion-image]: /images/case-study/motion.webp
