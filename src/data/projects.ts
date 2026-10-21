@@ -19,6 +19,15 @@ export const projects: Project[] = [
     image: 'bonsai'
   },
   {
+    title: 'Phillips Corp. LMS',
+    description:
+      'Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder',
+    ghLink: 'https://github.com/mite404/phillips-poc-public',
+    liveLink: 'https://phillips-poc-public.vercel.app/',
+    details: 'TypeScript | React | Tailwind | shadcn/ui',
+    image: 'phillips'
+  },
+  {
     title: 'Agent Dashboard',
     description:
       "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",
@@ -43,14 +52,5 @@ export const projects: Project[] = [
     liveLink: 'https://www.raycast.com/pernielsentikaer/beat-per-minute',
     details: 'TypeScript | React | Raycast API',
     image: 'beat-per-minute'
-  },
-  {
-    title: 'Phillips Corp. LMS',
-    description:
-      'Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder',
-    ghLink: 'https://github.com/mite404/phillips-poc-public',
-    liveLink: 'https://phillips-poc-public.vercel.app/',
-    details: 'TypeScript | React | Tailwind | shadcn/ui',
-    image: 'phillips'
   }
 ]
