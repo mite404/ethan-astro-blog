@@ -10,6 +10,15 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: 'Bonsai',
+    description:
+      'An agentic desktop app prototype built around one design pillar: making agent work legible for non-technical people. The agent answers with interactive chart cards, keeps its technical evidence one click deeper, and leaves a plain-language recap when you step away.',
+    ghLink: 'https://github.com/mite404/yaklabs',
+    liveLink: 'https://yaklabs.ethana2008.workers.dev/',
+    details: 'TypeScript | React | SQLite | Tailwind | Zod | Figma',
+    image: 'bonsai'
+  },
+  {
     title: 'Agent Dashboard',
     description:
       "Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.",

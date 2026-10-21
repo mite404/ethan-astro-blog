@@ -13,6 +13,7 @@ import batTopImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
 import batBottomImg from '@/images/BAT_BOTTOM_CROPPED.png'
 import starsImg from '@/images/STARS.png'
 import globeImg from '@/images/MOVIE_GLOBE.svg'
+import bonsaiImg from '@/images/bonsai.png'
 import claudeDashboardImg from '@/images/claude-dashboard.png'
 import tr08Img from '@/images/tr-08.png'
 import beatPerMinuteImg from '@/images/beat-per-minute-1-small.png'
@@ -22,6 +23,7 @@ const posts = await getSortedFilteredPosts()
 
 // Optimize project images
 const optimizedProjectImages = {
+  bonsai: await getImage({ src: bonsaiImg }),
   claudeDashboard: await getImage({ src: claudeDashboardImg }),
   tr08: await getImage({ src: tr08Img }),
   beatPerMinute: await getImage({ src: beatPerMinuteImg }),
@@ -66,7 +68,9 @@ const mostRecentPosts = posts.slice(0, 4)
         projects.map((project: Project) => {
           // Map project image to optimized version
           let optimizedImg: any = null
-          if (project.image.includes('claude-dashboard')) {
+          if (project.image.includes('bonsai')) {
+            optimizedImg = optimizedProjectImages.bonsai
+          } else if (project.image.includes('claude-dashboard')) {
             optimizedImg = optimizedProjectImages.claudeDashboard
           } else if (project.image.includes('tr-08')) {
             optimizedImg = optimizedProjectImages.tr08
