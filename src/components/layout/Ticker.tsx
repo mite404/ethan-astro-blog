@@ -75,7 +75,9 @@ export default function Ticker({
             fontSize: 'var(--fs-ticker)',
             color: '#FFFFFF',
             animation: `ticker-scroll ${speed}s linear infinite`,
-            animationPlayState: isPaused ? 'paused' : 'running'
+            animationPlayState: isPaused ? 'paused' : 'running',
+            // Keep one GPU layer in both states, so pausing doesn't re-render the text crisper.
+            willChange: 'transform'
           }}
         >
           {repeatedText}
