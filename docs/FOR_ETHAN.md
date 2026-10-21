@@ -105,6 +105,20 @@ post.body // Raw markdown string
 **Why not separate sites?** Shared infrastructure (build, deployment, content system)
 with visual flexibility.
 
+### Why the Projects Carousel Is Plain CSS (Oct 21, 2026)
+
+**Problem**: Adding Bonsai made five project cards. The four-column grid wrapped the fifth onto
+a lonely second row.
+
+**Solution**: One row that slides, like a film strip running past a projector gate. The browser
+already knows how to do this: `overflow-x: auto` makes the row scroll, and `scroll-snap-type`
+plus `scroll-snap-align` make it land cleanly on a card edge every time.
+
+**Why not React or Motion?** Native scroll-snap gives trackpad swipes, touch swipes, and keyboard
+scrolling for free. The only script is a few lines in `index.astro` that move the row one card per
+arrow click and grey out an arrow at either end. Adding a project is still just one entry in
+`src/data/projects.ts`.
+
 ---
 
 ## Bloopers (Bugs & Fixes)
