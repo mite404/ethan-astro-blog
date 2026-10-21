@@ -313,6 +313,82 @@ body[data-layout-type='portfolio'] .project-footer {
   margin-top: auto;
 }
 
+/* Projects carousel: one row, native scroll-snap; 4 cards visible on desktop, 2 on iPad, 1 on phone */
+body[data-layout-type='portfolio'] .project-track {
+  --cards: 1.15;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--cards) - 1) * 1rem) / var(--cards));
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+body[data-layout-type='portfolio'] .project-track::-webkit-scrollbar {
+  display: none;
+}
+body[data-layout-type='portfolio'] .project-track:focus-visible {
+  outline: 2px solid #e071e3;
+  outline-offset: 4px;
+}
+body[data-layout-type='portfolio'] .project-track > .project-card {
+  scroll-snap-align: start;
+}
+@media (min-width: 768px) {
+  body[data-layout-type='portfolio'] .project-track {
+    --cards: 2;
+  }
+}
+@media (min-width: 1024px) {
+  body[data-layout-type='portfolio'] .project-track {
+    --cards: 4;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body[data-layout-type='portfolio'] .project-track {
+    scroll-behavior: smooth;
+  }
+}
+
+body[data-layout-type='portfolio'] .project-nav {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1rem; /* matches the title's pt-4 so both center on the same line */
+}
+body[data-layout-type='portfolio'] .project-nav-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: #fefefe;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+body[data-layout-type='portfolio'] .project-nav-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+body[data-layout-type='portfolio'] .project-nav-btn:hover:not(:disabled) {
+  color: #7fee40;
+  border-color: #7fee40;
+}
+body[data-layout-type='portfolio'] .project-nav-btn:focus-visible {
+  outline: 2px solid #e071e3;
+  outline-offset: 2px;
+}
+body[data-layout-type='portfolio'] .project-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
 /* Project preview images */
 body[data-layout-type='portfolio'] .project-image-link {
   display: block;

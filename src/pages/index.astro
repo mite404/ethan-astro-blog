@@ -61,9 +61,19 @@ const mostRecentPosts = posts.slice(0, 4)
   </div>
 
   <!-- PROJECTS Section -->
-  <section class="bordered pb-4">
-    <h2 class="section-title pt-4">PROJECTS:</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <section class="bordered pb-4" data-project-carousel>
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="section-title pt-4">PROJECTS:</h2>
+      <div class="project-nav">
+        <button type="button" class="project-nav-btn" data-dir="-1" aria-label="Previous projects">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+        </button>
+        <button type="button" class="project-nav-btn" data-dir="1" aria-label="Next projects">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <div class="project-track" tabindex="0" role="region" aria-label="Projects">
       {
         projects.map((project: Project) => {
           // Map project image to optimized version
@@ -327,6 +337,37 @@ const mostRecentPosts = posts.slice(0, 4)
     start()
   }
 
-  document.addEventListener('astro:page-load', initDsCarousel)
+  // Projects carousel: native scroll-snap row; arrows step one card and disable at the ends.
+  function initProjectCarousel() {
+    const root = document.querySelector<HTMLElement>('[data-project-carousel]:not([data-ready])')
+    const track = root?.querySelector<HTMLElement>('.project-track')
+    if (!root || !track) return
+    root.setAttribute('data-ready', '')
+
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('.project-nav-btn')]
+    const step = () => {
+      const card = track.firstElementChild as HTMLElement // → first .project-card
+      return card.offsetWidth + parseFloat(getComputedStyle(track).columnGap) // → px per card
+    }
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth - 1
+      buttons.forEach(
+        (b) =>
+          (b.disabled = Number(b.dataset.dir) < 0 ? track.scrollLeft <= 0 : track.scrollLeft >= max)
+      )
+    }
+
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => track.scrollBy({ left: Number(b.dataset.dir) * step() }))
+    )
+    track.addEventListener('scroll', sync, { passive: true })
+    sync()
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initDsCarousel()
+    initProjectCarousel()
+  })
   initDsCarousel()
+  initProjectCarousel()
 </script>
