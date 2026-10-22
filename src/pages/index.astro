@@ -5,6 +5,7 @@ import { projects } from '@/data/projects.ts'
 import { themeConfig } from '@/config'
 import Ticker from '@/components/layout/Ticker'
 import ParallaxHand from '@/components/ui/ParallaxHand'
+import BatReveal from '@/components/ui/BatReveal.astro'
 import { getSortedFilteredPosts } from '@/utils/draft'
 import { getExcerpt } from '@/utils/excerpt'
 import type { Project } from '@/data/projects'
@@ -41,7 +42,7 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- BIO TOP Section (above Projects) — bat zone 1 wraps this, flush with ticker's bottom border -->
   <div class="bat-zone-1-wrapper">
     <div class="bat-zone-1" aria-hidden="true">
-      <Image src={batTopImg} alt="" width="1280" height="540" class="bat-zone-1-img" />
+      <BatReveal src={batTopImg} class="bat-zone-1-img" />
     </div>
 
     <div class="bat-zone-1-content relative z-10 pl-8">
@@ -234,7 +235,7 @@ const mostRecentPosts = posts.slice(0, 4)
   <!-- Using BAT_BOTTOM_CROPPED.png (1280×543px) from Figma 225:57 -->
   <div class="bat-zone-2-wrapper">
     <div class="bat-zone-2" aria-hidden="true">
-      <Image src={batBottomImg} alt="" width="1280" height="543" class="bat-zone-2-img" />
+      <BatReveal src={batBottomImg} class="bat-zone-2-img" />
     </div>
 
     <div class="bat-zone-2-content relative z-10 pl-8">

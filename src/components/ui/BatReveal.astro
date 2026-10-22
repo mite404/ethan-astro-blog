@@ -1,0 +1,114 @@
+---
+// Hover-reveal grid for a homepage bat zone: each square you cross shows the piece of the
+// bat texture under it, then fades out (mimics Render's "spinning up" hover grid).
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  src: ImageMetadata
+  class?: string
+}
+
+const { src, class: className } = Astro.props
+---
+
+<canvas data-bat-reveal data-src={src.src} class={className}></canvas>
+
+<script>
+  const CELL = 64 // px, one grid square
+  const HOLD = 660 // ms a tile stays fully drawn
+  const FADE = 1540 // ms to fade out after HOLD
+  const MAX_TILES = 200 // per zone; oldest tiles get dropped past this
+
+  const setup = (canvas: HTMLCanvasElement) => {
+    const ctx = canvas.getContext('2d')!
+    const img = new Image()
+    img.src = canvas.dataset.src!
+    // key "col,row" → birth time; Map keeps insertion order, so the first entry is the oldest
+    const tiles = new Map<string, number>()
+    let w = 0
+    let h = 0
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1
+      w = canvas.clientWidth
+      h = canvas.clientHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.imageSmoothingEnabled = false
+    }
+
+    // Draw the texture under cell (col,row), scaled like `object-fit: cover; center top`.
+    const drawTile = (col: number, row: number) => {
+      const scale = Math.max(w / img.width, h / img.height) // canvas px per image px
+      const offsetX = (img.width * scale - w) / 2
+      ctx.drawImage(
+        img,
+        (col * CELL + offsetX) / scale,
+        (row * CELL) / scale,
+        CELL / scale,
+        CELL / scale,
+        col * CELL,
+        row * CELL,
+        CELL,
+        CELL
+      )
+    }
+
+    const drawGrid = () => {
+      ctx.strokeStyle = 'rgb(0 0 0 / 0.06)'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      for (let x = 0.5; x < w; x += CELL) {
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, h)
+      }
+      for (let y = 0.5; y < h; y += CELL) {
+        ctx.moveTo(0, y)
+        ctx.lineTo(w, y)
+      }
+      ctx.stroke()
+    }
+
+    const frame = (now: number) => {
+      if (!canvas.isConnected) return // page navigated away
+      ctx.clearRect(0, 0, w, h)
+      drawGrid()
+      for (const [key, born] of tiles) {
+        const a = 1 - Math.max(0, now - born - HOLD) / FADE
+        if (a <= 0) {
+          tiles.delete(key)
+          continue
+        }
+        const [col, row] = key.split(',').map(Number)
+        ctx.globalAlpha = a
+        drawTile(col, row)
+      }
+      ctx.globalAlpha = 1
+      requestAnimationFrame(frame)
+    }
+
+    // The canvas itself is pointer-events: none under the bio text, so listen on its zone wrapper.
+    const onMove = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect()
+      const x = e.clientX - r.left
+      const y = e.clientY - r.top
+      if (x < 0 || y < 0 || x >= r.width || y >= r.height) return
+      const key = `${Math.floor(x / CELL)},${Math.floor(y / CELL)}`
+      if (tiles.has(key)) return
+      tiles.set(key, performance.now())
+      if (tiles.size > MAX_TILES) tiles.delete(tiles.keys().next().value!)
+    }
+
+    img.onload = () => {
+      resize()
+      new ResizeObserver(resize).observe(canvas)
+      canvas.parentElement!.parentElement!.addEventListener('pointermove', onMove)
+      requestAnimationFrame(frame)
+    }
+  }
+
+  document.addEventListener('astro:page-load', () =>
+    document.querySelectorAll<HTMLCanvasElement>('canvas[data-bat-reveal]').forEach(setup)
+  )
+</script>
