@@ -377,16 +377,15 @@ body[data-layout-type='portfolio'] .project-nav-btn svg {
   stroke-width: 2;
 }
 body[data-layout-type='portfolio'] .project-nav-btn:hover:not(:disabled) {
-  color: #7fee40;
-  border-color: #7fee40;
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 body[data-layout-type='portfolio'] .project-nav-btn:focus-visible {
   outline: 2px solid #e071e3;
   outline-offset: 2px;
 }
 body[data-layout-type='portfolio'] .project-nav-btn:disabled {
-  opacity: 0.25;
-  cursor: default;
+  visibility: hidden; /* keeps the other arrow from shifting position */
 }
 
 /* Project preview images */
@@ -626,6 +625,7 @@ body[data-layout-type='portfolio'] .ds-lead b {
 
 body[data-layout-type='portfolio'] .ds-view {
   margin-top: auto;
+  align-self: flex-start; /* shrink-wrap the label so hover only fires on the text, not the full column width */
   /* ponytail: repo's only Iosevka cut is italic, so upright Iosevka needs a new
      woff2. Using the system monospace for an upright, all-caps label that matches
      HJBL's DM Mono rhythm. Swap in an Iosevka-upright file for true brand parity. */
@@ -637,7 +637,7 @@ body[data-layout-type='portfolio'] .ds-view {
   transition: transform 0.2s ease;
 }
 
-body[data-layout-type='portfolio'] .ds-slide:hover .ds-view {
+body[data-layout-type='portfolio'] .ds-view:hover {
   transform: translateX(4px);
 }
 
@@ -806,7 +806,7 @@ body[data-layout-type='portfolio'] .ds-dot::after {
   inset: -14px -3px;
 }
 body[data-layout-type='portfolio'] .ds-dot:hover {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.5);
 }
 body[data-layout-type='portfolio'] .ds-dot.is-active {
   background: #7fee40;
