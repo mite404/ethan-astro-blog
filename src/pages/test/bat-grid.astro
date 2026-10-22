@@ -33,9 +33,9 @@ import batBottomImg from '@/images/BAT_BOTTOM_CROPPED.png'
       style={`aspect-ratio: ${batBottomImg.width} / ${batBottomImg.height}`}></canvas>
     <script>
       const CELL = 64 // px, one grid square
-      const HOLD = 600 // ms a tile stays fully drawn
-      const FADE = 1400 // ms to fade out after HOLD
-      const MAX_TILES = 40 // per zone; oldest tiles get dropped past this
+      const HOLD = 660 // ms a tile stays fully drawn
+      const FADE = 1540 // ms to fade out after HOLD
+      const MAX_TILES = 200 // per zone; oldest tiles get dropped past this
 
       const setup = (canvas: HTMLCanvasElement) => {
         const ctx = canvas.getContext('2d')!
