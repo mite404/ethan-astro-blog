@@ -1,0 +1,127 @@
+---
+// Test page: hover a grid to briefly reveal random tiles of the bat texture
+// (mimics Render's "spinning up" hover grid).
+import batImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Bat grid test</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #fff;
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="grid" data-src={batImg.src}></canvas>
+    <script>
+      const CELL = 64 // px, one grid square
+      const HOLD = 600 // ms a tile stays fully drawn
+      const FADE = 1400 // ms to fade out after HOLD
+      const MAX_TILES = 40 // oldest tiles get dropped past this
+
+      const canvas = document.getElementById('grid') as HTMLCanvasElement
+      const ctx = canvas.getContext('2d')!
+      const img = new Image()
+      img.src = canvas.dataset.src!
+
+      // key "col,row" → tile; Map keeps insertion order, so the first entry is the oldest
+      const tiles = new Map<string, { sx: number; sy: number; born: number }>()
+      let alpha: Uint8ClampedArray // texture alpha channel, every 4th byte
+
+      // Fraction of opaque pixels in a CELL×CELL patch of the texture.
+      const coverage = (sx: number, sy: number) => {
+        let on = 0
+        for (let y = 0; y < CELL; y++)
+          for (let x = 0; x < CELL; x++)
+            if (alpha[((sy + y) * img.width + sx + x) * 4 + 3] > 0) on++
+        return on / (CELL * CELL)
+      }
+
+      // Random patch that is mostly dithered edge, not blank or solid gray.
+      const pickPatch = () => {
+        let sx = 0
+        let sy = 0
+        for (let i = 0; i < 30; i++) {
+          sx = Math.floor(Math.random() * (img.width - CELL))
+          sy = Math.floor(Math.random() * (img.height - CELL))
+          const c = coverage(sx, sy)
+          if (c > 0.2 && c < 0.8) break
+        }
+        return { sx, sy }
+      }
+
+      const resize = () => {
+        const dpr = window.devicePixelRatio || 1
+        canvas.width = innerWidth * dpr
+        canvas.height = innerHeight * dpr
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        ctx.imageSmoothingEnabled = false
+      }
+
+      const drawGrid = () => {
+        ctx.strokeStyle = '#eee'
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        for (let x = 0.5; x < innerWidth; x += CELL) {
+          ctx.moveTo(x, 0)
+          ctx.lineTo(x, innerHeight)
+        }
+        for (let y = 0.5; y < innerHeight; y += CELL) {
+          ctx.moveTo(0, y)
+          ctx.lineTo(innerWidth, y)
+        }
+        ctx.stroke()
+      }
+
+      const frame = (now: number) => {
+        ctx.clearRect(0, 0, innerWidth, innerHeight)
+        drawGrid()
+        for (const [key, t] of tiles) {
+          const a = 1 - Math.max(0, now - t.born - HOLD) / FADE
+          if (a <= 0) {
+            tiles.delete(key)
+            continue
+          }
+          const [col, row] = key.split(',').map(Number)
+          ctx.globalAlpha = a
+          ctx.drawImage(img, t.sx, t.sy, CELL, CELL, col * CELL, row * CELL, CELL, CELL)
+        }
+        ctx.globalAlpha = 1
+        requestAnimationFrame(frame)
+      }
+
+      const onMove = (e: PointerEvent) => {
+        const key = `${Math.floor(e.clientX / CELL)},${Math.floor(e.clientY / CELL)}`
+        if (tiles.has(key)) return
+        tiles.set(key, { ...pickPatch(), born: performance.now() })
+        if (tiles.size > MAX_TILES) tiles.delete(tiles.keys().next().value!)
+      }
+
+      img.onload = () => {
+        const scratch = document.createElement('canvas')
+        scratch.width = img.width
+        scratch.height = img.height
+        const sctx = scratch.getContext('2d')!
+        sctx.drawImage(img, 0, 0)
+        alpha = sctx.getImageData(0, 0, img.width, img.height).data
+        resize()
+        addEventListener('resize', resize)
+        addEventListener('pointermove', onMove)
+        requestAnimationFrame(frame)
+      }
+    </script>
+  </body>
+</html>
