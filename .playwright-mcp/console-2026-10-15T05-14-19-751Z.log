@@ -1,0 +1,10 @@
+[     470ms] [ERROR] Failed to load resource: net::ERR_TRUST_TOKEN_OPERATION_FAILED @ https://www.amazon.com/tt/i:0
+[     940ms] [ERROR] Loading the image 'https://target.digitalaudience.io/bakery/bake?rvid=793&partner=AmazonDSP&car=0' violates the following Content Security Policy directive: "default-src 'self' s.amazon-adsystem.com aax-eu.amazon-adsystem.com aax-fe.amazon-adsystem.com fonts.gstatic.com *.firefox.etp doubleclick.net *.imdb.com google.com *.samplicio.us ninthdecimal.com samba.tv zeotap.com *.ninthdecimal.com *.zeotap.com samplicio.us imdb.com *.doubleclick.net *.samba.tv *.google.com". Note that 'img-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked. @ https://s.amazon-adsystem.com/v3/pr?exlist=n-zeotap-4_n-digitalaudience_imdb_nd_n-lucid_g_n-samba.tv_adelphic&fv=1.0&a=cm&dmt=1&gdpr_consent=&gdpr=0:14
+[    1116ms] [WARNING] Allow attribute will take precedence over 'allowfullscreen'. @ https://d3qjf563see442.cloudfront.net/csvm.js:336
+[    1660ms] Uncaught (in promise) SecurityError: Failed to construct 'PresentationRequest': The document is sandboxed and lacks the 'allow-presentation' flag.
+    at W.initialize (https://www.gstatic.com/eureka/clank/155/cast_sender.js:83:86)
+    at chrome.cast.initialize (https://www.gstatic.com/eureka/clank/155/cast_sender.js:95:136)
+    at Qb (https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js:51:397)
+    at Xb (https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js:53:287)
+    at init (https://f.vimeocdn.com/p/4.46.126/js/player.module.js:3:380569)
+    at <anonymous> (https://f.vimeocdn.com/p/4.46.126/js/player.module.js:3:386152)

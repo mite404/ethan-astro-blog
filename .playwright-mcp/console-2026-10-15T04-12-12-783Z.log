@@ -1,0 +1,4 @@
+[     451ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:4321/node_modules/.vite/deps/client-B6T5C89C.js?v=48454422:15860
+[     561ms] [WARNING] 🖐️ Calculated position: {globeOffsetFromLayout: 2934.75} @ http://localhost:4321/src/components/ui/ParallaxHand.tsx:47
+[   76102ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:4321/node_modules/.vite/deps/client-B6T5C89C.js?v=48454422:15860
+[   76208ms] [WARNING] 🖐️ Calculated position: {globeOffsetFromLayout: 2934.75} @ http://localhost:4321/src/components/ui/ParallaxHand.tsx:47

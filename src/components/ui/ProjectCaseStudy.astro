@@ -74,6 +74,22 @@ const { Content } = await render(entry)
     box-shadow: 0 16px 64px rgb(0 0 0 / 24%);
   }
 
+  /* Page transition's blur, held at its 30% keyframe while an asset preview is open.
+     Blurs the children, not the card, so the border and shadow stay sharp. */
+  .case-study > :not(.case-preview) {
+    transition: filter 220ms cubic-bezier(0.17, 1.02, 0.58, 1);
+  }
+
+  .case-study:has(.case-preview:popover-open) > :not(.case-preview) {
+    filter: blur(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-study > :not(.case-preview) {
+      transition: none;
+    }
+  }
+
   .case-study .case-header {
     display: flex;
     align-items: center;

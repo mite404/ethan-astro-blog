@@ -1,0 +1,146 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - navigation [ref=e5]:
+      - img "Asterix icon" [ref=e7]
+      - generic [ref=e8]:
+        - link "BLOG" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "GITHUB" [ref=e11] [cursor=pointer]:
+          - /url: https://github.com/mite404
+        - link "RESUMÉ" [ref=e13] [cursor=pointer]:
+          - /url: /Ethan_Anderson_Resume.pdf
+    - heading "Ethan Anderson" [level=1] [ref=e15]
+  - main [ref=e16]:
+    - generic [ref=e17]: TypeScript | JavaScript | Python | React | React Router | Vercel AI SDK | Vercel | Render | Netlify | BetterAuth | OAuth | Tailwind | PostgreSQL | Supabase | Drizzle | Mongo DB | Mongoose | Convex | Figma | Motion React | Google Cloud | Ollama | Claude | Gemini | Amp | TypeScript | JavaScript | Python | React | React Router | Vercel AI SDK | Vercel | Render | Netlify | BetterAuth | OAuth | Tailwind | PostgreSQL | Supabase | Drizzle | Mongo DB | Mongoose | Convex | Figma | Motion React | Google Cloud | Ollama | Claude | Gemini | Amp | TypeScript | JavaScript | Python | React | React Router | Vercel AI SDK | Vercel | Render | Netlify | BetterAuth | OAuth | Tailwind | PostgreSQL | Supabase | Drizzle | Mongo DB | Mongoose | Convex | Figma | Motion React | Google Cloud | Ollama | Claude | Gemini | Amp | TypeScript | JavaScript | Python | React | React Router | Vercel AI SDK | Vercel | Render | Netlify | BetterAuth | OAuth | Tailwind | PostgreSQL | Supabase | Drizzle | Mongo DB | Mongoose | Convex | Figma | Motion React | Google Cloud | Ollama | Claude | Gemini | Amp |
+    - paragraph [ref=e25]: I'm an early-stage engineer drawn to creative tools and developer experience, where my professional background in video and audio production becomes a technical advantage.
+    - generic [ref=e27]:
+      - heading "PROJECTS:" [level=2] [ref=e28]
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - link [ref=e31] [cursor=pointer]:
+            - /url: https://github.com/mite404/claude-agent-dashboard
+            - img "Agent Dashboard preview" [ref=e32]
+          - heading "Agent Dashboard" [level=3] [ref=e33]
+          - paragraph [ref=e34]: Integrated Claude Code's experimental agent teams feature including Pre/PostToolUse, TeammateIdle, and TaskCompleted hooks into a REST API task pipeline, enabling real-time observability into multi-agent task ownership, session events, and cross-agent dependency state.
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - link "GitHub" [ref=e37] [cursor=pointer]:
+                - /url: https://github.com/mite404/claude-agent-dashboard
+              - text: "|"
+            - paragraph [ref=e38]: TypeScript | React | SQLite | Tailwind
+          - button "Read test case study from Agent Dashboard" [ref=e39] [cursor=pointer]: Case study ↗
+        - generic [ref=e40]:
+          - link [ref=e41] [cursor=pointer]:
+            - /url: https://tr-08.vercel.app/
+            - img "TR-08 Web Sequencer preview" [ref=e42]
+          - heading "TR-08 Web Sequencer" [level=3] [ref=e43]
+          - paragraph [ref=e44]: A high-precision web audio sequencer using Tone.js, implementing custom logic for event scheduling and transport synchronization to mitigate browser main-thread latency. Custom UI.
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - link "GitHub" [ref=e47] [cursor=pointer]:
+                - /url: https://github.com/mite404/tr-08-agentic
+              - text: "|"
+              - link "Live" [ref=e48] [cursor=pointer]:
+                - /url: https://tr-08.vercel.app/
+            - paragraph [ref=e49]: TypeScript | React | Tailwind | Supabase | Figma
+          - button "Read test case study from TR-08 Web Sequencer" [ref=e50] [cursor=pointer]: Case study ↗
+        - generic [ref=e51]:
+          - link [ref=e52] [cursor=pointer]:
+            - /url: https://www.raycast.com/pernielsentikaer/beat-per-minute
+            - img "Open Source Raycast Extension preview" [ref=e53]
+          - heading "Open Source Raycast Extension" [level=3] [ref=e54]
+          - paragraph [ref=e55]: Engineered and open-sourced a productivity extension, "Tap BPM", using the Raycast API. Optimized user input latency for millisecond-accurate music tempo calculation, handled asynchronous state updates and improved on UX features. Over 1,800 installs!
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - link "GitHub" [ref=e58] [cursor=pointer]:
+                - /url: https://github.com/raycast/extensions/pull/24594
+              - text: "|"
+              - link "Live" [ref=e59] [cursor=pointer]:
+                - /url: https://www.raycast.com/pernielsentikaer/beat-per-minute
+            - paragraph [ref=e60]: TypeScript | React | Raycast API
+          - button "Read test case study from Open Source Raycast Extension" [ref=e61] [cursor=pointer]: Case study ↗
+        - generic [ref=e62]:
+          - link [ref=e63] [cursor=pointer]:
+            - /url: https://phillips-poc-public.vercel.app/
+            - img "Phillips Corp. LMS preview" [ref=e64]
+          - heading "Phillips Corp. LMS" [level=3] [ref=e65]
+          - paragraph [ref=e66]: Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - link "GitHub" [ref=e69] [cursor=pointer]:
+                - /url: https://github.com/mite404/phillips-poc-public
+              - text: "|"
+              - link "Live" [ref=e70] [cursor=pointer]:
+                - /url: https://phillips-poc-public.vercel.app/
+            - paragraph [ref=e71]: TypeScript | React | Tailwind | shadcn/ui
+          - button "Read test case study from Phillips Corp. LMS" [ref=e72] [cursor=pointer]: Case study ↗
+    - generic [ref=e74]:
+      - link "Design System Portfolio Site Neon green & magenta on near-black. View system → Display Guisol Text Barlow Voice Iosevka" [ref=e75] [cursor=pointer]:
+        - /url: /portfolio-design-system.html
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - generic [ref=e78]: Design System
+            - generic [ref=e79]: PortfolioSite
+            - paragraph [ref=e80]: Neon green & magenta on near-black.
+            - generic [ref=e81]: View system →
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: Display
+              - generic [ref=e85]: Guisol
+            - generic [ref=e86]:
+              - generic [ref=e87]: Text
+              - generic [ref=e88]: Barlow
+            - generic [ref=e89]:
+              - generic [ref=e90]: Voice
+              - generic [ref=e91]: Iosevka
+      - link "Design System HJBL Rebrand Editorial maroon on cream & brown. View system → Display Cormorant Text Baskerville Data DM Mono":
+        - /url: /hjbl-design-system.html
+        - generic:
+          - generic:
+            - generic: Design System
+            - generic: HJBLRebrand
+            - paragraph: Editorial maroon on cream & brown.
+            - generic: View system →
+          - generic:
+            - generic:
+              - generic: Display
+              - generic: Cormorant
+            - generic:
+              - generic: Text
+              - generic: Baskerville
+            - generic:
+              - generic: Data
+              - generic: DM Mono
+      - generic [ref=e97]:
+        - button "Show slide 1" [ref=e98] [cursor=pointer]
+        - button "Show slide 2" [ref=e99] [cursor=pointer]
+    - paragraph [ref=e103]: Bringing 19 years of systems thinking and team leadership within entertainment for brands like VICE, SPOTIFY, SQUARESPACE & BEYONCÉ to early-stage companies building creative tools.
+    - generic [ref=e105]:
+      - heading "BLOG:" [level=2] [ref=e106]
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - heading [level=3] [ref=e109]:
+            - link "The Hidden Superpo…" [ref=e110] [cursor=pointer]:
+              - /url: /blog/week-07
+          - paragraph [ref=e111]: Since building a BPM Counter extension in Week-05, I've been building a beat sequencer. Again I choose a project whose concept was related to music, s…
+          - paragraph [ref=e112]: November 2025
+        - generic [ref=e113]:
+          - heading [level=3] [ref=e114]:
+            - link "Brush Yourself Off…" [ref=e115] [cursor=pointer]:
+              - /url: /blog/week-05
+          - paragraph [ref=e116]: This week was tough. I wanted to prove to myself that I could finish a Level 2 Assignment despite the AI and other students telling me these contained…
+          - paragraph [ref=e117]: October 2025
+        - generic [ref=e118]:
+          - heading [level=3] [ref=e119]:
+            - 'link "Rust & Polish: Wee…" [ref=e120] [cursor=pointer]':
+              - /url: /blog/week-04
+          - paragraph [ref=e121]: "This week I was faced with a realization: two things were contributing to losing some fundamental fluency with JavaScript. First, my part time job as …"
+          - paragraph [ref=e122]: October 2025
+        - generic [ref=e123]:
+          - heading [level=3] [ref=e124]:
+            - link "How I Learned to S…" [ref=e125] [cursor=pointer]:
+              - /url: /blog/week-03
+          - paragraph [ref=e126]: Building a tower defense game taught me a harsh lesson about the lifecycle of rendered objects. When I first implemented enemy spawning, I didn't real…
+          - paragraph [ref=e127]: October 2025
+    - link "GET IN TOUCH" [ref=e131] [cursor=pointer]:
+      - /url: mailto:ethana@ethananderson.net
