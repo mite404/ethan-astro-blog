@@ -1,7 +1,8 @@
 ---
-// Test page: hover a grid to briefly reveal random tiles of the bat texture
-// (mimics Render's "spinning up" hover grid).
-import batImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
+// Test page: hover each bat zone's grid to briefly reveal the matching piece of the
+// homepage bat texture (mimics Render's "spinning up" hover grid).
+import batTopImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
+import batBottomImg from '@/images/BAT_BOTTOM_CROPPED.png'
 ---
 
 <html lang="en">
@@ -11,117 +12,115 @@ import batImg from '@/images/BAT_TOP_CROPPED_FIXED.png'
     <meta name="robots" content="noindex" />
     <title>Bat grid test</title>
     <style>
-      html,
       body {
         margin: 0;
-        height: 100%;
         background: #fff;
       }
+      /* Same box as the homepage zones: full width up to 1280px, at the asset's own ratio */
       canvas {
         display: block;
-        width: 100vw;
-        height: 100vh;
+        width: min(100%, 1280px);
+        margin: 0 auto;
       }
     </style>
   </head>
   <body>
-    <canvas id="grid" data-src={batImg.src}></canvas>
+    <canvas
+      data-src={batTopImg.src}
+      style={`aspect-ratio: ${batTopImg.width} / ${batTopImg.height}`}></canvas>
+    <canvas
+      data-src={batBottomImg.src}
+      style={`aspect-ratio: ${batBottomImg.width} / ${batBottomImg.height}`}></canvas>
     <script>
       const CELL = 64 // px, one grid square
       const HOLD = 600 // ms a tile stays fully drawn
       const FADE = 1400 // ms to fade out after HOLD
-      const MAX_TILES = 40 // oldest tiles get dropped past this
+      const MAX_TILES = 40 // per zone; oldest tiles get dropped past this
 
-      const canvas = document.getElementById('grid') as HTMLCanvasElement
-      const ctx = canvas.getContext('2d')!
-      const img = new Image()
-      img.src = canvas.dataset.src!
+      const setup = (canvas: HTMLCanvasElement) => {
+        const ctx = canvas.getContext('2d')!
+        const img = new Image()
+        img.src = canvas.dataset.src!
+        // key "col,row" → birth time; Map keeps insertion order, so the first entry is the oldest
+        const tiles = new Map<string, number>()
+        let w = 0
+        let h = 0
 
-      // key "col,row" → tile; Map keeps insertion order, so the first entry is the oldest
-      const tiles = new Map<string, { sx: number; sy: number; born: number }>()
-      let alpha: Uint8ClampedArray // texture alpha channel, every 4th byte
-
-      // Fraction of opaque pixels in a CELL×CELL patch of the texture.
-      const coverage = (sx: number, sy: number) => {
-        let on = 0
-        for (let y = 0; y < CELL; y++)
-          for (let x = 0; x < CELL; x++)
-            if (alpha[((sy + y) * img.width + sx + x) * 4 + 3] > 0) on++
-        return on / (CELL * CELL)
-      }
-
-      // Random patch that is mostly dithered edge, not blank or solid gray.
-      const pickPatch = () => {
-        let sx = 0
-        let sy = 0
-        for (let i = 0; i < 30; i++) {
-          sx = Math.floor(Math.random() * (img.width - CELL))
-          sy = Math.floor(Math.random() * (img.height - CELL))
-          const c = coverage(sx, sy)
-          if (c > 0.2 && c < 0.8) break
+        const resize = () => {
+          const dpr = window.devicePixelRatio || 1
+          w = canvas.clientWidth
+          h = canvas.clientHeight
+          canvas.width = w * dpr
+          canvas.height = h * dpr
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+          ctx.imageSmoothingEnabled = false
         }
-        return { sx, sy }
-      }
 
-      const resize = () => {
-        const dpr = window.devicePixelRatio || 1
-        canvas.width = innerWidth * dpr
-        canvas.height = innerHeight * dpr
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-        ctx.imageSmoothingEnabled = false
-      }
-
-      const drawGrid = () => {
-        ctx.strokeStyle = '#eee'
-        ctx.lineWidth = 1
-        ctx.beginPath()
-        for (let x = 0.5; x < innerWidth; x += CELL) {
-          ctx.moveTo(x, 0)
-          ctx.lineTo(x, innerHeight)
+        // Draw the texture under cell (col,row), scaled like `object-fit: cover; center top`.
+        const drawTile = (col: number, row: number) => {
+          const scale = Math.max(w / img.width, h / img.height) // canvas px per image px
+          const offsetX = (img.width * scale - w) / 2
+          ctx.drawImage(
+            img,
+            (col * CELL + offsetX) / scale,
+            (row * CELL) / scale,
+            CELL / scale,
+            CELL / scale,
+            col * CELL,
+            row * CELL,
+            CELL,
+            CELL
+          )
         }
-        for (let y = 0.5; y < innerHeight; y += CELL) {
-          ctx.moveTo(0, y)
-          ctx.lineTo(innerWidth, y)
-        }
-        ctx.stroke()
-      }
 
-      const frame = (now: number) => {
-        ctx.clearRect(0, 0, innerWidth, innerHeight)
-        drawGrid()
-        for (const [key, t] of tiles) {
-          const a = 1 - Math.max(0, now - t.born - HOLD) / FADE
-          if (a <= 0) {
-            tiles.delete(key)
-            continue
+        const drawGrid = () => {
+          ctx.strokeStyle = '#eee'
+          ctx.lineWidth = 1
+          ctx.beginPath()
+          for (let x = 0.5; x < w; x += CELL) {
+            ctx.moveTo(x, 0)
+            ctx.lineTo(x, h)
           }
-          const [col, row] = key.split(',').map(Number)
-          ctx.globalAlpha = a
-          ctx.drawImage(img, t.sx, t.sy, CELL, CELL, col * CELL, row * CELL, CELL, CELL)
+          for (let y = 0.5; y < h; y += CELL) {
+            ctx.moveTo(0, y)
+            ctx.lineTo(w, y)
+          }
+          ctx.stroke()
         }
-        ctx.globalAlpha = 1
-        requestAnimationFrame(frame)
+
+        const frame = (now: number) => {
+          ctx.clearRect(0, 0, w, h)
+          drawGrid()
+          for (const [key, born] of tiles) {
+            const a = 1 - Math.max(0, now - born - HOLD) / FADE
+            if (a <= 0) {
+              tiles.delete(key)
+              continue
+            }
+            const [col, row] = key.split(',').map(Number)
+            ctx.globalAlpha = a
+            drawTile(col, row)
+          }
+          ctx.globalAlpha = 1
+          requestAnimationFrame(frame)
+        }
+
+        const onMove = (e: PointerEvent) => {
+          const key = `${Math.floor(e.offsetX / CELL)},${Math.floor(e.offsetY / CELL)}`
+          if (tiles.has(key)) return
+          tiles.set(key, performance.now())
+          if (tiles.size > MAX_TILES) tiles.delete(tiles.keys().next().value!)
+        }
+
+        img.onload = () => {
+          resize()
+          addEventListener('resize', resize)
+          canvas.addEventListener('pointermove', onMove)
+          requestAnimationFrame(frame)
+        }
       }
 
-      const onMove = (e: PointerEvent) => {
-        const key = `${Math.floor(e.clientX / CELL)},${Math.floor(e.clientY / CELL)}`
-        if (tiles.has(key)) return
-        tiles.set(key, { ...pickPatch(), born: performance.now() })
-        if (tiles.size > MAX_TILES) tiles.delete(tiles.keys().next().value!)
-      }
-
-      img.onload = () => {
-        const scratch = document.createElement('canvas')
-        scratch.width = img.width
-        scratch.height = img.height
-        const sctx = scratch.getContext('2d')!
-        sctx.drawImage(img, 0, 0)
-        alpha = sctx.getImageData(0, 0, img.width, img.height).data
-        resize()
-        addEventListener('resize', resize)
-        addEventListener('pointermove', onMove)
-        requestAnimationFrame(frame)
-      }
+      document.querySelectorAll('canvas').forEach(setup)
     </script>
   </body>
 </html>
