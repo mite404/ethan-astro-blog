@@ -24,7 +24,7 @@ export const projects: Project[] = [
       'Architected and deployed a full-stack Learning Management System MVP in a high-velocity 2-week sprint, engineering a custom data model and middleware layer to integrate legacy LMS APIs. Modernized legacy education workflows by collaborating on a redesigned, user-centric flow and implementing an intuitive "Drag-and-Drop" Program Builder',
     ghLink: 'https://github.com/mite404/phillips-poc-public',
     liveLink: 'https://phillips-poc-public.vercel.app/',
-    details: 'TypeScript | React | Tailwind | shadcn/ui',
+    details: 'TypeScript | React | PostgreSQL | Tailwind',
     image: 'phillips'
   },
   {
@@ -41,7 +41,7 @@ export const projects: Project[] = [
       'A high-precision web audio sequencer using Tone.js, implementing custom logic for event scheduling and transport synchronization to mitigate browser main-thread latency. Custom UI.',
     ghLink: 'https://github.com/mite404/tr-08-agentic',
     liveLink: 'https://tr-08.vercel.app/',
-    details: 'TypeScript | React | Tailwind | Supabase | Figma',
+    details: 'TypeScript | React | Tailwind | PostgreSQL | Figma',
     image: 'tr-08'
   },
   {
